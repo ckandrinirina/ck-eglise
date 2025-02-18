@@ -35,6 +35,9 @@ src/
 - **UI Components**: shadcn/ui
 - **Database**: SQLite with Sequelize ORM
 - **State Management**: React Server Components + Hooks
+- **Data Fetching**: TanStack React Query
+- **Form Handling**: React Hook Form
+- **Package Manager**: pnpm (Fast, disk space efficient alternative to npm)
 
 ### Development Tools
 - **Package Manager**: pnpm
@@ -77,6 +80,20 @@ export const GET = async () => {
   await initializeDB()
   // Logic here
 }
+```
+
+### Form and Query Patterns
+```tsx
+// React Hook Form usage
+const form = useForm<FormSchema>({
+  resolver: zodResolver(formSchema)
+})
+
+// TanStack React Query usage
+const query = useQuery({
+  queryKey: ['data'],
+  queryFn: fetchData
+})
 ```
 
 ## Key Principles
