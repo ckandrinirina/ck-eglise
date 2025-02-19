@@ -18,8 +18,8 @@ const getLocale = (pathname: string) => {
 
 export function Breadcrumbs() {
   const pathname = usePathname();
-  const locale = getLocale(pathname);
-  const segments = getLocaleIndependentSegments(pathname);
+  const locale = getLocale(pathname as string);
+  const segments = getLocaleIndependentSegments(pathname as string);
   const t = useTranslations("admin");
 
   return (

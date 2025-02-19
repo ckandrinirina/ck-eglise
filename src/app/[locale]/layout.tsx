@@ -22,7 +22,7 @@ type Locale = (typeof i18nConfig.locales)[number];
 export async function generateMetadata({
   params,
 }: {
-  params: { locale: Locale };
+  params: Promise<{ locale: Locale }>;
 }): Promise<Metadata> {
   const locale = (await params).locale;
   return {
@@ -45,7 +45,7 @@ const LocaleLayout = async ({
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: Locale };
+  params: Promise<{ locale: Locale }>;
 }) => {
   const locale = (await params).locale;
   if (!i18nConfig.locales.includes(locale)) {

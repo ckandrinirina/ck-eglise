@@ -17,7 +17,7 @@ import { usePathname } from "next/navigation";
 export function UserMenu() {
   const t = useTranslations();
   const pathname = usePathname();
-  const locale = pathname.split("/")[1];
+  const locale = pathname?.split("/")[1];
 
   return (
     <DropdownMenu>

@@ -18,7 +18,7 @@ const navItems = [
 
 function SidebarContent() {
   const pathname = usePathname();
-  const locale = pathname.split("/")[1] || "fr";
+  const locale = pathname?.split("/")[1] || "fr";
   const t = useTranslations("admin");
 
   return (
