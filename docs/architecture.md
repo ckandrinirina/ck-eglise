@@ -7,10 +7,12 @@
 ```
 src/
 ├── app/                    # App Router (Next.js 13+)
-│   ├── api/               # API routes
-│   ├── (routes)/          # Route groups
-│   ├── layout.tsx         # Root layout
-│   └── page.tsx           # Root page
+│   ├── [locale]/          # Locale-based routes (all pages must be here)
+│   │   ├── (routes)/      # Route groups
+│   │   ├── auth/          # Auth routes (localized)
+│   │   ├── layout.tsx     # Localized root layout
+│   │   └── page.tsx       # Localized root page
+│   └── api/               # API routes (non-localized)
 ├── components/            # React components
 │   ├── ui/               # Basic UI components
 │   └── shared/           # Complex shared components
@@ -99,14 +101,27 @@ const query = useQuery({
 })
 ```
 
+### Routing Pattern
+```tsx
+// All pages including auth must be under [locale] directory for translation support
+src/app/[locale]/dashboard/page.tsx   // ✅ Correct
+src/app/[locale]/auth/login/page.tsx  // ✅ Correct
+src/app/dashboard/page.tsx            // ❌ Incorrect
+src/app/auth/login/page.tsx           // ❌ Incorrect
+
+// Only API routes can be outside [locale]
+src/app/api/auth/login/route.ts       // ✅ Correct
+```
+
 ## Key Principles
 
 ### Frontend
-1. Use React Server Components by default
-2. Client components only when needed
-3. shadcn/ui for UI components
-4. Tailwind for styling
-5. Arrow functions everywhere
+1. All pages must be under [locale] directory
+2. Use React Server Components by default
+3. Client components only when needed
+4. shadcn/ui for UI components
+5. Tailwind for styling
+6. Arrow functions everywhere
 
 ### Backend
 1. SQLite for database
