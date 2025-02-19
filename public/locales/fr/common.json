@@ -29,5 +29,58 @@
         "passwordRequired": "Le mot de passe doit contenir au moins 8 caractères"
       }
     }
+  },
+  "admin": {
+    "title": "Panneau d'Administration",
+    "dashboard": {
+      "title": "Tableau de Bord",
+      "welcome": "Bienvenue sur votre tableau de bord",
+      "stats": {
+        "totalUsers": "Nombre d'Utilisateurs",
+        "activeSessions": "Sessions Actives",
+        "totalEvents": "Total des Événements"
+      },
+      "recentActivity": "Activité Récente",
+      "userGrowth": "Croissance des Utilisateurs",
+      "quickStats": "Statistiques Rapides"
+    },
+    "users": {
+      "title": "Utilisateurs",
+      "description": "Gérer les comptes et les permissions des utilisateurs",
+      "addUser": "Ajouter un Utilisateur",
+      "table": {
+        "name": "Nom",
+        "email": "Email",
+        "role": "Rôle",
+        "status": "Statut"
+      },
+      "actions": {
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "more": "Plus d'options"
+      }
+    },
+    "settings": {
+      "title": "Paramètres",
+      "description": "Gérer les paramètres de l'application",
+      "general": {
+        "title": "Paramètres Généraux",
+        "siteName": "Nom du Site",
+        "siteNameDescription": "Le nom de votre site affiché aux utilisateurs",
+        "environment": "Environnement",
+        "environmentDescription": "Environnement de déploiement actuel"
+      },
+      "security": {
+        "title": "Paramètres de Sécurité",
+        "sessionTimeout": "Délai d'Expiration de Session",
+        "sessionTimeoutDescription": "Durée avant la déconnexion des utilisateurs inactifs"
+      },
+      "actions": {
+        "save": "Enregistrer les Modifications"
+      }
+    },
+    "breadcrumbs": {
+      "home": "Accueil"
+    }
   }
 }

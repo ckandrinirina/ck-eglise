@@ -29,5 +29,58 @@
         "passwordRequired": "Ny teny miafina dia tsy maintsy ahitana litera 8 farafahakeliny"
       }
     }
+  },
+  "admin": {
+    "title": "Toerana Mpitantana",
+    "dashboard": {
+      "title": "Tabilao",
+      "welcome": "Tongasoa eto amin'ny tabilaonao",
+      "stats": {
+        "totalUsers": "Isan'ny Mpampiasa",
+        "activeSessions": "Mpampiasa Mavitrika",
+        "totalEvents": "Isan'ny Hetsika"
+      },
+      "recentActivity": "Asa Vao Haingana",
+      "userGrowth": "Fitomboan'ny Mpampiasa",
+      "quickStats": "Antontan'isa Haingana"
+    },
+    "users": {
+      "title": "Mpampiasa",
+      "description": "Fitantanana ny kaonty sy fahazoan-dàlana",
+      "addUser": "Hanampy Mpampiasa",
+      "table": {
+        "name": "Anarana",
+        "email": "Mailaka",
+        "role": "Andraikitra",
+        "status": "Toe-javatra"
+      },
+      "actions": {
+        "edit": "Hanova",
+        "delete": "Hamafa",
+        "more": "Safidy hafa"
+      }
+    },
+    "settings": {
+      "title": "Safidy",
+      "description": "Fitantanana ny safidy fampiharana",
+      "general": {
+        "title": "Safidy Ankapobeny",
+        "siteName": "Anaran'ny Tranonkala",
+        "siteNameDescription": "Ny anaran'ny tranonkalanao aseho amin'ny mpampiasa",
+        "environment": "Tontolo",
+        "environmentDescription": "Tontolo fampiharana ankehitriny"
+      },
+      "security": {
+        "title": "Fiarovana",
+        "sessionTimeout": "Fe-potoana Fivoahana",
+        "sessionTimeoutDescription": "Fotoana hivoahan'ny mpampiasa tsy mavitrika"
+      },
+      "actions": {
+        "save": "Hitahiry Fanovana"
+      }
+    },
+    "breadcrumbs": {
+      "home": "Fandraisana"
+    }
   }
 }

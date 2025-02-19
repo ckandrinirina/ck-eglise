@@ -29,5 +29,58 @@
         "passwordRequired": "Password must be at least 8 characters"
       }
     }
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "dashboard": {
+      "title": "Dashboard",
+      "welcome": "Welcome to your admin dashboard",
+      "stats": {
+        "totalUsers": "Total Users",
+        "activeSessions": "Active Sessions",
+        "totalEvents": "Total Events"
+      },
+      "recentActivity": "Recent Activity",
+      "userGrowth": "User Growth",
+      "quickStats": "Quick Stats"
+    },
+    "users": {
+      "title": "Users",
+      "description": "Manage user accounts and permissions",
+      "addUser": "Add User",
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "status": "Status"
+      },
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "more": "More options"
+      }
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "Manage your application settings",
+      "general": {
+        "title": "General Settings",
+        "siteName": "Site Name",
+        "siteNameDescription": "The name of your site displayed to users",
+        "environment": "Environment",
+        "environmentDescription": "Current deployment environment"
+      },
+      "security": {
+        "title": "Security Settings",
+        "sessionTimeout": "Session Timeout",
+        "sessionTimeoutDescription": "How long until inactive users are logged out"
+      },
+      "actions": {
+        "save": "Save Changes"
+      }
+    },
+    "breadcrumbs": {
+      "home": "Home"
+    }
   }
 }
