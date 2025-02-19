@@ -12,7 +12,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const LanguageSwitcherContent = () => {
+const LanguageSwitcherContent = ({
+  variant = "fixed",
+}: {
+  variant?: "fixed" | "inline";
+}) => {
   const t = useTranslations();
   const pathname = usePathname();
   const router = useRouter();
@@ -24,13 +28,13 @@ const LanguageSwitcherContent = () => {
   };
 
   return (
-    <div className="fixed top-2 right-4 z-[99999]">
+    <div className={variant === "fixed" ? "fixed top-2 right-4 z-[99999]" : ""}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
             size="icon"
-            className="shadow-lg hover:bg-secondary/90 bg-background/80 backdrop-blur-sm hover:shadow-xl transition-all duration-200"
+            className={`${variant === "fixed" ? "shadow-lg" : ""} hover:bg-secondary/90 bg-background/80 backdrop-blur-sm hover:shadow-xl transition-all duration-200`}
           >
             <Image
               src={`/flags/${currentLocale}.svg`}
@@ -65,7 +69,11 @@ const LanguageSwitcherContent = () => {
   );
 };
 
-export const LanguageSwitcher = () => {
+export const LanguageSwitcher = ({
+  variant,
+}: {
+  variant?: "fixed" | "inline";
+}) => {
   return (
     <Suspense
       fallback={
@@ -73,7 +81,11 @@ export const LanguageSwitcher = () => {
           variant="ghost"
           size="icon"
           disabled
-          className="fixed right-4 top-2 z-[99999] shadow-lg bg-background/80 backdrop-blur-sm"
+          className={
+            variant === "fixed"
+              ? "fixed right-4 top-2 z-[99999] shadow-lg bg-background/80 backdrop-blur-sm"
+              : ""
+          }
         >
           <Image
             src={`/flags/${i18nConfig.defaultLocale}.svg`}
@@ -84,7 +96,7 @@ export const LanguageSwitcher = () => {
         </Button>
       }
     >
-      <LanguageSwitcherContent />
+      <LanguageSwitcherContent variant={variant} />
     </Suspense>
   );
 };
