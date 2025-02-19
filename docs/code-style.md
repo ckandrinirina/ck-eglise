@@ -7,3 +7,7 @@
 
 ## Code
 - All code should be commented thoroughly to ensure clarity and maintainability.
+
+## Component Management
+- For adding new shadcn components, always use the command: `pnpm dlx shadcn@latest add [component name]`
+- Never manually create or copy shadcn component files
