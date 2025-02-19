@@ -18,6 +18,22 @@ The application supports multilingual content with three primary languages:
 - Integrates seamlessly with Next.js App Router
 - Supports server-side and client-side translations
 - JSON-based translation files
+- Each language has its own separate translation file (e.g., fr.json, mg.json, en.json)
+
+### File Structure
+```
+public/
+  locales/
+    fr/
+      common.json
+      auth.json
+    mg/
+      common.json
+      auth.json
+    en/
+      common.json
+      auth.json
+```
 
 ### Supported Content
 - UI elements
@@ -29,9 +45,10 @@ The application supports multilingual content with three primary languages:
 ### Technical Implementation
 - Language switching is available on all pages
 - Translation strings are managed through next-i18next configuration
-- Translation files organized in public/locales/{lang} directory
+- Translation files organized in public/locales/{lang} directory with separate files for each language
 - Real-time language switching without page reload
 - SEO-friendly URL structure with language prefixes
+- Modular translation files for better maintenance and organization
 
 ### User Experience
 - Language selector is accessible from the navigation
