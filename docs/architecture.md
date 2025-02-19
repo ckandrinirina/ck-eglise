@@ -112,7 +112,13 @@ const query = useQuery({
 4. Migrations for schema changes
 5. Environment-based config
 
-### Code Organization
+## Layouts
+
+Our project uses two main layouts:
+- Authenticated Layout: for pages accessible after user login, providing navigation and user-specific content.
+- Authentication Layout: dedicated to authentication flows (login, logout, etc.) to ensure a secure and streamlined process.
+
+## Code Organization
 1. Group by feature in routes
 2. Shared components in ui/shared
 3. Database logic in repositories
