@@ -2,7 +2,8 @@
 import { defineRouting } from "next-intl/routing";
 
 export const routing = defineRouting({
-  locales: ["en", "fr"], // Replace with your supported locales
+  locales: ["en", "fr", "mg"], // Replace with your supported locales
+  defaultLocale: "fr", // Set your default locale
   pathnames: {
     "/": "/",
     "/auth/login": "/auth/login",

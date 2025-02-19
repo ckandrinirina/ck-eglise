@@ -25,7 +25,7 @@ export async function generateMetadata({
 }: {
   params: { locale: Locale };
 }): Promise<Metadata> {
-  const locale = await params.locale;
+  const locale = (await params).locale;
   return {
     title: "CK Eglise",
     description:
@@ -48,7 +48,7 @@ const LocaleLayout = async ({
   children: React.ReactNode;
   params: { locale: Locale };
 }) => {
-  const locale = await params.locale;
+  const locale = (await params).locale;
   if (!i18nConfig.locales.includes(locale)) {
     notFound();
   }
