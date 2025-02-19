@@ -6,8 +6,11 @@
 - [ ] Authentification
 
 #### Design Implementation
-- [ ] Authentification layout
+- [x] Authentification layout
 - [ ] Authenticated layout
 
 ### Chretient Tasks
 - [ ] Chretient management
+
+### Translation Implementation
+- [ ] Add choice language mg or fr
