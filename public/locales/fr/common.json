@@ -1,0 +1,17 @@
+{
+  "navigation": {
+    "home": "Accueil",
+    "dashboard": "Tableau de bord",
+    "login": "Connexion",
+    "logout": "Déconnexion"
+  },
+  "language": {
+    "en": "Anglais",
+    "fr": "Français",
+    "mg": "Malgache"
+  },
+  "home": {
+    "welcome": "Bienvenue",
+    "description": "Application de gestion d'église"
+  }
+}

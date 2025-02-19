@@ -1,0 +1,17 @@
+{
+  "navigation": {
+    "home": "Fandraisana",
+    "dashboard": "Takelaka Fampisehoana",
+    "login": "Hiditra",
+    "logout": "Hivoaka"
+  },
+  "language": {
+    "en": "Anglisy",
+    "fr": "Frantsay",
+    "mg": "Malagasy"
+  },
+  "home": {
+    "welcome": "Tongasoa",
+    "description": "Rindran-draharaha fitantanana fiangonana"
+  }
+}
