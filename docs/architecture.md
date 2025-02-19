@@ -46,6 +46,7 @@ src/
 - **Linting**: ESLint
 - **Type Checking**: TypeScript
 - **CSS Framework**: Tailwind CSS
+- **CI/CD**: GitHub Actions
 
 ## Coding Conventions
 
