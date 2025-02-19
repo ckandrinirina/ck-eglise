@@ -1,7 +1,7 @@
 {
   "navigation": {
     "home": "Fandraisana",
-    "dashboard": "Takelaka Fampisehoana",
+    "dashboard": "Tabilao",
     "login": "Hiditra",
     "logout": "Hivoaka"
   },
@@ -11,7 +11,23 @@
     "mg": "Malagasy"
   },
   "home": {
-    "welcome": "Tongasoa",
-    "description": "Rindran-draharaha fitantanana fiangonana"
+    "welcome": "Tonga soa",
+    "description": "Rindran-draharahan'ny Fiangonana"
+  },
+  "auth": {
+    "login": {
+      "title": "Tonga soa indray",
+      "description": "Ampidiro ny mombamomba anao mba hiditra amin'ny kaontinao",
+      "username": "Anarana",
+      "password": "Teny miafina",
+      "usernamePlaceholder": "Ampidiro ny anaranao",
+      "passwordPlaceholder": "Ampidiro ny teny miafina",
+      "submit": "Hiditra",
+      "submitting": "Am-pidirana...",
+      "validation": {
+        "usernameRequired": "Ny anarana dia tsy maintsy ahitana litera 3 farafahakeliny",
+        "passwordRequired": "Ny teny miafina dia tsy maintsy ahitana litera 8 farafahakeliny"
+      }
+    }
   }
 }

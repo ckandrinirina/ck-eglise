@@ -1,7 +1,7 @@
 "use client";
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
@@ -16,15 +16,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 
-const formSchema = z.object({
-  username: z.string().min(3, "Username must be at least 3 characters"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-});
-
-type FormData = z.infer<typeof formSchema>;
-
 const LoginForm = () => {
+  const t = useTranslations("auth.login");
   const [isLoading, setIsLoading] = useState(false);
+
+  const formSchema = z.object({
+    username: z.string().min(3, t("validation.usernameRequired")),
+    password: z.string().min(8, t("validation.passwordRequired")),
+  });
+
+  type FormData = z.infer<typeof formSchema>;
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -56,11 +57,11 @@ const LoginForm = () => {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>{t("username")}</FormLabel>
                   <FormControl>
                     <Input
                       type="text"
-                      placeholder="Enter your username"
+                      placeholder={t("usernamePlaceholder")}
                       disabled={isLoading}
                       {...field}
                     />
@@ -74,11 +75,11 @@ const LoginForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>{t("password")}</FormLabel>
                   <FormControl>
                     <Input
                       type="password"
-                      placeholder="Enter your password"
+                      placeholder={t("passwordPlaceholder")}
                       disabled={isLoading}
                       {...field}
                     />
@@ -88,7 +89,7 @@ const LoginForm = () => {
               )}
             />
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Signing in..." : "Sign in"}
+              {isLoading ? t("submitting") : t("submit")}
             </Button>
           </form>
         </Form>

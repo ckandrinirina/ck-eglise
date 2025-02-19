@@ -13,5 +13,21 @@
   "home": {
     "welcome": "Welcome",
     "description": "Church Management Application"
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "description": "Enter your credentials to sign in to your account",
+      "username": "Username",
+      "password": "Password",
+      "usernamePlaceholder": "Enter your username",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Sign in",
+      "submitting": "Signing in...",
+      "validation": {
+        "usernameRequired": "Username must be at least 3 characters",
+        "passwordRequired": "Password must be at least 8 characters"
+      }
+    }
   }
 }
