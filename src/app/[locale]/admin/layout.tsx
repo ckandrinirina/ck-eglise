@@ -22,7 +22,7 @@ export default function AdminLayout({
               <div className="flex flex-1 items-center justify-between">
                 <Breadcrumbs />
                 <div className="flex items-center gap-4">
-                  <LanguageSwitcher />
+                  <LanguageSwitcher variant="inline" />
                   <Separator orientation="vertical" className="h-6" />
                   <UserMenu />
                 </div>

@@ -1,3 +1,5 @@
+import { LanguageSwitcher } from "@/components/shared/language-switcher";
+
 export default function AuthLayout({
   children,
 }: {
@@ -5,6 +7,8 @@ export default function AuthLayout({
 }) {
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
+      <LanguageSwitcher />
+
       {/* Auth content side */}
       <div className="relative flex items-center justify-center p-8">
         {children}
