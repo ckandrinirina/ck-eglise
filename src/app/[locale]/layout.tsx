@@ -54,11 +54,7 @@ const LocaleLayout = ({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground`}
       >
         <I18nProvider locale={locale}>
-          <header className="p-4 border-b">
-            <nav className="flex justify-between items-center max-w-7xl mx-auto">
-              <LanguageSwitcher />
-            </nav>
-          </header>
+          <LanguageSwitcher />
           {children}
         </I18nProvider>
       </body>
