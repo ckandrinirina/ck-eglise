@@ -1,5 +1,7 @@
 # Next.js Project Architecture
 
+<!-- Note: All markdown files in docs are always short. -->
+
 ## Directory Structure
 
 ```

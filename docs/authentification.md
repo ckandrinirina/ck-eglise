@@ -1,3 +1,5 @@
+<!-- Note: All markdown files in docs are always short. -->
+
 # Authentication
 
 Our authentication system is built using NextAuth, fully integrated into our Next.js 13+ App Router architecture. API routes handling authentication (login, logout, and session queries) are organized under `src/app/api/auth/` with clear separation of concerns.
