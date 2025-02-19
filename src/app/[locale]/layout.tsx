@@ -4,6 +4,7 @@ import "./globals.css";
 import { LanguageSwitcher } from "@/components/shared/language-switcher";
 import I18nProvider from "@/components/shared/i18n-provider";
 import { i18nConfig } from "@/lib/i18n/config";
+import { notFound } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,17 +18,20 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-export function generateMetadata({
+type Locale = (typeof i18nConfig.locales)[number];
+
+export async function generateMetadata({
   params,
 }: {
-  params: { locale: string };
-}): Metadata {
+  params: { locale: Locale };
+}): Promise<Metadata> {
+  const locale = await params.locale;
   return {
     title: "CK Eglise",
     description:
-      params.locale === "fr"
+      locale === "fr"
         ? "Application de gestion d'église"
-        : params.locale === "mg"
+        : locale === "mg"
           ? "Rindran-draharaha fitantanana fiangonana"
           : "Church Management Application",
   };
@@ -37,15 +41,16 @@ export async function generateStaticParams() {
   return i18nConfig.locales.map((locale) => ({ locale }));
 }
 
-const LocaleLayout = ({
+const LocaleLayout = async ({
   children,
-  params: { locale },
+  params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: { locale: Locale };
 }) => {
+  const locale = await params.locale;
   if (!i18nConfig.locales.includes(locale)) {
-    return null; // This will trigger a 404
+    notFound();
   }
 
   return (

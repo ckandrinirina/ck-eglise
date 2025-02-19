@@ -1,19 +1,10 @@
 "use client";
 
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 import { Suspense } from "react";
 
-const HomeContent = () => {
-  const { t, ready } = useTranslation("common");
-
-  if (!ready) {
-    return (
-      <main className="container mx-auto p-8">
-        <div className="h-8 w-48 bg-gray-200 rounded animate-pulse mb-8"></div>
-        <div className="h-6 w-96 bg-gray-200 rounded animate-pulse"></div>
-      </main>
-    );
-  }
+function HomeContent() {
+  const t = useTranslations();
 
   return (
     <main className="container mx-auto p-8">
@@ -23,9 +14,9 @@ const HomeContent = () => {
       </p>
     </main>
   );
-};
+}
 
-const Home = () => {
+export default function Home() {
   return (
     <Suspense
       fallback={
@@ -38,6 +29,4 @@ const Home = () => {
       <HomeContent />
     </Suspense>
   );
-};
-
-export default Home;
+}

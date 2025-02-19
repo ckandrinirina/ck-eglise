@@ -1,9 +1,8 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  i18n: undefined, // Disable built-in i18n routing as we're using middleware
-  experimental: {
-    appDir: true,
-  },
-};
+import createNextIntlPlugin from "next-intl/plugin";
 
-export default nextConfig;
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {};
+
+export default withNextIntl(nextConfig);
