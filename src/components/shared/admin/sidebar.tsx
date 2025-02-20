@@ -14,7 +14,6 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-  SidebarProvider,
   useSidebar,
 } from "@/components/ui/sidebar";
 
@@ -88,15 +87,7 @@ export function AdminSidebar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <SidebarProvider
-      className="!block"
-      style={
-        {
-          "--sidebar-width": "16rem",
-          "--sidebar-width-icon": "4rem",
-        } as React.CSSProperties
-      }
-    >
+    <>
       {/* Mobile Menu Button */}
       <div className="lg:hidden absolute left-4 top-3 z-20">
         <Sheet open={open} onOpenChange={setOpen}>
@@ -119,6 +110,6 @@ export function AdminSidebar() {
           <MainNav />
         </SidebarContainer>
       </div>
-    </SidebarProvider>
+    </>
   );
 }
