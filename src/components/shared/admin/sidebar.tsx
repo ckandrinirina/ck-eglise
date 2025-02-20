@@ -7,7 +7,12 @@ import Link from "next/link";
 import { LayoutDashboard, Menu, Settings, Users } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import {
   Sidebar,
   SidebarContent,
@@ -23,14 +28,14 @@ const navItems = [
   { href: "/admin/settings", label: "settings.title", icon: Settings },
 ];
 
-function MainNav() {
+function MainNav({ isMobile }: { isMobile?: boolean }) {
   const pathname = usePathname();
   const locale = pathname?.split("/")[1] || "fr";
   const t = useTranslations("admin");
   const { state } = useSidebar();
 
   return (
-    <nav className="flex flex-col gap-2">
+    <nav className="flex flex-col gap-4">
       {navItems.map((item) => {
         const localizedHref = `/${locale}${item.href}`;
         const isActive = pathname === localizedHref;
@@ -39,14 +44,16 @@ function MainNav() {
           <Link
             key={localizedHref}
             href={localizedHref}
-            className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all group-data-[collapsible=icon]:justify-center ${
+            className={`flex items-center gap-3 rounded-lg px-4 py-3 text-sm transition-all ${
               isActive
                 ? "bg-secondary text-secondary-foreground"
                 : "hover:bg-secondary/50"
-            }`}
+            } ${!isMobile && state === "collapsed" ? "group-data-[collapsible=icon]:justify-center" : ""}`}
           >
-            <Icon className="h-4 w-4 flex-shrink-0" />
-            {state !== "collapsed" && <span>{t(item.label)}</span>}
+            <Icon className="h-5 w-5 flex-shrink-0" />
+            {(isMobile || state !== "collapsed") && (
+              <span>{t(item.label)}</span>
+            )}
           </Link>
         );
       })}
@@ -85,11 +92,12 @@ function SidebarContainer({ children }: { children: React.ReactNode }) {
 
 export function AdminSidebar() {
   const [open, setOpen] = useState(false);
+  const t = useTranslations("admin");
 
   return (
     <>
       {/* Mobile Menu Button */}
-      <div className="lg:hidden absolute left-4 top-3 z-20">
+      <div className="lg:hidden fixed left-4 top-3 z-50">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon">
@@ -97,9 +105,12 @@ export function AdminSidebar() {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-[300px] p-0">
-            <SidebarContainer>
-              <MainNav />
-            </SidebarContainer>
+            <SheetTitle className="p-6 text-lg font-semibold border-b">
+              {t("title")}
+            </SheetTitle>
+            <div className="p-4">
+              <MainNav isMobile />
+            </div>
           </SheetContent>
         </Sheet>
       </div>

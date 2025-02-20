@@ -20,7 +20,7 @@ export default function AdminLayout({
             "--sidebar-width-icon": "4rem",
           } as React.CSSProperties
         }
-        className="flex h-screen overflow-hidden bg-background"
+        className="flex h-screen overflow-hidden bg-background relative"
       >
         <AdminSidebar />
         <SidebarInset className="flex-1 transition-[padding] duration-300 group-has-[[data-collapsible=icon]]/sidebar-wrapper">
