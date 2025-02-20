@@ -32,6 +32,12 @@
   },
   "admin": {
     "title": "Panneau d'Administration",
+    "navigation": {
+      "title": "Navigation"
+    },
+    "administration": {
+      "title": "Administration"
+    },
     "dashboard": {
       "title": "Tableau de Bord",
       "welcome": "Bienvenue sur votre tableau de bord",

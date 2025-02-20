@@ -32,6 +32,12 @@
   },
   "admin": {
     "title": "Toerana Mpitantana",
+    "navigation": {
+      "title": "Fizorana"
+    },
+    "administration": {
+      "title": "Fitantanana"
+    },
     "dashboard": {
       "title": "Tabilao",
       "welcome": "Tongasoa eto amin'ny tabilaonao",

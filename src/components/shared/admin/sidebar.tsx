@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { LayoutDashboard, Menu, Settings, Users } from "lucide-react";
+import { LayoutDashboard, Menu, ChevronRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,60 +20,101 @@ import {
   SidebarHeader,
   SidebarRail,
   useSidebar,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarMenuSubButton,
 } from "@/components/ui/sidebar";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "@/components/ui/collapsible";
 
 const navItems = [
-  { href: "/admin", label: "dashboard.title", icon: LayoutDashboard },
-  { href: "/admin/users", label: "users.title", icon: Users },
-  { href: "/admin/settings", label: "settings.title", icon: Settings },
+  {
+    title: "administration", // Changed to lowercase to match translation key pattern
+    url: "/admin",
+    icon: LayoutDashboard,
+    isActive: true,
+    items: [
+      {
+        title: "dashboard", // Changed to match translation key pattern
+        url: "/admin",
+      },
+      {
+        title: "users", // Changed to match translation key pattern
+        url: "/admin/users",
+      },
+      {
+        title: "settings", // Changed to match translation key pattern
+        url: "/admin/settings",
+      },
+    ],
+  },
 ];
 
-function MainNav({ isMobile }: { isMobile?: boolean }) {
+function MainNav({}: { isMobile?: boolean }) {
   const pathname = usePathname();
   const locale = pathname?.split("/")[1] || "fr";
   const t = useTranslations("admin");
-  const { state } = useSidebar();
 
   return (
-    <nav className="flex flex-col gap-4">
-      {navItems.map((item) => {
-        const localizedHref = `/${locale}${item.href}`;
-        const isActive = pathname === localizedHref;
-        const Icon = item.icon;
-        const link = (
-          <Link
-            key={localizedHref}
-            href={localizedHref}
-            className={`flex items-center gap-3 rounded-lg px-4 py-3 text-sm transition-all ${
-              isActive
-                ? "bg-secondary text-secondary-foreground"
-                : "hover:bg-secondary/50"
-            } ${!isMobile && state === "collapsed" ? "group-data-[collapsible=icon]:justify-center" : ""}`}
-          >
-            <Icon className="h-5 w-5 flex-shrink-0" />
-            {(isMobile || state !== "collapsed") && (
-              <span>{t(item.label)}</span>
-            )}
-          </Link>
-        );
+    <SidebarGroup>
+      <SidebarGroupLabel>{t("navigation.title")}</SidebarGroupLabel>
+      <SidebarMenu>
+        {navItems.map((item) => {
+          const localizedUrl = `/${locale}${item.url}`;
+          const isActive = pathname === localizedUrl;
 
-        if (!isMobile && state === "collapsed") {
           return (
-            <Tooltip key={localizedHref} delayDuration={0}>
-              <TooltipTrigger asChild>{link}</TooltipTrigger>
-              <TooltipContent side="right">{t(item.label)}</TooltipContent>
-            </Tooltip>
-          );
-        }
+            <Collapsible
+              key={item.title}
+              asChild
+              defaultOpen={isActive}
+              className="group/collapsible"
+            >
+              <SidebarMenuItem>
+                <CollapsibleTrigger asChild>
+                  <SidebarMenuButton
+                    tooltip={t(`${item.title}.title`)}
+                    isActive={isActive}
+                  >
+                    {item.icon && (
+                      <item.icon className="h-5 w-5 flex-shrink-0" />
+                    )}
+                    <span>{t(`${item.title}.title`)}</span>
+                    <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <SidebarMenuSub>
+                    {item.items?.map((subItem) => {
+                      const localizedSubUrl = `/${locale}${subItem.url}`;
+                      const isSubActive = pathname === localizedSubUrl;
 
-        return link;
-      })}
-    </nav>
+                      return (
+                        <SidebarMenuSubItem key={subItem.title}>
+                          <SidebarMenuSubButton asChild isActive={isSubActive}>
+                            <Link href={localizedSubUrl}>
+                              <span>{t(`${subItem.title}.title`)}</span>
+                            </Link>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      );
+                    })}
+                  </SidebarMenuSub>
+                </CollapsibleContent>
+              </SidebarMenuItem>
+            </Collapsible>
+          );
+        })}
+      </SidebarMenu>
+    </SidebarGroup>
   );
 }
 
