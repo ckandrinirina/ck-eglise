@@ -21,6 +21,11 @@ import {
   SidebarRail,
   useSidebar,
 } from "@/components/ui/sidebar";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const navItems = [
   { href: "/admin", label: "dashboard.title", icon: LayoutDashboard },
@@ -40,7 +45,7 @@ function MainNav({ isMobile }: { isMobile?: boolean }) {
         const localizedHref = `/${locale}${item.href}`;
         const isActive = pathname === localizedHref;
         const Icon = item.icon;
-        return (
+        const link = (
           <Link
             key={localizedHref}
             href={localizedHref}
@@ -56,6 +61,17 @@ function MainNav({ isMobile }: { isMobile?: boolean }) {
             )}
           </Link>
         );
+
+        if (!isMobile && state === "collapsed") {
+          return (
+            <Tooltip key={localizedHref} delayDuration={0}>
+              <TooltipTrigger asChild>{link}</TooltipTrigger>
+              <TooltipContent side="right">{t(item.label)}</TooltipContent>
+            </Tooltip>
+          );
+        }
+
+        return link;
       })}
     </nav>
   );
