@@ -23,7 +23,7 @@ export default function AdminLayout({
         className="flex h-screen overflow-hidden bg-background"
       >
         <AdminSidebar />
-        <SidebarInset className="flex-1 transition-[padding] duration-300 group-has-[[data-collapsible=icon]]/sidebar-wrapper:lg:pl-16">
+        <SidebarInset className="flex-1 transition-[padding] duration-300 group-has-[[data-collapsible=icon]]/sidebar-wrapper">
           <div className="flex h-full flex-col">
             <header className="flex h-16 shrink-0 items-center border-b bg-background">
               <div className="flex items-center justify-between w-full px-4">
