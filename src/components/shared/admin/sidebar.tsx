@@ -61,7 +61,7 @@ function SidebarContainer({ children }: { children: React.ReactNode }) {
   return (
     <Sidebar
       collapsible="icon"
-      className="border-r h-screen fixed inset-y-0 left-0 transition-all duration-300"
+      className="border-r min-h-screen bg-background z-30"
     >
       <SidebarHeader className="p-6">
         {state !== "collapsed" ? (
@@ -73,7 +73,7 @@ function SidebarContainer({ children }: { children: React.ReactNode }) {
         )}
       </SidebarHeader>
       <SidebarContent>{children}</SidebarContent>
-      <SidebarFooter className="p-4">
+      <SidebarFooter className="p-4 border-t">
         {state !== "collapsed" && (
           <p className="text-xs text-muted-foreground">© 2024 CK Admin</p>
         )}

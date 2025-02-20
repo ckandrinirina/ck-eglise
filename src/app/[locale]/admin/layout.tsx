@@ -14,31 +14,33 @@ export default function AdminLayout({
   return (
     <TooltipProvider>
       <SidebarProvider
-        className="!block"
         style={
           {
             "--sidebar-width": "16rem",
             "--sidebar-width-icon": "4rem",
           } as React.CSSProperties
         }
+        className="flex h-screen overflow-hidden bg-background"
       >
         <AdminSidebar />
-        <SidebarInset className="lg:pl-64 transition-[padding] duration-300 group-has-[[data-collapsible=icon]]/sidebar-wrapper:lg:pl-16">
-          <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-            <div className="flex items-center justify-between w-full px-4">
-              <div className="flex items-center gap-2">
-                <Breadcrumbs />
+        <SidebarInset className="flex-1 transition-[padding] duration-300 group-has-[[data-collapsible=icon]]/sidebar-wrapper:lg:pl-16">
+          <div className="flex h-full flex-col">
+            <header className="flex h-16 shrink-0 items-center border-b bg-background">
+              <div className="flex items-center justify-between w-full px-4">
+                <div className="flex items-center gap-2">
+                  <Breadcrumbs />
+                </div>
+                <div className="flex items-center gap-4">
+                  <LanguageSwitcher variant="inline" />
+                  <Separator orientation="vertical" className="h-6" />
+                  <UserMenu />
+                </div>
               </div>
-              <div className="flex items-center gap-4">
-                <LanguageSwitcher variant="inline" />
-                <Separator orientation="vertical" className="h-6" />
-                <UserMenu />
-              </div>
-            </div>
-          </header>
-          <main className="flex-1 flex flex-col gap-4 p-4 pt-0">
-            {children}
-          </main>
+            </header>
+            <main className="flex-1 overflow-y-auto">
+              <div className="p-4">{children}</div>
+            </main>
+          </div>
         </SidebarInset>
       </SidebarProvider>
     </TooltipProvider>
