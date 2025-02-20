@@ -15,6 +15,7 @@ import {
   SidebarHeader,
   SidebarRail,
   SidebarProvider,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
 const navItems = [
@@ -27,6 +28,7 @@ function MainNav() {
   const pathname = usePathname();
   const locale = pathname?.split("/")[1] || "fr";
   const t = useTranslations("admin");
+  const { state } = useSidebar();
 
   return (
     <nav className="flex flex-col gap-2">
@@ -38,14 +40,14 @@ function MainNav() {
           <Link
             key={localizedHref}
             href={localizedHref}
-            className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
+            className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all group-data-[collapsible=icon]:justify-center ${
               isActive
                 ? "bg-secondary text-secondary-foreground"
                 : "hover:bg-secondary/50"
             }`}
           >
-            <Icon className="h-4 w-4" />
-            {t(item.label)}
+            <Icon className="h-4 w-4 flex-shrink-0" />
+            {state !== "collapsed" && <span>{t(item.label)}</span>}
           </Link>
         );
       })}
@@ -55,18 +57,27 @@ function MainNav() {
 
 function SidebarContainer({ children }: { children: React.ReactNode }) {
   const t = useTranslations("admin");
+  const { state } = useSidebar();
 
   return (
     <Sidebar
       collapsible="icon"
-      className="border-r h-screen fixed inset-y-0 left-0"
+      className="border-r h-screen fixed inset-y-0 left-0 transition-all duration-300"
     >
       <SidebarHeader className="p-6">
-        <h2 className="text-lg font-semibold">{t("title")}</h2>
+        {state !== "collapsed" ? (
+          <h2 className="text-lg font-semibold">{t("title")}</h2>
+        ) : (
+          <div className="w-6 h-6 mx-auto">
+            <LayoutDashboard className="w-full h-full" />
+          </div>
+        )}
       </SidebarHeader>
       <SidebarContent>{children}</SidebarContent>
       <SidebarFooter className="p-4">
-        <p className="text-xs text-muted-foreground">© 2024 CK Admin</p>
+        {state !== "collapsed" && (
+          <p className="text-xs text-muted-foreground">© 2024 CK Admin</p>
+        )}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
