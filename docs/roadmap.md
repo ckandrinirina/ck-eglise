@@ -7,7 +7,7 @@
 
 #### Design Implementation
 - [x] Authentification layout
-- [ ] Authenticated layout
+- [x] Authenticated layout
 
 ### Chretient Tasks
 - [ ] Chretient management
