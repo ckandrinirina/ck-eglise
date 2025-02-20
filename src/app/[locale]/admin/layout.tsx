@@ -13,7 +13,9 @@ export default function AdminLayout({
   return (
     <TooltipProvider>
       <div className="flex min-h-screen">
-        <AdminSidebar />
+        <div className="w-64 shrink-0">
+          <AdminSidebar />
+        </div>
         <div className="flex-1 flex flex-col">
           <header className="border-b bg-background">
             <div className="px-4 sm:px-6 lg:px-8 flex h-16 items-center">
