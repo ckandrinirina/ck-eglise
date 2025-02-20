@@ -32,6 +32,12 @@
   },
   "admin": {
     "title": "Admin Panel",
+    "navigation": {
+      "title": "Navigation"
+    },
+    "administration": {
+      "title": "Administration"
+    },
     "dashboard": {
       "title": "Dashboard",
       "welcome": "Welcome to your admin dashboard",
