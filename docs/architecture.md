@@ -184,7 +184,7 @@ NODE_ENV="development"
 ```
 
 ## Component Management
-- For adding new shadcn components, always use the command: `npx shadcn@latest add [component name]`
+- For adding new shadcn components, always use the command: `pnpm dlx shadcn@latest add [component name]`
 - Never manually create or copy shadcn component files
 
 For detailed implementation examples, refer to the specific sections in the codebase.
