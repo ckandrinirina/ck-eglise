@@ -21,7 +21,7 @@ src/
 ├── types/                # TypeScript definitions
 ├── styles/              # Global styles
 ├── db/                   # Database architecture
-│   ├── models/          # Sequelize models
+│   ├── schema.prisma     # Prisma schema definition
 │   ├── migrations/      # Database migrations
 │   ├── seeders/         # Seed data
 │   ├── config.ts        # Database configuration
@@ -37,7 +37,7 @@ src/
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **UI Components**: shadcn/ui
-- **Database**: SQLite with Sequelize ORM
+- **Database**: SQLite with Prisma ORM
 - **State Management**: React Server Components + Hooks
 - **Data Fetching**: TanStack React Query
 - **Form Handling**: React Hook Form
@@ -65,16 +65,14 @@ import { Button } from "@/components/ui/button"
 
 ### Database Pattern
 ```ts
-// Models are singular, use Sequelize
-const User = sequelize.define('User', {
-  id: DataTypes.INTEGER,
-  // ...fields
-})
+// Models are defined in schema.prisma
+// Example of Prisma client usage:
+const users = await prisma.user.findMany()
 
 // Repository pattern for data access
 const UserRepository = {
-  findAll: async () => User.findAll(),
-  create: async (data) => User.create(data)
+  findAll: async () => prisma.user.findMany(),
+  create: async (data) => prisma.user.create({ data })
 }
 ```
 
@@ -125,7 +123,7 @@ src/app/api/auth/login/route.ts       // ✅ Correct
 
 ### Backend
 1. SQLite for database
-2. Sequelize for ORM
+2. Prisma for ORM
 3. Repository pattern
 4. Migrations for schema changes
 5. Environment-based config
