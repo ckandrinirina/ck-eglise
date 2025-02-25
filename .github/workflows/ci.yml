@@ -92,7 +92,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build Next.js application
-        run: pnpm build
+        run: pnpm build:prod
         env:
           DATABASE_URL: "file:./database.sqlite"
           NODE_ENV: "production"
