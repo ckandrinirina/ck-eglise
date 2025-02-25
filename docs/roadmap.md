@@ -3,7 +3,8 @@
 <!-- TODO Groups -->
 
 ### Authentication Tasks
-- [ ] Authentification
+- [x] Authentification
+- [ ] User access management
 
 #### Design Implementation
 - [x] Authentification layout
@@ -13,4 +14,4 @@
 - [ ] Chretient management
 
 ### Translation Implementation
-- [ ] Add choice language mg or fr
+- [x] Add choice language mg or fr

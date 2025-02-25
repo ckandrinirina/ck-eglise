@@ -66,18 +66,48 @@
     },
     "users": {
       "title": "Mpampiasa",
-      "description": "Fitantanana ny kaonty sy fahazoan-dàlana",
-      "addUser": "Hanampy Mpampiasa",
+      "description": "Hitantana ny kaonty sy ny fahazoan-dàlana ny mpampiasa.",
+      "addUser": "Hanampy mpampiasa",
       "table": {
         "name": "Anarana",
         "email": "Mailaka",
         "role": "Andraikitra",
-        "status": "Toe-javatra"
+        "status": "Toe-javatra",
+        "createdAt": "Noforonina tamin'ny"
       },
       "actions": {
         "edit": "Hanova",
         "delete": "Hamafa",
-        "more": "Safidy hafa"
+        "more": "Bebe kokoa"
+      },
+      "dialog": {
+        "createUser": "Hamorona mpampiasa",
+        "editUser": "Hanova mpampiasa",
+        "createUserDesc": "Hanampy mpampiasa vaovao amin'ny rafitra.",
+        "editUserDesc": "Hanova ny mombamomba sy ny fahazoan-dàlana ny mpampiasa.",
+        "success": "Fahombiazana",
+        "error": "Hadisoana",
+        "userCreated": "Mpampiasa noforonina soa aman-tsara",
+        "userUpdated": "Mpampiasa nohavaozina soa aman-tsara",
+        "userDeleted": "Mpampiasa voafafa soa aman-tsara",
+        "errorSaving": "Tsy nahomby ny fitahirizana",
+        "errorDeleting": "Tsy nahomby ny famafana",
+        "confirmDelete": "Tena te hamafa ity mpampiasa ity ve ianao?",
+        "save": "Hitahiry fanovana",
+        "create": "Hamorona mpampiasa",
+        "saving": "Am-pitahirizana...",
+        "deleting": "Am-pamafana...",
+        "cancel": "Ajanona",
+        "confirm": "Ekena"
+      },
+      "form": {
+        "name": "Anarana",
+        "email": "Mailaka",
+        "password": "Tenimiafina",
+        "role": "Andraikitra",
+        "selectRole": "Misafidiana andraikitra",
+        "roleUser": "Mpampiasa",
+        "roleAdmin": "Mpitantana"
       }
     },
     "settings": {
