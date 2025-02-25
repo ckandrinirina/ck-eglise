@@ -21,7 +21,7 @@ src/
 ├── types/                # TypeScript definitions
 ├── styles/              # Global styles
 ├── db/                   # Database architecture
-│   ├── models/          # Sequelize models
+│   ├── schema.prisma     # Prisma schema definition
 │   ├── migrations/      # Database migrations
 │   ├── seeders/         # Seed data
 │   ├── config.ts        # Database configuration
@@ -37,7 +37,7 @@ src/
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **UI Components**: shadcn/ui
-- **Database**: SQLite with Sequelize ORM
+- **Database**: SQLite with Prisma ORM
 - **State Management**: React Server Components + Hooks
 - **Data Fetching**: TanStack React Query
 - **Form Handling**: React Hook Form
@@ -65,16 +65,14 @@ import { Button } from "@/components/ui/button"
 
 ### Database Pattern
 ```ts
-// Models are singular, use Sequelize
-const User = sequelize.define('User', {
-  id: DataTypes.INTEGER,
-  // ...fields
-})
+// Models are defined in schema.prisma
+// Example of Prisma client usage:
+const users = await prisma.user.findMany()
 
 // Repository pattern for data access
 const UserRepository = {
-  findAll: async () => User.findAll(),
-  create: async (data) => User.create(data)
+  findAll: async () => prisma.user.findMany(),
+  create: async (data) => prisma.user.create({ data })
 }
 ```
 
@@ -122,13 +120,22 @@ src/app/api/auth/login/route.ts       // ✅ Correct
 4. shadcn/ui for UI components
 5. Tailwind for styling
 6. Arrow functions everywhere
+7. Use Next.js Image component (<Image />) from 'next/image' for all images to ensure optimal performance and loading
 
 ### Backend
 1. SQLite for database
-2. Sequelize for ORM
+2. Prisma for ORM
 3. Repository pattern
 4. Migrations for schema changes
 5. Environment-based config
+
+### Testing
+1. All functionality must have corresponding tests
+2. Components must have unit tests
+3. API routes must have integration tests
+4. Database operations must have repository tests
+5. Use Jest and React Testing Library
+6. Tests must be co-located with the code they test in __tests__ directories
 
 ## Layouts
 

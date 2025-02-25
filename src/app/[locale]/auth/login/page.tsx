@@ -1,5 +1,8 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
+import { authOptions } from "@/lib/auth";
 import LoginForm from "@/components/shared/auth/login-form";
 
 export async function generateMetadata({
@@ -16,6 +19,12 @@ export async function generateMetadata({
 }
 
 const LoginPage = async () => {
+  // Check if user is already logged in
+  const session = await getServerSession(authOptions);
+  if (session) {
+    redirect("/admin");
+  }
+
   const t = await getTranslations("auth.login");
 
   return (

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import I18nProvider from "@/components/shared/i18n-provider";
+import { ToastProvider } from "@/components/shared/toast-provider";
+import AuthProvider from "@/components/shared/auth-provider";
 import { i18nConfig } from "@/lib/i18n/config";
 import { notFound } from "next/navigation";
 
@@ -57,7 +59,10 @@ const LocaleLayout = async ({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground`}
       >
-        <I18nProvider locale={locale}>{children}</I18nProvider>
+        <AuthProvider>
+          <ToastProvider />
+          <I18nProvider locale={locale}>{children}</I18nProvider>
+        </AuthProvider>
       </body>
     </html>
   );

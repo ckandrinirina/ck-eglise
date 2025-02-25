@@ -20,18 +20,32 @@
       "description": "Enter your credentials to sign in to your account",
       "username": "Username",
       "password": "Password",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email address",
       "usernamePlaceholder": "Enter your username",
       "passwordPlaceholder": "Enter your password",
       "submit": "Sign in",
       "submitting": "Signing in...",
       "validation": {
         "usernameRequired": "Username must be at least 3 characters",
-        "passwordRequired": "Password must be at least 8 characters"
+        "passwordRequired": "Password must be at least 8 characters",
+        "emailRequired": "Please enter a valid email address"
+      },
+      "error": {
+        "title": "Login Error",
+        "invalidCredentials": "Incorrect email or password",
+        "generic": "An error occurred during login"
+      },
+      "success": {
+        "loggedIn": "Successfully logged in"
       }
     }
   },
   "admin": {
     "title": "Admin Panel",
+    "account": {
+      "anonymous": "User"
+    },
     "navigation": {
       "title": "Navigation"
     },

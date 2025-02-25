@@ -6,7 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -37,9 +37,7 @@ export default function AdminLayout({
                 </div>
               </div>
             </header>
-            <main className="flex-1 overflow-y-auto">
-              <div className="p-4">{children}</div>
-            </main>
+            <main className="flex-1 overflow-auto p-4 md:p-6">{children}</main>
           </div>
         </SidebarInset>
       </SidebarProvider>
