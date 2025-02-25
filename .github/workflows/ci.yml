@@ -100,11 +100,11 @@ jobs:
       - name: Generate Prisma Client
         run: pnpm prisma:generate
 
-      - name: Run Prisma Migrations
-        run: pnpm prisma:migrate
+      # - name: Run Prisma Migrations
+      #   run: pnpm prisma:migrate
 
       - name: Build Next.js application
-        run: pnpm build:prod
+        run: pnpm build
         env:
           DATABASE_URL: "file:./database.sqlite"
           NODE_ENV: "production"
