@@ -66,18 +66,47 @@
     },
     "users": {
       "title": "Utilisateurs",
-      "description": "Gérer les comptes et les permissions des utilisateurs",
-      "addUser": "Ajouter un Utilisateur",
+      "description": "Gérez les comptes et les permissions des utilisateurs.",
+      "addUser": "Ajouter un utilisateur",
       "table": {
         "name": "Nom",
         "email": "Email",
         "role": "Rôle",
-        "status": "Statut"
+        "createdAt": "Créé le"
       },
       "actions": {
+        "more": "Plus",
         "edit": "Modifier",
-        "delete": "Supprimer",
-        "more": "Plus d'options"
+        "delete": "Supprimer"
+      },
+      "dialog": {
+        "createUser": "Créer un utilisateur",
+        "editUser": "Modifier l'utilisateur",
+        "createUserDesc": "Ajouter un nouvel utilisateur au système.",
+        "editUserDesc": "Modifier les détails et les permissions de l'utilisateur.",
+        "success": "Succès",
+        "error": "Erreur",
+        "userCreated": "Utilisateur créé avec succès",
+        "userUpdated": "Utilisateur mis à jour avec succès",
+        "userDeleted": "Utilisateur supprimé avec succès",
+        "errorSaving": "Échec de l'enregistrement",
+        "errorDeleting": "Échec de la suppression",
+        "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
+        "save": "Enregistrer les modifications",
+        "create": "Créer l'utilisateur",
+        "saving": "Enregistrement en cours...",
+        "deleting": "Suppression en cours...",
+        "cancel": "Annuler",
+        "confirm": "Confirmer"
+      },
+      "form": {
+        "name": "Nom",
+        "email": "Email",
+        "password": "Mot de passe",
+        "role": "Rôle",
+        "selectRole": "Sélectionner un rôle",
+        "roleUser": "Utilisateur",
+        "roleAdmin": "Administrateur"
       }
     },
     "settings": {

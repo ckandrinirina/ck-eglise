@@ -23,20 +23,116 @@ import {
 } from "@/components/ui/table";
 import { MoreHorizontal, UserPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { UserDialog } from "@/components/shared/admin/user-dialog";
+import { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { format } from "date-fns";
 
-type Status = "active" | "inactive" | "pending";
-
-const getStatusStyle = (status: Status) => {
-  const styles = {
-    active: "bg-green-50 text-green-700 ring-green-600/20",
-    inactive: "bg-gray-50 text-gray-600 ring-gray-500/20",
-    pending: "bg-yellow-50 text-yellow-700 ring-yellow-600/20",
-  };
-  return styles[status];
+type User = {
+  id: string;
+  name: string | null;
+  email: string | null;
+  role: string;
+  createdAt: string;
 };
 
 export default function UsersPage() {
   const t = useTranslations("admin.users");
+  const queryClient = useQueryClient();
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  // Fetch users
+  const { data: users = [] } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await fetch("/api/users");
+      if (!res.ok) throw new Error("Failed to fetch users");
+      return res.json();
+    },
+  });
+
+  // Delete user mutation
+  const deleteUser = useMutation({
+    mutationFn: async (userId: string) => {
+      const res = await fetch(`/api/users/${userId}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("Failed to delete user");
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+      toast.success(t("dialog.userDeleted"));
+    },
+    onError: () => {
+      toast.error(t("dialog.errorDeleting"));
+    },
+  });
+
+  const handleEdit = (user: User) => {
+    setSelectedUser(user);
+    setDialogOpen(true);
+  };
+
+  const handleDelete = (userId: string) => {
+    toast.promise(
+      () =>
+        new Promise((resolve, reject) => {
+          toast.custom(
+            () => (
+              <div className="rounded-lg bg-background p-6 shadow-lg space-y-4">
+                <h3 className="text-lg font-medium">
+                  {t("dialog.confirmDelete")}
+                </h3>
+                <div className="flex gap-2 justify-end">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      toast.dismiss();
+                      reject();
+                    }}
+                  >
+                    {t("dialog.cancel")}
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={() => {
+                      toast.dismiss();
+                      deleteUser
+                        .mutateAsync(userId)
+                        .then(resolve)
+                        .catch(reject);
+                    }}
+                  >
+                    {t("dialog.confirm")}
+                  </Button>
+                </div>
+              </div>
+            ),
+            { duration: Infinity },
+          );
+        }),
+      {
+        loading: t("dialog.deleting"),
+        success: t("dialog.userDeleted"),
+        error: t("dialog.errorDeleting"),
+      },
+    );
+  };
+
+  const handleAdd = () => {
+    setSelectedUser(null);
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+    setSelectedUser(null);
+    queryClient.invalidateQueries({ queryKey: ["users"] });
+  };
 
   return (
     <div className="space-y-6">
@@ -51,7 +147,7 @@ export default function UsersPage() {
         </div>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button className="w-full sm:w-auto">
+            <Button onClick={handleAdd} className="w-full sm:w-auto">
               <UserPlus className="mr-2 h-4 w-4" />
               {t("addUser")}
             </Button>
@@ -68,54 +164,65 @@ export default function UsersPage() {
                 <TableHead>{t("table.name")}</TableHead>
                 <TableHead>{t("table.email")}</TableHead>
                 <TableHead>{t("table.role")}</TableHead>
-                <TableHead>{t("table.status")}</TableHead>
+                <TableHead>{t("table.createdAt")}</TableHead>
                 <TableHead className="w-[48px]"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell className="font-medium">Sample User</TableCell>
-                <TableCell className="truncate max-w-[200px]">
-                  user@example.com
-                </TableCell>
-                <TableCell>Member</TableCell>
-                <TableCell>
-                  <span
-                    className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset ${getStatusStyle("active")}`}
-                  >
-                    Active
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8"
-                          >
-                            <MoreHorizontal className="h-4 w-4" />
-                            <span className="sr-only">Open menu</span>
-                          </Button>
-                        </DropdownMenuTrigger>
-                      </TooltipTrigger>
-                      <TooltipContent>{t("actions.more")}</TooltipContent>
-                    </Tooltip>
-                    <DropdownMenuContent align="end" className="w-[160px]">
-                      <DropdownMenuItem>{t("actions.edit")}</DropdownMenuItem>
-                      <DropdownMenuItem className="text-red-600">
-                        {t("actions.delete")}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
+              {users.map((user: User) => (
+                <TableRow key={user.id}>
+                  <TableCell className="font-medium">{user.name}</TableCell>
+                  <TableCell className="truncate max-w-[200px]">
+                    {user.email}
+                  </TableCell>
+                  <TableCell className="capitalize">{user.role}</TableCell>
+                  <TableCell>
+                    {format(new Date(user.createdAt), "PPp")}
+                  </TableCell>
+                  <TableCell>
+                    <DropdownMenu>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8"
+                            >
+                              <MoreHorizontal className="h-4 w-4" />
+                              <span className="sr-only">
+                                {t("actions.more")}
+                              </span>
+                            </Button>
+                          </DropdownMenuTrigger>
+                        </TooltipTrigger>
+                        <TooltipContent>{t("actions.more")}</TooltipContent>
+                      </Tooltip>
+                      <DropdownMenuContent align="end" className="w-[160px]">
+                        <DropdownMenuItem onClick={() => handleEdit(user)}>
+                          {t("actions.edit")}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="text-red-600"
+                          onClick={() => handleDelete(user.id)}
+                        >
+                          {t("actions.delete")}
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>
       </Card>
+
+      <UserDialog
+        open={dialogOpen}
+        onOpenChange={handleDialogClose}
+        user={selectedUser || undefined}
+      />
     </div>
   );
 }
