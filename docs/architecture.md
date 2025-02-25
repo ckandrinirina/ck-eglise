@@ -16,6 +16,11 @@ src/
 ├── components/            # React components
 │   ├── ui/               # Basic UI components
 │   └── shared/           # Complex shared components
+│       ├── auth/         # Authentication related components
+│       ├── admin/        # Admin dashboard components
+│       ├── i18n/         # Internationalization components
+│       ├── layout/       # Layout related components
+│       └── common/       # Cross-cutting components
 ├── lib/                  # Utilities & helpers
 ├── hooks/                # Custom React hooks
 ├── types/                # TypeScript definitions
@@ -161,16 +166,25 @@ Our project uses two main layouts:
 - Authentication Layout: dedicated to authentication flows (login, logout, etc.) to ensure a secure and streamlined process.
 
 ## Code Organization
-1. Group by feature in routes
-2. Shared components in ui/shared
-3. Database logic in repositories
-4. Utils in lib directory
-5. Types in dedicated files
+1. Group by feature in both routes and components
+   - Routes grouped under app/[locale]
+   - Components grouped by feature under components/shared
+   - Each feature (auth, admin, etc.) has its own directory
+2. UI components in components/ui
+3. Feature-specific shared components in components/shared/[feature]
+4. Cross-cutting components in components/shared/common
+5. Database logic in repositories
+6. Utils in lib directory
+7. Types in dedicated files
 
 ## Environment Setup
 ```
 DATABASE_URL="file:./database.sqlite"
 NODE_ENV="development"
 ```
+
+## Component Management
+- For adding new shadcn components, always use the command: `npx shadcn@latest add [component name]`
+- Never manually create or copy shadcn component files
 
 For detailed implementation examples, refer to the specific sections in the codebase.
