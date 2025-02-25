@@ -1,14 +1,15 @@
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(
-  req: Request,
-  { params }: { params: { id: string } },
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await getServerSession(authOptions);
+    const { id } = await params;
     if (!session || session.user.role !== "admin") {
       return new NextResponse("Unauthorized", { status: 401 });
     }
@@ -27,7 +28,7 @@ export async function PUT(
     };
 
     const user = await prisma.user.update({
-      where: { id: params.id },
+      where: { id },
       data,
       select: {
         id: true,
@@ -46,7 +47,7 @@ export async function PUT(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -55,12 +56,13 @@ export async function DELETE(
     }
 
     // Prevent deleting self
-    if (session.user.id === params.id) {
+    const { id } = await params; // Await the params to extract the id
+    if (session.user.id === id) {
       return new NextResponse("Cannot delete own account", { status: 400 });
     }
 
     await prisma.user.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return new NextResponse(null, { status: 204 });
