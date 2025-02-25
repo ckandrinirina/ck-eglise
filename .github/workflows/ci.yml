@@ -46,6 +46,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Generate Prisma Client
+        run: pnpm prisma:generate
+
       - name: Run ESLint
         run: pnpm lint
 
@@ -54,6 +57,9 @@ jobs:
 
       - name: Run tests
         run: pnpm test
+        env:
+          DATABASE_URL: "file:./database.sqlite"
+          NODE_ENV: "test"
 
   build:
     name: 🏗️ Build
@@ -90,6 +96,12 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Generate Prisma Client
+        run: pnpm prisma:generate
+
+      - name: Run Prisma Migrations
+        run: pnpm prisma:migrate
 
       - name: Build Next.js application
         run: pnpm build:prod
