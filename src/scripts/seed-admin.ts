@@ -5,20 +5,20 @@ import { hash } from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
-  const password = await hash("password123", 12);
+  const password = await hash("Azerty*123", 12);
 
   try {
     // Check if admin exists
     const existingAdmin = await prisma.user.findUnique({
       where: {
-        email: "admin@example.com",
+        email: "admin-ck-eglise@yopmail.com",
       },
     });
 
     if (!existingAdmin) {
       const admin = await prisma.user.create({
         data: {
-          email: "admin@example.com",
+          email: "admin-ck-eglise@yopmail.com",
           name: "Admin User",
           password: password,
           role: "admin",
