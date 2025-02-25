@@ -129,6 +129,14 @@ src/app/api/auth/login/route.ts       // ✅ Correct
 4. Migrations for schema changes
 5. Environment-based config
 
+### Testing
+1. All functionality must have corresponding tests
+2. Components must have unit tests
+3. API routes must have integration tests
+4. Database operations must have repository tests
+5. Use Jest and React Testing Library
+6. Tests must be co-located with the code they test in __tests__ directories
+
 ## Layouts
 
 Our project uses two main layouts:
