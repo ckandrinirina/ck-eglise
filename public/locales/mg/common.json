@@ -20,18 +20,32 @@
       "description": "Ampidiro ny mombamomba anao mba hiditra amin'ny kaontinao",
       "username": "Anarana",
       "password": "Teny miafina",
+      "email": "Mailaka",
+      "emailPlaceholder": "Ampidiro ny adiresy mailaka anao",
       "usernamePlaceholder": "Ampidiro ny anaranao",
       "passwordPlaceholder": "Ampidiro ny teny miafina",
       "submit": "Hiditra",
       "submitting": "Am-pidirana...",
       "validation": {
         "usernameRequired": "Ny anarana dia tsy maintsy ahitana litera 3 farafahakeliny",
-        "passwordRequired": "Ny teny miafina dia tsy maintsy ahitana litera 8 farafahakeliny"
+        "passwordRequired": "Ny teny miafina dia tsy maintsy ahitana litera 8 farafahakeliny",
+        "emailRequired": "Ampidiro ny adiresy mailaka marina"
+      },
+      "error": {
+        "title": "Hadisoana amin'ny fidirana",
+        "invalidCredentials": "Mailaka na teny miafina diso",
+        "generic": "Nisy hadisoana nitranga tamin'ny fidirana"
+      },
+      "success": {
+        "loggedIn": "Tafiditra soa aman-tsara"
       }
     }
   },
   "admin": {
     "title": "Toerana Mpitantana",
+    "account": {
+      "anonymous": "Mpampiasa"
+    },
     "navigation": {
       "title": "Fizorana"
     },

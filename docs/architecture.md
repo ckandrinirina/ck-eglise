@@ -120,6 +120,7 @@ src/app/api/auth/login/route.ts       // ✅ Correct
 4. shadcn/ui for UI components
 5. Tailwind for styling
 6. Arrow functions everywhere
+7. Use Next.js Image component (<Image />) from 'next/image' for all images to ensure optimal performance and loading
 
 ### Backend
 1. SQLite for database

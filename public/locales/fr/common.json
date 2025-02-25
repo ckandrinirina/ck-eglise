@@ -20,18 +20,32 @@
       "description": "Entrez vos identifiants pour vous connecter à votre compte",
       "username": "Nom d'utilisateur",
       "password": "Mot de passe",
+      "email": "Email",
+      "emailPlaceholder": "Entrez votre adresse email",
       "usernamePlaceholder": "Entrez votre nom d'utilisateur",
       "passwordPlaceholder": "Entrez votre mot de passe",
       "submit": "Se connecter",
       "submitting": "Connexion en cours...",
       "validation": {
         "usernameRequired": "Le nom d'utilisateur doit contenir au moins 3 caractères",
-        "passwordRequired": "Le mot de passe doit contenir au moins 8 caractères"
+        "passwordRequired": "Le mot de passe doit contenir au moins 8 caractères",
+        "emailRequired": "Veuillez saisir une adresse email valide"
+      },
+      "error": {
+        "title": "Erreur de connexion",
+        "invalidCredentials": "Email ou mot de passe incorrect",
+        "generic": "Une erreur est survenue lors de la connexion"
+      },
+      "success": {
+        "loggedIn": "Connexion réussie"
       }
     }
   },
   "admin": {
     "title": "Panneau d'Administration",
+    "account": {
+      "anonymous": "Utilisateur"
+    },
     "navigation": {
       "title": "Navigation"
     },
