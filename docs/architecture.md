@@ -39,7 +39,7 @@ src/
 - **UI Components**: shadcn/ui
 - **Database**: SQLite with Prisma ORM
 - **State Management**: React Server Components + Hooks
-- **Data Fetching**: TanStack React Query
+- **Data Fetching**: TanStack React Query (required for ALL API queries)
 - **Form Handling**: React Hook Form
 - **Package Manager**: pnpm (Fast, disk space efficient alternative to npm)
 
@@ -83,6 +83,23 @@ export const GET = async () => {
   await initializeDB()
   // Logic here
 }
+```
+
+### Data Fetching Pattern
+```tsx
+// All API queries MUST use TanStack React Query
+// ✅ Correct Pattern
+const usersQuery = useQuery({
+  queryKey: ['users'],
+  queryFn: fetchUsers
+})
+
+// ❌ Incorrect Patterns
+// Don't use fetch/axios directly
+const users = await fetch('/api/users')
+
+// Don't use SWR or other data fetching libraries
+const { data } = useSWR('/api/users')
 ```
 
 ### Form and Query Patterns
