@@ -1,6 +1,5 @@
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { hash } from "bcryptjs";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -15,23 +14,17 @@ export async function PUT(
     }
 
     const body = await req.json();
-    const { name, email, password, role } = body;
+    const { name, email, role } = body;
 
     const data: {
       name?: string;
       email?: string;
-      password?: string;
       role?: string;
     } = {
       name,
       email,
       role,
     };
-
-    // Only update password if provided
-    if (password) {
-      data.password = await hash(password, 12);
-    }
 
     const user = await prisma.user.update({
       where: { id: params.id },

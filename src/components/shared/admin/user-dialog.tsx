@@ -29,17 +29,27 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 import { useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
-const userFormSchema = z.object({
+const baseUserSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
   }),
   email: z.string().email(),
-  password: z.string().min(8).optional(),
   role: z.enum(["user", "admin"]),
 });
 
-type UserFormValues = z.infer<typeof userFormSchema>;
+const createUserSchema = baseUserSchema.extend({
+  password: z.string().min(8),
+});
+
+const editUserSchema = baseUserSchema.extend({
+  password: z.string().min(8).optional(),
+});
+
+type CreateUserFormValues = z.infer<typeof createUserSchema>;
+type EditUserFormValues = z.infer<typeof editUserSchema>;
+type UserFormValues = CreateUserFormValues | EditUserFormValues;
 
 interface UserDialogProps {
   open: boolean;
@@ -54,42 +64,45 @@ interface UserDialogProps {
 
 export function UserDialog({ open, onOpenChange, user }: UserDialogProps) {
   const t = useTranslations("admin.users");
+  const queryClient = useQueryClient();
 
-  const form = useForm<UserFormValues>({
-    resolver: zodResolver(userFormSchema),
+  const form = useForm<EditUserFormValues>({
+    resolver: zodResolver(user ? editUserSchema : createUserSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      role: "user",
+      name: user?.name || "",
+      email: user?.email || "",
+      role: (user?.role as "user" | "admin") || "user",
+      password: undefined,
     },
   });
 
+  // Reset form when user prop changes
   useEffect(() => {
-    if (user) {
+    if (open) {
       form.reset({
-        name: user.name || "",
-        email: user.email || "",
-        role: user.role as "user" | "admin",
-      });
-    } else {
-      form.reset({
-        name: "",
-        email: "",
-        role: "user",
+        name: user?.name || "",
+        email: user?.email || "",
+        role: (user?.role as "user" | "admin") || "user",
       });
     }
-  }, [user, form]);
+  }, [user, open, form]);
 
   async function onSubmit(data: UserFormValues) {
     toast.promise(
       async () => {
-        const res = await fetch("/api/users" + (user ? `/${user.id}` : ""), {
+        const url = user ? `/api/users/${user.id}` : "/api/users";
+        const res = await fetch(url, {
           method: user ? "PUT" : "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         });
 
-        if (!res.ok) throw new Error("Failed to save user");
+        if (!res.ok) {
+          const error = await res.text();
+          throw new Error(error || "Failed to save user");
+        }
+
+        queryClient.invalidateQueries({ queryKey: ["users"] });
         onOpenChange(false);
       },
       {
@@ -99,6 +112,9 @@ export function UserDialog({ open, onOpenChange, user }: UserDialogProps) {
       },
     );
   }
+
+  // Get form validation state
+  const { isValid, isDirty } = form.formState;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -136,7 +152,7 @@ export function UserDialog({ open, onOpenChange, user }: UserDialogProps) {
                     <Input
                       type="email"
                       {...field}
-                      disabled={!!user} // Désactive le champ si on modifie un utilisateur existant
+                      disabled={!!user} // Disable field when editing existing user
                     />
                   </FormControl>
                   <FormMessage />
@@ -185,7 +201,7 @@ export function UserDialog({ open, onOpenChange, user }: UserDialogProps) {
               )}
             />
             <DialogFooter>
-              <Button type="submit">
+              <Button type="submit" disabled={!isValid || !isDirty}>
                 {t(user ? "dialog.save" : "dialog.create")}
               </Button>
             </DialogFooter>

@@ -76,50 +76,34 @@ export default function UsersPage() {
   };
 
   const handleDelete = (userId: string) => {
-    toast.promise(
-      () =>
-        new Promise((resolve, reject) => {
-          toast.custom(
-            () => (
-              <div className="rounded-lg bg-background p-6 shadow-lg space-y-4">
-                <h3 className="text-lg font-medium">
-                  {t("dialog.confirmDelete")}
-                </h3>
-                <div className="flex gap-2 justify-end">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      toast.dismiss();
-                      reject();
-                    }}
-                  >
-                    {t("dialog.cancel")}
-                  </Button>
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    onClick={() => {
-                      toast.dismiss();
-                      deleteUser
-                        .mutateAsync(userId)
-                        .then(resolve)
-                        .catch(reject);
-                    }}
-                  >
-                    {t("dialog.confirm")}
-                  </Button>
-                </div>
-              </div>
-            ),
-            { duration: Infinity },
-          );
-        }),
-      {
-        loading: t("dialog.deleting"),
-        success: t("dialog.userDeleted"),
-        error: t("dialog.errorDeleting"),
-      },
+    toast.custom(
+      () => (
+        <div className="rounded-lg bg-background p-6 shadow-lg space-y-4">
+          <h3 className="text-lg font-medium">{t("dialog.confirmDelete")}</h3>
+          <div className="flex gap-2 justify-end">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                toast.dismiss();
+              }}
+            >
+              {t("dialog.cancel")}
+            </Button>
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={() => {
+                toast.dismiss();
+                deleteUser.mutate(userId);
+              }}
+            >
+              {t("dialog.confirm")}
+            </Button>
+          </div>
+        </div>
+      ),
+      { duration: Infinity },
     );
   };
 
