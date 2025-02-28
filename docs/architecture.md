@@ -23,6 +23,10 @@ src/
 │       └── common/       # Cross-cutting components
 ├── lib/                  # Utilities & helpers
 ├── hooks/                # Custom React hooks
+│   ├── user/            # User-related hooks
+│   ├── auth/            # Authentication-related hooks
+│   ├── admin/           # Admin-related hooks
+│   └── common/          # General purpose hooks
 ├── types/                # TypeScript definitions
 ├── styles/              # Global styles
 ├── db/                   # Database architecture
@@ -206,9 +210,13 @@ Our project uses two main layouts:
 2. UI components in components/ui
 3. Feature-specific shared components in components/shared/[feature]
 4. Cross-cutting components in components/shared/common
-5. Database logic in repositories
-6. Utils in lib directory
-7. Types in dedicated files
+5. Custom hooks grouped by feature in hooks/[feature]
+   - User-related hooks in hooks/user
+   - Authentication-related hooks in hooks/auth
+   - Each feature has its own dedicated hooks directory
+6. Database logic in repositories
+7. Utils in lib directory
+8. Types in dedicated files
 
 ## Environment Setup
 ```
