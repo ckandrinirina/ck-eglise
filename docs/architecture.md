@@ -66,7 +66,40 @@ const Component = ({ props }) => {
 
 // shadcn/ui usage
 import { Button } from "@/components/ui/button"
+
+// Component logic must be separated into dedicated files
+// ✅ Correct Pattern
+// UserList.tsx
+import { useUserLogic } from './useUserLogic' // Logic in separate file
+
+const UserList = () => {
+  const { users, loading, error } = useUserLogic()
+  return <div>{/* UI rendering only */}</div>
+}
+
+// useUserLogic.ts
+export const useUserLogic = () => {
+  // Business logic, data fetching, state management
+  return { users, loading, error }
+}
+
+// ❌ Incorrect Pattern
+// Don't mix complex logic with component UI
+const UserList = () => {
+  // Complex business logic mixed with UI
+  const [users, setUsers] = useState([])
+  const [loading, setLoading] = useState(true)
+  // ... more logic here
+  return <div>{/* UI with mixed concerns */}</div>
+}
 ```
+
+### Component Guidelines
+
+- Each `.tsx` file should export only one component.
+- All child components should be in separate files.
+- Make all components as reusable as possible.
+- Always optimize for performance using techniques like `useMemo`, `useCallback`, etc.
 
 ### Database Pattern
 ```ts
