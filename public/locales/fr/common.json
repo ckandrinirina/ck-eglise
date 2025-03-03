@@ -211,7 +211,12 @@
         "nameRequired": "Le nom est requis",
         "type": "Type",
         "typeRequired": "Le type est requis",
-        "typePlaceholder": "Entrez un type (ex: pays, statut, catégorie)"
+        "typePlaceholder": "Sélectionnez un type",
+        "types": {
+          "territory": "Territoire",
+          "role": "Rôle",
+          "branch": "Branche"
+        }
       },
       "error": {
         "title": "Erreur",

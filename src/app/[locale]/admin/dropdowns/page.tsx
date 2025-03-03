@@ -138,7 +138,7 @@ export default function DropdownsPage() {
                 <SelectItem value="all">{t("filters.typeAll")}</SelectItem>
                 {dropdownTypes.map((type) => (
                   <SelectItem key={type} value={type}>
-                    {type}
+                    {t(`form.types.${type}`)}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -235,7 +235,7 @@ export default function DropdownsPage() {
                 {dropdowns.map((dropdown) => (
                   <TableRow key={dropdown.id}>
                     <TableCell>{dropdown.name}</TableCell>
-                    <TableCell>{dropdown.type}</TableCell>
+                    <TableCell>{t(`form.types.${dropdown.type}`)}</TableCell>
                     <TableCell>
                       {format(new Date(dropdown.createdAt), "PPP")}
                     </TableCell>

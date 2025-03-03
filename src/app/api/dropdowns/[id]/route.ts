@@ -7,7 +7,7 @@ import { z } from "zod";
 // Validation schema for updating dropdowns
 const updateDropdownSchema = z.object({
   name: z.string().min(1).optional(),
-  type: z.string().min(1).optional(),
+  type: z.enum(["territory", "role", "branch"]).optional(),
 });
 
 // GET /api/dropdowns/[id] - Get a specific dropdown

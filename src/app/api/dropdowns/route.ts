@@ -7,7 +7,7 @@ import { z } from "zod";
 // Validation schema for creating dropdowns
 const createDropdownSchema = z.object({
   name: z.string().min(1),
-  type: z.string().min(1),
+  type: z.enum(["territory", "role", "branch"]),
 });
 
 // GET /api/dropdowns - Get all dropdowns with optional type filter

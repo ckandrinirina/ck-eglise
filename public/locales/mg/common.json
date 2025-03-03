@@ -197,7 +197,12 @@
         "nameRequired": "Tsy maintsy ampidirina ny anarana",
         "type": "Karazana",
         "typeRequired": "Tsy maintsy ampidirina ny karazana",
-        "typePlaceholder": "Ampidiro ny karazana (oh: firenena, toetra, sokajy)"
+        "typePlaceholder": "Misafidiana karazana",
+        "types": {
+          "territory": "Faritra",
+          "role": "Andraikitra",
+          "branch": "Sampana"
+        }
       },
       "error": {
         "title": "Hadisoana",

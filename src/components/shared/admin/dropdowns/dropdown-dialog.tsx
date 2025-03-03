@@ -24,11 +24,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Dropdown } from "@/types/dropdowns/dropdown";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // Form schema
 const formSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
-  type: z.string().min(1, { message: "Type is required" }),
+  type: z.enum(["territory", "role", "branch"], {
+    required_error: "Type is required",
+  }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -54,7 +63,7 @@ export const DropdownDialog = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      type: "",
+      type: "territory", // Set default type
     },
   });
 
@@ -64,12 +73,12 @@ export const DropdownDialog = ({
       if (dropdown) {
         form.reset({
           name: dropdown.name,
-          type: dropdown.type,
+          type: dropdown.type as "territory" | "role" | "branch", // Type assertion since we know it's valid
         });
       } else {
         form.reset({
           name: "",
-          type: "",
+          type: "territory", // Reset to default type
         });
       }
     }
@@ -117,9 +126,27 @@ export const DropdownDialog = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{t("form.type")}</FormLabel>
-                  <FormControl>
-                    <Input placeholder={t("form.typePlaceholder")} {...field} />
-                  </FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder={t("form.typePlaceholder")} />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="territory">
+                        {t("form.types.territory")}
+                      </SelectItem>
+                      <SelectItem value="role">
+                        {t("form.types.role")}
+                      </SelectItem>
+                      <SelectItem value="branch">
+                        {t("form.types.branch")}
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

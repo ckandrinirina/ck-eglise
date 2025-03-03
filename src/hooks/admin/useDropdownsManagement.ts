@@ -43,16 +43,10 @@ export const useDropdownsManagement = () => {
     retry: 2,
   });
 
-  // Get unique dropdown types for filtering
+  // Get all available dropdown types for filtering (constant)
   const dropdownTypes = useMemo(() => {
-    const types = new Set<string>();
-    dropdowns.forEach((dropdown) => {
-      if (dropdown.type) {
-        types.add(dropdown.type);
-      }
-    });
-    return Array.from(types).sort();
-  }, [dropdowns]);
+    return ["territory", "role", "branch"].sort();
+  }, []); // No dependencies since it's a constant array
 
   // Filter and sort dropdowns
   const filteredAndSortedDropdowns = useMemo(() => {
