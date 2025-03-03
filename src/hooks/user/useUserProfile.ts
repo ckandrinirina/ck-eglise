@@ -2,8 +2,9 @@ import { useState, useCallback } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
-import { UserService, UpdateUserData } from "@/lib/services/user.service";
+import { UserService } from "@/lib/services/user.service";
 import { useAuth } from "@/hooks/use-auth";
+import { UpdateUserData } from "@/types/users/user";
 
 export const useUserProfile = () => {
   const t = useTranslations("profile");

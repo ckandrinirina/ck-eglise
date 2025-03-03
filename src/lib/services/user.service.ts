@@ -34,4 +34,12 @@ export const UserService = {
    */
   deleteUser: (userId: string): Promise<AxiosResponse<void>> =>
     api.delete(`/users/${userId}`),
+
+  /**
+   * Update user password
+   */
+  updatePassword: (
+    userId: string,
+    data: { currentPassword: string; newPassword: string },
+  ): Promise<AxiosResponse<void>> => api.put(`/users/${userId}/password`, data),
 };
