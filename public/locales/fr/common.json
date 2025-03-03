@@ -206,8 +206,12 @@
         "error": "Erreur"
       },
       "form": {
-        "name": "Nom",
-        "namePlaceholder": "Entrez un nom",
+        "name": "Nom par défaut (Anglais)",
+        "namePlaceholder": "Entrez le nom par défaut (Anglais)",
+        "nameFr": "Nom en français",
+        "nameFrPlaceholder": "Entrez le nom en français",
+        "nameMg": "Nom en malgache",
+        "nameMgPlaceholder": "Entrez le nom en malgache",
         "nameRequired": "Le nom est requis",
         "type": "Type",
         "typeRequired": "Le type est requis",
@@ -218,12 +222,9 @@
           "branch": "Branche"
         }
       },
-      "error": {
-        "title": "Erreur",
-        "description": "Une erreur s'est produite lors du chargement des données"
-      },
-      "noData": "Aucune valeur de liste déroulante trouvée",
-      "loading": "Chargement des données..."
+      "translation": {
+        "fallback": "Utilisation du nom par défaut (traduction non disponible)"
+      }
     },
     "settings": {
       "title": "Paramètres",

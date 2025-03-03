@@ -58,6 +58,8 @@ export const useDropdownsManagement = () => {
       return result.filter(
         (dropdown) =>
           dropdown.name?.toLowerCase().includes(query) ||
+          dropdown.nameFr?.toLowerCase().includes(query) ||
+          dropdown.nameMg?.toLowerCase().includes(query) ||
           dropdown.type?.toLowerCase().includes(query),
       );
     }

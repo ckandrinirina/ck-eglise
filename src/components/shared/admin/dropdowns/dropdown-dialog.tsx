@@ -35,6 +35,8 @@ import {
 // Form schema
 const formSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
+  nameFr: z.string().optional(),
+  nameMg: z.string().optional(),
   type: z.enum(["territory", "role", "branch"], {
     required_error: "Type is required",
   }),
@@ -63,6 +65,8 @@ export const DropdownDialog = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      nameFr: "",
+      nameMg: "",
       type: "territory", // Set default type
     },
   });
@@ -73,11 +77,15 @@ export const DropdownDialog = ({
       if (dropdown) {
         form.reset({
           name: dropdown.name,
+          nameFr: dropdown.nameFr || "",
+          nameMg: dropdown.nameMg || "",
           type: dropdown.type as "territory" | "role" | "branch", // Type assertion since we know it's valid
         });
       } else {
         form.reset({
           name: "",
+          nameFr: "",
+          nameMg: "",
           type: "territory", // Reset to default type
         });
       }
@@ -115,6 +123,38 @@ export const DropdownDialog = ({
                   <FormLabel>{t("form.name")}</FormLabel>
                   <FormControl>
                     <Input placeholder={t("form.namePlaceholder")} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="nameFr"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("form.nameFr")}</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={t("form.nameFrPlaceholder")}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="nameMg"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("form.nameMg")}</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={t("form.nameMgPlaceholder")}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -44,9 +44,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useParams } from "next/navigation";
 
 export default function DropdownsPage() {
   const t = useTranslations("admin.dropdowns");
+  const { locale } = useParams();
   const {
     dropdowns,
     isLoading,
@@ -70,6 +72,48 @@ export default function DropdownsPage() {
     handleDialogClose,
     handleSaveDropdown,
   } = useDropdownsManagement();
+
+  const getLocalizedName = (dropdown: Dropdown) => {
+    let name: string;
+    let isFallback = false;
+
+    switch (locale) {
+      case "fr":
+        if (dropdown.nameFr) {
+          name = dropdown.nameFr;
+        } else {
+          name = dropdown.name;
+          isFallback = true;
+        }
+        break;
+      case "mg":
+        if (dropdown.nameMg) {
+          name = dropdown.nameMg;
+        } else {
+          name = dropdown.name;
+          isFallback = true;
+        }
+        break;
+      default:
+        name = dropdown.name;
+    }
+
+    return (
+      <div className="flex items-center gap-2">
+        <span>{name}</span>
+        {isFallback && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="text-muted-foreground text-xs">(default)</span>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{t("translation.fallback")}</p>
+            </TooltipContent>
+          </Tooltip>
+        )}
+      </div>
+    );
+  };
 
   const showDeleteConfirmation = (dropdownId: string) => {
     const { confirmDelete } = handleDelete(dropdownId);
@@ -234,7 +278,7 @@ export default function DropdownsPage() {
               <TableBody>
                 {dropdowns.map((dropdown) => (
                   <TableRow key={dropdown.id}>
-                    <TableCell>{dropdown.name}</TableCell>
+                    <TableCell>{getLocalizedName(dropdown)}</TableCell>
                     <TableCell>{t(`form.types.${dropdown.type}`)}</TableCell>
                     <TableCell>
                       {format(new Date(dropdown.createdAt), "PPP")}

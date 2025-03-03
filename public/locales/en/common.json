@@ -206,8 +206,12 @@
         "error": "Error"
       },
       "form": {
-        "name": "Name",
-        "namePlaceholder": "Enter a name",
+        "name": "Default Name (English)",
+        "namePlaceholder": "Enter the default name (English)",
+        "nameFr": "French Name",
+        "nameFrPlaceholder": "Enter the French name",
+        "nameMg": "Malagasy Name",
+        "nameMgPlaceholder": "Enter the Malagasy name",
         "nameRequired": "Name is required",
         "type": "Type",
         "typeRequired": "Type is required",
@@ -218,12 +222,9 @@
           "branch": "Branch"
         }
       },
-      "error": {
-        "title": "Error",
-        "description": "An error occurred while loading data"
-      },
-      "noData": "No dropdown values found",
-      "loading": "Loading data..."
+      "translation": {
+        "fallback": "Using default name (translation not available)"
+      }
     },
     "settings": {
       "title": "Settings",

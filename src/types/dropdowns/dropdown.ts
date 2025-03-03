@@ -12,7 +12,9 @@ export type DropdownType = "territory" | "role" | "branch";
  */
 export type Dropdown = {
   id: string;
-  name: string;
+  name: string; // Default name (fallback)
+  nameFr?: string; // French name
+  nameMg?: string; // Malagasy name
   type: DropdownType;
   createdAt: string;
   updatedAt: string;
@@ -23,6 +25,8 @@ export type Dropdown = {
  */
 export type CreateDropdownData = {
   name: string;
+  nameFr?: string;
+  nameMg?: string;
   type: DropdownType;
 };
 
@@ -32,6 +36,8 @@ export type CreateDropdownData = {
  */
 export type UpdateDropdownData = Partial<{
   name: string;
+  nameFr: string;
+  nameMg: string;
   type: string;
 }>;
 

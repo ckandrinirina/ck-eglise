@@ -192,8 +192,12 @@
         "error": "Hadisoana"
       },
       "form": {
-        "name": "Anarana",
-        "namePlaceholder": "Ampidiro ny anarana",
+        "name": "Anarana tsotra (Anglisy)",
+        "namePlaceholder": "Ampidiro ny anarana tsotra (Anglisy)",
+        "nameFr": "Anarana amin'ny teny frantsay",
+        "nameFrPlaceholder": "Ampidiro ny anarana amin'ny teny frantsay",
+        "nameMg": "Anarana amin'ny teny malagasy",
+        "nameMgPlaceholder": "Ampidiro ny anarana amin'ny teny malagasy",
         "nameRequired": "Tsy maintsy ampidirina ny anarana",
         "type": "Karazana",
         "typeRequired": "Tsy maintsy ampidirina ny karazana",
@@ -204,12 +208,9 @@
           "branch": "Sampana"
         }
       },
-      "error": {
-        "title": "Hadisoana",
-        "description": "Nisy olana nitranga tamin'ny fakana ny data"
-      },
-      "noData": "Tsy misy sanda hita",
-      "loading": "Eo am-pampidirana data..."
+      "translation": {
+        "fallback": "Mampiasa ny anarana tsotra (tsy misy ny dikany)"
+      }
     },
     "settings": {
       "title": "Firafitra",

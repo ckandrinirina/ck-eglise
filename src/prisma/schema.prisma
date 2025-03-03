@@ -68,7 +68,9 @@ model VerificationToken {
 // Dropdown model for managing dropdown values
 model Dropdown {
   id        String   @id @default(cuid())
-  name      String
+  name      String   // Default name
+  nameFr    String?  // French name
+  nameMg    String?  // Malagasy name
   type      String   @default("territory") // Enum values: "territory", "role", "branch"
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
