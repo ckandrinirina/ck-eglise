@@ -68,10 +68,19 @@
       "title": "Utilisateurs",
       "description": "Gérez les comptes et les permissions des utilisateurs.",
       "addUser": "Ajouter un utilisateur",
+      "error": {
+        "title": "Erreur de chargement",
+        "description": "Une erreur est survenue lors du chargement des utilisateurs. Veuillez réessayer plus tard."
+      },
+      "noUsers": {
+        "title": "Aucun Utilisateur Trouvé",
+        "description": "Il n'y a pas encore d'utilisateurs dans le système. Ajoutez votre premier utilisateur pour commencer."
+      },
       "table": {
         "name": "Nom",
         "email": "Email",
         "role": "Rôle",
+        "status": "Statut",
         "createdAt": "Créé le"
       },
       "actions": {
@@ -91,6 +100,9 @@
         "userDeleted": "Utilisateur supprimé avec succès",
         "errorSaving": "Échec de l'enregistrement",
         "errorDeleting": "Échec de la suppression",
+        "errorLoading": "Échec du chargement des utilisateurs",
+        "errorCreating": "Échec de la création de l'utilisateur",
+        "errorUpdating": "Échec de la mise à jour de l'utilisateur",
         "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
         "save": "Enregistrer les modifications",
         "create": "Créer l'utilisateur",
@@ -101,8 +113,14 @@
       },
       "form": {
         "name": "Nom",
+        "namePlaceholder": "Entrez le nom de l'utilisateur",
         "email": "Email",
+        "emailPlaceholder": "Entrez l'adresse email",
         "password": "Mot de passe",
+        "passwordPlaceholder": "Entrez le mot de passe",
+        "newPassword": "Nouveau Mot de passe",
+        "newPasswordPlaceholder": "Entrez le nouveau mot de passe (optionnel)",
+        "passwordHint": "Laissez vide pour conserver le mot de passe actuel",
         "role": "Rôle",
         "selectRole": "Sélectionner un rôle",
         "roleUser": "Utilisateur",

@@ -68,6 +68,14 @@
       "title": "Mpampiasa",
       "description": "Hitantana ny kaonty sy ny fahazoan-dàlana ny mpampiasa.",
       "addUser": "Hanampy mpampiasa",
+      "error": {
+        "title": "Hadisoana amin'ny fakana",
+        "description": "Nisy hadisoana nitranga teo am-paka ny mpampiasa. Andramo indray afaka kelikely."
+      },
+      "noUsers": {
+        "title": "Tsy Misy Mpampiasa Hita",
+        "description": "Mbola tsy misy mpampiasa ao amin'ny rafitra. Ampio ny mpampiasa voalohany mba hanombohana."
+      },
       "table": {
         "name": "Anarana",
         "email": "Mailaka",
@@ -92,6 +100,9 @@
         "userDeleted": "Mpampiasa voafafa soa aman-tsara",
         "errorSaving": "Tsy nahomby ny fitahirizana",
         "errorDeleting": "Tsy nahomby ny famafana",
+        "errorLoading": "Tsy nahomby ny fakàna mpampiasa",
+        "errorCreating": "Tsy nahomby ny famoronana mpampiasa",
+        "errorUpdating": "Tsy nahomby ny fanavaozana mpampiasa",
         "confirmDelete": "Tena te hamafa ity mpampiasa ity ve ianao?",
         "save": "Hitahiry fanovana",
         "create": "Hamorona mpampiasa",
@@ -102,8 +113,14 @@
       },
       "form": {
         "name": "Anarana",
+        "namePlaceholder": "Ampidiro ny anaran'ny mpampiasa",
         "email": "Mailaka",
+        "emailPlaceholder": "Ampidiro ny adiresy mailaka",
         "password": "Tenimiafina",
+        "passwordPlaceholder": "Ampidiro ny tenimiafina",
+        "newPassword": "Tenimiafina vaovao",
+        "newPasswordPlaceholder": "Ampidiro ny tenimiafina vaovao (safidy)",
+        "passwordHint": "Avelao ho foana raha toa ka tsy hanova tenimiafina",
         "role": "Andraikitra",
         "selectRole": "Misafidiana andraikitra",
         "roleUser": "Mpampiasa",
