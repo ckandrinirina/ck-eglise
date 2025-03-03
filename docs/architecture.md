@@ -31,12 +31,11 @@ src/
 │   └── common/          # General purpose hooks
 ├── types/                # TypeScript definitions
 ├── styles/              # Global styles
-├── db/                   # Database architecture
-│   ├── schema.prisma     # Prisma schema definition
+├── prisma/              # Prisma ORM configuration and database files
+│   ├── schema.prisma    # Prisma schema definition
 │   ├── migrations/      # Database migrations
-│   ├── seeders/         # Seed data
-│   ├── config.ts        # Database configuration
-│   └── index.ts         # Database connection
+│   ├── database.sqlite  # SQLite database file
+│   └── seed.ts         # Database seed script
 ```
 
 ## Tech Stack
@@ -116,6 +115,29 @@ const UserRepository = {
   findAll: async () => prisma.user.findMany(),
   create: async (data) => prisma.user.create({ data })
 }
+```
+
+### Prisma Commands
+All Prisma commands must be executed from the src/prisma directory:
+
+```bash
+# Navigate to prisma directory first
+cd src/prisma
+
+# Generate Prisma Client
+pnpm prisma generate
+
+# Create and apply migrations
+pnpm prisma migrate dev
+
+# Reset database
+pnpm prisma reset
+
+# Push schema changes directly (development only)
+pnpm prisma db push
+
+# Run seed script
+pnpm prisma db seed
 ```
 
 ### API Routes Pattern
