@@ -22,7 +22,13 @@ src/
 │       ├── layout/       # Layout related components
 │       └── common/       # Cross-cutting components
 ├── lib/                  # Utilities & helpers
+│   ├── services/         # API service files
+│   └── db.ts            # Database utility functions
 ├── hooks/                # Custom React hooks
+│   ├── user/            # User-related hooks
+│   ├── auth/            # Authentication-related hooks
+│   ├── admin/           # Admin-related hooks
+│   └── common/          # General purpose hooks
 ├── types/                # TypeScript definitions
 ├── styles/              # Global styles
 ├── db/                   # Database architecture
@@ -31,8 +37,6 @@ src/
 │   ├── seeders/         # Seed data
 │   ├── config.ts        # Database configuration
 │   └── index.ts         # Database connection
-└── lib/
-    └── db.ts            # Database utility functions
 ```
 
 ## Tech Stack
@@ -66,7 +70,40 @@ const Component = ({ props }) => {
 
 // shadcn/ui usage
 import { Button } from "@/components/ui/button"
+
+// Component logic must be separated into dedicated files
+// ✅ Correct Pattern
+// UserList.tsx
+import { useUserLogic } from './useUserLogic' // Logic in separate file
+
+const UserList = () => {
+  const { users, loading, error } = useUserLogic()
+  return <div>{/* UI rendering only */}</div>
+}
+
+// useUserLogic.ts
+export const useUserLogic = () => {
+  // Business logic, data fetching, state management
+  return { users, loading, error }
+}
+
+// ❌ Incorrect Pattern
+// Don't mix complex logic with component UI
+const UserList = () => {
+  // Complex business logic mixed with UI
+  const [users, setUsers] = useState([])
+  const [loading, setLoading] = useState(true)
+  // ... more logic here
+  return <div>{/* UI with mixed concerns */}</div>
+}
 ```
+
+### Component Guidelines
+
+- Each `.tsx` file should export only one component.
+- All child components should be in separate files.
+- Make all components as reusable as possible.
+- Always optimize for performance using techniques like `useMemo`, `useCallback`, etc.
 
 ### Database Pattern
 ```ts
@@ -90,6 +127,27 @@ export const GET = async () => {
 }
 ```
 
+### Type Definitions Pattern
+```ts
+// All interface and type definitions must be placed in the types folder
+// ✅ Correct Pattern
+// src/types/user.ts
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: 'user' | 'admin';
+}
+
+// ❌ Incorrect Pattern
+// Don't define types/interfaces in component or hook files
+// src/components/UserList.tsx
+interface User { // ❌ Should be in types folder
+  id: string;
+  name: string;
+}
+```
+
 ### Data Fetching Pattern
 ```tsx
 // All API queries MUST use TanStack React Query
@@ -105,6 +163,41 @@ const users = await fetch('/api/users')
 
 // Don't use SWR or other data fetching libraries
 const { data } = useSWR('/api/users')
+```
+
+### API Service Pattern
+```ts
+// All API calls must be placed in dedicated service files under src/lib/services
+// Example structure:
+// src/lib/services/user.service.ts
+
+import axios from 'axios';
+
+// Create axios instance with common config
+const api = axios.create({
+  baseURL: '/api',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
+
+// ✅ Correct Pattern - Service-based API calls
+export const UserService = {
+  getUsers: () => api.get('/users'),
+  createUser: (data) => api.post('/users', data),
+  updateUser: (id, data) => api.put(`/users/${id}`, data),
+  deleteUser: (id) => api.delete(`/users/${id}`)
+}
+
+// Usage in components/hooks with React Query
+const usersQuery = useQuery({
+  queryKey: ['users'],
+  queryFn: () => UserService.getUsers()
+})
+
+// ❌ Incorrect Pattern - Direct API calls in components/hooks
+const users = await fetch('/api/users')
+const users = await axios.get('/api/users')
 ```
 
 ### Form and Query Patterns
@@ -173,9 +266,13 @@ Our project uses two main layouts:
 2. UI components in components/ui
 3. Feature-specific shared components in components/shared/[feature]
 4. Cross-cutting components in components/shared/common
-5. Database logic in repositories
-6. Utils in lib directory
-7. Types in dedicated files
+5. Custom hooks grouped by feature in hooks/[feature]
+   - User-related hooks in hooks/user
+   - Authentication-related hooks in hooks/auth
+   - Each feature has its own dedicated hooks directory
+6. Database logic in repositories
+7. Utils in lib directory
+8. Types in dedicated files
 
 ## Environment Setup
 ```
