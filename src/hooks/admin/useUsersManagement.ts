@@ -168,7 +168,7 @@ export const useUsersManagement = () => {
         createUser.mutate(userData);
       }
     },
-    [selectedUser, createUser, updateUser, t],
+    [selectedUser, createUser, updateUser],
   );
 
   const handleSearchChange = (query: string) => {
@@ -184,6 +184,14 @@ export const useUsersManagement = () => {
     setRoleFilter(tempRoleFilter);
   };
 
+  const handleSort = useCallback((field: UserSortConfig["field"]) => {
+    setSortConfig((prev) => ({
+      field,
+      direction:
+        prev.field === field && prev.direction === "asc" ? "desc" : "asc",
+    }));
+  }, []);
+
   return {
     users: filteredAndSortedUsers,
     isLoading,
@@ -198,6 +206,7 @@ export const useUsersManagement = () => {
     handleSearchChange,
     handleRoleFilterChange,
     applyFilters,
+    handleSort,
     handleClearFilters,
     handleEdit,
     handleDelete,
