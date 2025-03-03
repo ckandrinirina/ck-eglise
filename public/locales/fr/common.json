@@ -1,9 +1,26 @@
 {
+  "header": {
+    "home": "Accueil",
+    "dashboard": "Tableau de bord",
+    "admin": "Administration"
+  },
   "navigation": {
     "home": "Accueil",
     "dashboard": "Tableau de bord",
     "login": "Connexion",
-    "logout": "Déconnexion"
+    "logout": "Déconnexion",
+    "signup": "S'inscrire",
+    "profile": "Profil",
+    "admin": "Administration",
+    "settings": "Paramètres"
+  },
+  "actions": {
+    "submit": "Soumettre",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "add": "Ajouter"
   },
   "language": {
     "en": "Anglais",
@@ -65,7 +82,9 @@
       "quickStats": "Statistiques Rapides"
     },
     "users": {
-      "title": "Utilisateurs",
+      "title": "Gestion des utilisateurs",
+      "subtitle": "Gérer les utilisateurs de l'application",
+      "createNew": "Créer un nouvel utilisateur",
       "description": "Gérez les comptes et les permissions des utilisateurs.",
       "addUser": "Ajouter un utilisateur",
       "search": {
@@ -143,6 +162,53 @@
         "selectRole": "Sélectionner un rôle",
         "roleUser": "Utilisateur",
         "roleAdmin": "Administrateur"
+      },
+      "dropdowns": {
+        "title": "Gestion des listes déroulantes",
+        "subtitle": "Gérer les valeurs disponibles dans les menus déroulants",
+        "buttons": {
+          "add": "Ajouter une valeur",
+          "edit": "Modifier",
+          "delete": "Supprimer",
+          "options": "Options"
+        },
+        "table": {
+          "name": "Nom",
+          "type": "Type",
+          "createdAt": "Date de création"
+        },
+        "filters": {
+          "searchPlaceholder": "Rechercher par nom ou type",
+          "typeAll": "Tous les types",
+          "apply": "Appliquer",
+          "clear": "Effacer"
+        },
+        "dialog": {
+          "addDropdown": "Ajouter une valeur",
+          "editDropdown": "Modifier la valeur",
+          "cancel": "Annuler",
+          "save": "Enregistrer",
+          "saving": "Enregistrement...",
+          "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette valeur ?",
+          "delete": "Supprimer",
+          "dropdownCreated": "Valeur ajoutée avec succès",
+          "dropdownUpdated": "Valeur mise à jour avec succès",
+          "dropdownDeleted": "Valeur supprimée avec succès",
+          "errorCreating": "Erreur lors de la création",
+          "errorUpdating": "Erreur lors de la mise à jour",
+          "errorDeleting": "Erreur lors de la suppression"
+        },
+        "form": {
+          "name": "Nom",
+          "namePlaceholder": "Entrez un nom",
+          "type": "Type",
+          "typePlaceholder": "Entrez un type (ex: pays, statut, catégorie)"
+        },
+        "error": {
+          "title": "Erreur",
+          "description": "Une erreur s'est produite lors du chargement des données"
+        },
+        "noData": "Aucune valeur de liste déroulante trouvée"
       }
     },
     "settings": {
@@ -167,5 +233,9 @@
     "breadcrumbs": {
       "home": "Accueil"
     }
+  },
+  "profile": {
+    "title": "Profil utilisateur",
+    "updateInformation": "Mettre à jour les informations"
   }
 }
