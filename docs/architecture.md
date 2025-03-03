@@ -22,12 +22,14 @@ src/
 │       ├── layout/       # Layout related components
 │       └── common/       # Cross-cutting components
 ├── lib/                  # Utilities & helpers
+│   ├── services/         # API service files
+│   └── db.ts            # Database utility functions
 ├── hooks/                # Custom React hooks
 │   ├── user/            # User-related hooks
 │   ├── auth/            # Authentication-related hooks
 │   ├── admin/           # Admin-related hooks
 │   └── common/          # General purpose hooks
-├── types/                # TypeScript definitions
+├── models/                # TypeScript definitions
 ├── styles/              # Global styles
 ├── db/                   # Database architecture
 │   ├── schema.prisma     # Prisma schema definition
@@ -35,8 +37,6 @@ src/
 │   ├── seeders/         # Seed data
 │   ├── config.ts        # Database configuration
 │   └── index.ts         # Database connection
-└── lib/
-    └── db.ts            # Database utility functions
 ```
 
 ## Tech Stack
@@ -124,6 +124,27 @@ const UserRepository = {
 export const GET = async () => {
   await initializeDB()
   // Logic here
+}
+```
+
+### Type Definitions Pattern
+```ts
+// All interface and type definitions must be placed in the models folder
+// ✅ Correct Pattern
+// src/models/user.ts
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: 'user' | 'admin';
+}
+
+// ❌ Incorrect Pattern
+// Don't define types/interfaces in component or hook files
+// src/components/UserList.tsx
+interface User { // ❌ Should be in models folder
+  id: string;
+  name: string;
 }
 ```
 

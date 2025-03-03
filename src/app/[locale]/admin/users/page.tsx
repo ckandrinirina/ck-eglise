@@ -24,70 +24,31 @@ import {
 import { MoreHorizontal, UserPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { UserDialog } from "@/components/shared/admin/user-dialog";
-import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
 import { format } from "date-fns";
-
-type User = {
-  id: string;
-  name: string | null;
-  email: string | null;
-  role: string;
-  createdAt: string;
-};
+import { useUsersManagement } from "@/hooks/admin/useUsersManagement";
+import { toast } from "sonner";
 
 export default function UsersPage() {
   const t = useTranslations("admin.users");
-  const queryClient = useQueryClient();
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const {
+    users,
+    selectedUser,
+    dialogOpen,
+    handleEdit,
+    handleDelete,
+    handleAdd,
+    handleDialogClose,
+  } = useUsersManagement();
 
-  // Fetch users
-  const { data: users = [] } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const res = await fetch("/api/users");
-      if (!res.ok) throw new Error("Failed to fetch users");
-      return res.json();
-    },
-  });
+  const showDeleteConfirmation = (userId: string) => {
+    const { confirmDelete } = handleDelete(userId);
 
-  // Delete user mutation
-  const deleteUser = useMutation({
-    mutationFn: async (userId: string) => {
-      const res = await fetch(`/api/users/${userId}`, {
-        method: "DELETE",
-      });
-      if (!res.ok) throw new Error("Failed to delete user");
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
-      toast.success(t("dialog.userDeleted"));
-    },
-    onError: () => {
-      toast.error(t("dialog.errorDeleting"));
-    },
-  });
-
-  const handleEdit = (user: User) => {
-    setSelectedUser(user);
-    setDialogOpen(true);
-  };
-
-  const handleDelete = (userId: string) => {
     toast.custom(
       () => (
         <div className="rounded-lg bg-background p-6 shadow-lg space-y-4">
           <h3 className="text-lg font-medium">{t("dialog.confirmDelete")}</h3>
           <div className="flex gap-2 justify-end">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                toast.dismiss();
-              }}
-            >
+            <Button variant="outline" size="sm" onClick={() => toast.dismiss()}>
               {t("dialog.cancel")}
             </Button>
             <Button
@@ -95,7 +56,7 @@ export default function UsersPage() {
               size="sm"
               onClick={() => {
                 toast.dismiss();
-                deleteUser.mutate(userId);
+                confirmDelete();
               }}
             >
               {t("dialog.confirm")}
@@ -105,17 +66,6 @@ export default function UsersPage() {
       ),
       { duration: Infinity },
     );
-  };
-
-  const handleAdd = () => {
-    setSelectedUser(null);
-    setDialogOpen(true);
-  };
-
-  const handleDialogClose = () => {
-    setDialogOpen(false);
-    setSelectedUser(null);
-    queryClient.invalidateQueries({ queryKey: ["users"] });
   };
 
   return (
@@ -153,7 +103,7 @@ export default function UsersPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {users.map((user: User) => (
+              {users.map((user) => (
                 <TableRow key={user.id}>
                   <TableCell className="font-medium">{user.name}</TableCell>
                   <TableCell className="truncate max-w-[200px]">
@@ -188,7 +138,7 @@ export default function UsersPage() {
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           className="text-red-600"
-                          onClick={() => handleDelete(user.id)}
+                          onClick={() => showDeleteConfirmation(user.id)}
                         >
                           {t("actions.delete")}
                         </DropdownMenuItem>
