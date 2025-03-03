@@ -144,6 +144,41 @@ const users = await fetch('/api/users')
 const { data } = useSWR('/api/users')
 ```
 
+### API Service Pattern
+```ts
+// All API calls must be placed in dedicated service files under src/lib/services
+// Example structure:
+// src/lib/services/user.service.ts
+
+import axios from 'axios';
+
+// Create axios instance with common config
+const api = axios.create({
+  baseURL: '/api',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
+
+// ✅ Correct Pattern - Service-based API calls
+export const UserService = {
+  getUsers: () => api.get('/users'),
+  createUser: (data) => api.post('/users', data),
+  updateUser: (id, data) => api.put(`/users/${id}`, data),
+  deleteUser: (id) => api.delete(`/users/${id}`)
+}
+
+// Usage in components/hooks with React Query
+const usersQuery = useQuery({
+  queryKey: ['users'],
+  queryFn: () => UserService.getUsers()
+})
+
+// ❌ Incorrect Pattern - Direct API calls in components/hooks
+const users = await fetch('/api/users')
+const users = await axios.get('/api/users')
+```
+
 ### Form and Query Patterns
 ```tsx
 // React Hook Form usage
