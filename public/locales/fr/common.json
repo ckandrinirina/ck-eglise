@@ -68,6 +68,20 @@
       "title": "Utilisateurs",
       "description": "Gérez les comptes et les permissions des utilisateurs.",
       "addUser": "Ajouter un utilisateur",
+      "search": {
+        "placeholder": "Rechercher un utilisateur...",
+        "clearFilters": "Effacer les filtres"
+      },
+      "filter": {
+        "all": "Tous les rôles",
+        "byRole": "Filtrer par rôle",
+        "admin": "Administrateur",
+        "user": "Utilisateur"
+      },
+      "noSearchResults": {
+        "title": "Aucun résultat trouvé",
+        "description": "Aucun utilisateur ne correspond à votre recherche. Essayez avec d'autres critères."
+      },
       "error": {
         "title": "Erreur de chargement",
         "description": "Une erreur est survenue lors du chargement des utilisateurs. Veuillez réessayer plus tard."
@@ -81,7 +95,9 @@
         "email": "Email",
         "role": "Rôle",
         "status": "Statut",
-        "createdAt": "Créé le"
+        "createdAt": "Créé le",
+        "sortAsc": "Trier par ordre croissant",
+        "sortDesc": "Trier par ordre décroissant"
       },
       "actions": {
         "more": "Plus",

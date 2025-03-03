@@ -9,10 +9,9 @@ export type User = {
   id: string;
   name: string | null;
   email: string | null;
-  role: string;
+  role: "user" | "admin";
   createdAt: string;
-  updatedAt?: string;
-  lastLogin?: string;
+  updatedAt: string;
 };
 
 /**
@@ -22,11 +21,23 @@ export type CreateUserData = {
   name: string;
   email: string;
   password: string;
-  role: string;
+  role: "user" | "admin";
 };
 
 /**
  * Data structure for updating an existing user
  * Excludes id, createdAt and email which cannot be updated
  */
-export type UpdateUserData = Partial<Omit<User, "id" | "createdAt" | "email">>;
+export type UpdateUserData = Partial<{
+  name: string;
+  password: string;
+  role: "user" | "admin";
+}>;
+
+/**
+ * Sort configuration for user list
+ */
+export type UserSortConfig = {
+  field: "name" | "email" | "role" | "createdAt";
+  direction: "asc" | "desc";
+};

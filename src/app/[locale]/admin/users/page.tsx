@@ -2,6 +2,7 @@
 
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,7 +22,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { MoreHorizontal, UserPlus, AlertCircle } from "lucide-react";
+import {
+  MoreHorizontal,
+  UserPlus,
+  AlertCircle,
+  Search,
+  X,
+  ArrowUpDown,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { UserDialog } from "@/components/shared/admin/user-dialog";
 import { format } from "date-fns";
@@ -29,6 +37,13 @@ import { useUsersManagement } from "@/hooks/admin/useUsersManagement";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function UsersPage() {
   const t = useTranslations("admin.users");
@@ -38,6 +53,13 @@ export default function UsersPage() {
     isError,
     selectedUser,
     dialogOpen,
+    searchQuery,
+    roleFilter,
+    sortConfig,
+    handleSearch,
+    handleSort,
+    handleFilterRole,
+    handleClearFilters,
     handleEdit,
     handleDelete,
     handleAdd,
@@ -115,40 +137,123 @@ export default function UsersPage() {
             {t("description")}
           </p>
         </div>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button onClick={handleAdd} className="w-full sm:w-auto">
-              <UserPlus className="mr-2 h-4 w-4" />
-              {t("addUser")}
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>{t("addUser")}</TooltipContent>
-        </Tooltip>
+        <Button onClick={handleAdd} className="w-full sm:w-auto">
+          <UserPlus className="mr-2 h-4 w-4" />
+          {t("addUser")}
+        </Button>
       </div>
 
-      {users.length === 0 ? (
-        <Card className="p-6">
-          <div className="text-center py-10">
-            <h3 className="text-lg font-medium mb-2">{t("noUsers.title")}</h3>
-            <p className="text-muted-foreground mb-4">
-              {t("noUsers.description")}
-            </p>
-            <Button onClick={handleAdd}>
-              <UserPlus className="mr-2 h-4 w-4" />
-              {t("addUser")}
-            </Button>
+      <Card className="p-4">
+        <div className="flex flex-col sm:flex-row gap-4 mb-4">
+          <div className="flex-1">
+            <div className="relative">
+              <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder={t("search.placeholder")}
+                onChange={(e) => handleSearch(e.target.value)}
+                className="pl-8"
+                value={searchQuery}
+              />
+            </div>
           </div>
-        </Card>
-      ) : (
-        <Card className="overflow-x-auto">
-          <div className="min-w-[600px]">
+          <div className="flex gap-2">
+            <Select
+              value={roleFilter}
+              onValueChange={(value: "all" | "admin" | "user") =>
+                handleFilterRole(value)
+              }
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder={t("filter.byRole")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{t("filter.all")}</SelectItem>
+                <SelectItem value="admin">{t("filter.admin")}</SelectItem>
+                <SelectItem value="user">{t("filter.user")}</SelectItem>
+              </SelectContent>
+            </Select>
+            {(searchQuery ||
+              roleFilter !== "all" ||
+              sortConfig.field !== "name" ||
+              sortConfig.direction !== "asc") && (
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handleClearFilters}
+                className="shrink-0"
+              >
+                <X className="h-4 w-4" />
+                <span className="sr-only">{t("search.clearFilters")}</span>
+              </Button>
+            )}
+          </div>
+        </div>
+
+        {users.length === 0 ? (
+          <div className="text-center py-10">
+            <h3 className="text-lg font-medium mb-2">
+              {searchQuery ? t("noSearchResults.title") : t("noUsers.title")}
+            </h3>
+            <p className="text-muted-foreground mb-4">
+              {searchQuery
+                ? t("noSearchResults.description")
+                : t("noUsers.description")}
+            </p>
+            {!searchQuery && (
+              <Button onClick={handleAdd}>
+                <UserPlus className="mr-2 h-4 w-4" />
+                {t("addUser")}
+              </Button>
+            )}
+          </div>
+        ) : (
+          <div className="min-w-[600px] overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>{t("table.name")}</TableHead>
-                  <TableHead>{t("table.email")}</TableHead>
-                  <TableHead>{t("table.role")}</TableHead>
-                  <TableHead>{t("table.createdAt")}</TableHead>
+                  <TableHead
+                    onClick={() => handleSort("name")}
+                    className="cursor-pointer"
+                  >
+                    <div className="flex items-center gap-1">
+                      {t("table.name")}
+                      <ArrowUpDown className="h-4 w-4" />
+                      {sortConfig.field === "name" && (
+                        <span className="sr-only">
+                          {sortConfig.direction === "asc"
+                            ? t("table.sortAsc")
+                            : t("table.sortDesc")}
+                        </span>
+                      )}
+                    </div>
+                  </TableHead>
+                  <TableHead
+                    onClick={() => handleSort("email")}
+                    className="cursor-pointer"
+                  >
+                    <div className="flex items-center gap-1">
+                      {t("table.email")}
+                      <ArrowUpDown className="h-4 w-4" />
+                    </div>
+                  </TableHead>
+                  <TableHead
+                    onClick={() => handleSort("role")}
+                    className="cursor-pointer"
+                  >
+                    <div className="flex items-center gap-1">
+                      {t("table.role")}
+                      <ArrowUpDown className="h-4 w-4" />
+                    </div>
+                  </TableHead>
+                  <TableHead
+                    onClick={() => handleSort("createdAt")}
+                    className="cursor-pointer"
+                  >
+                    <div className="flex items-center gap-1">
+                      {t("table.createdAt")}
+                      <ArrowUpDown className="h-4 w-4" />
+                    </div>
+                  </TableHead>
                   <TableHead className="w-[48px]"></TableHead>
                 </TableRow>
               </TableHeader>
@@ -210,8 +315,8 @@ export default function UsersPage() {
               </TableBody>
             </Table>
           </div>
-        </Card>
-      )}
+        )}
+      </Card>
 
       <UserDialog
         open={dialogOpen}

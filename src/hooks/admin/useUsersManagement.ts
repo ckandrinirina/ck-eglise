@@ -3,13 +3,20 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { UserService } from "@/lib/services/user.service";
-import { User } from "@/types/user";
+import { User, UserSortConfig } from "@/types/user";
+import debounce from "lodash/debounce";
 
 export const useUsersManagement = () => {
   const t = useTranslations("admin.users");
   const queryClient = useQueryClient();
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [roleFilter, setRoleFilter] = useState<"all" | "admin" | "user">("all");
+  const [sortConfig, setSortConfig] = useState<UserSortConfig>({
+    field: "name",
+    direction: "asc",
+  });
 
   // Fetch users with improved caching strategy
   const {
@@ -17,9 +24,11 @@ export const useUsersManagement = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["users", roleFilter],
     queryFn: async () => {
-      const response = await UserService.getUsers();
+      const response = await UserService.getUsers(
+        roleFilter !== "all" ? { role: roleFilter } : undefined,
+      );
       return response.data;
     },
     staleTime: 60000, // 1 minute before refetch
@@ -30,17 +39,70 @@ export const useUsersManagement = () => {
     },
   });
 
-  // Sort users by role and name for better display
-  const sortedUsers = useMemo(() => {
-    return [...users].sort((a, b) => {
-      // Sort by role first (admin first, then user)
-      if (a.role !== b.role) {
-        return a.role === "admin" ? -1 : 1;
+  // Filter and sort users
+  const filteredAndSortedUsers = useMemo(() => {
+    let result = [...users];
+
+    // Apply search filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter(
+        (user) =>
+          user.name?.toLowerCase().includes(query) ||
+          user.email?.toLowerCase().includes(query),
+      );
+    }
+
+    // Apply sorting
+    result.sort((a, b) => {
+      const aValue = a[sortConfig.field];
+      const bValue = b[sortConfig.field];
+
+      if (!aValue || !bValue) return 0;
+
+      let comparison = 0;
+      if (typeof aValue === "string") {
+        comparison = aValue.localeCompare(bValue as string);
+      } else {
+        comparison =
+          new Date(aValue).getTime() - new Date(bValue as string).getTime();
       }
-      // Then by name
-      return (a.name || "").localeCompare(b.name || "");
+
+      return sortConfig.direction === "asc" ? comparison : -comparison;
     });
-  }, [users]);
+
+    return result;
+  }, [users, searchQuery, sortConfig]);
+
+  // Debounced search handler
+  const handleSearch = useMemo(
+    () =>
+      debounce((query: string) => {
+        setSearchQuery(query);
+      }, 300),
+    [],
+  );
+
+  // Sort handler
+  const handleSort = useCallback((field: UserSortConfig["field"]) => {
+    setSortConfig((current) => ({
+      field,
+      direction:
+        current.field === field && current.direction === "asc" ? "desc" : "asc",
+    }));
+  }, []);
+
+  // Filter handler
+  const handleFilterRole = useCallback((role: typeof roleFilter) => {
+    setRoleFilter(role);
+  }, []);
+
+  // Clear filters
+  const handleClearFilters = useCallback(() => {
+    setSearchQuery("");
+    setRoleFilter("all");
+    setSortConfig({ field: "name", direction: "asc" });
+  }, []);
 
   // Delete user mutation
   const deleteUser = useMutation({
@@ -127,11 +189,18 @@ export const useUsersManagement = () => {
   );
 
   return {
-    users: sortedUsers,
+    users: filteredAndSortedUsers,
     isLoading,
     isError,
     selectedUser,
     dialogOpen,
+    searchQuery,
+    roleFilter,
+    sortConfig,
+    handleSearch,
+    handleSort,
+    handleFilterRole,
+    handleClearFilters,
     handleEdit,
     handleDelete,
     handleAdd,

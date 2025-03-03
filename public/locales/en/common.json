@@ -76,12 +76,28 @@
         "title": "No Users Found",
         "description": "There are no users in the system yet. Add your first user to get started."
       },
+      "search": {
+        "placeholder": "Search users...",
+        "clearFilters": "Clear filters"
+      },
+      "filter": {
+        "all": "All roles",
+        "byRole": "Filter by role",
+        "admin": "Administrator",
+        "user": "User"
+      },
+      "noSearchResults": {
+        "title": "No results found",
+        "description": "No users match your search criteria. Try different search terms."
+      },
       "table": {
         "name": "Name",
         "email": "Email",
         "role": "Role",
         "status": "Status",
-        "createdAt": "Created At"
+        "createdAt": "Created At",
+        "sortAsc": "Sort ascending",
+        "sortDesc": "Sort descending"
       },
       "actions": {
         "edit": "Edit User",

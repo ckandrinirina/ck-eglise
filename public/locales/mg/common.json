@@ -76,12 +76,28 @@
         "title": "Tsy Misy Mpampiasa Hita",
         "description": "Mbola tsy misy mpampiasa ao amin'ny rafitra. Ampio ny mpampiasa voalohany mba hanombohana."
       },
+      "search": {
+        "placeholder": "Hitady mpampiasa...",
+        "clearFilters": "Fafao ny sivana"
+      },
+      "filter": {
+        "all": "Andraikitra rehetra",
+        "byRole": "Sivana araka ny andraikitra",
+        "admin": "Mpitantana",
+        "user": "Mpampiasa"
+      },
+      "noSearchResults": {
+        "title": "Tsy misy valiny",
+        "description": "Tsy misy mpampiasa mifanaraka amin'ny fikarohana. Andramo ny teny fikarohana hafa."
+      },
       "table": {
         "name": "Anarana",
         "email": "Mailaka",
         "role": "Andraikitra",
         "status": "Toe-javatra",
-        "createdAt": "Noforonina tamin'ny"
+        "createdAt": "Noforonina tamin'ny",
+        "sortAsc": "Lahatry miakatra",
+        "sortDesc": "Lahatry midina"
       },
       "actions": {
         "edit": "Hanova",

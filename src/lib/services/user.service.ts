@@ -26,27 +26,12 @@ export const UserService = {
   updateUser: (
     userId: string,
     userData: UpdateUserData,
-  ): Promise<AxiosResponse<User>> => api.put(`/users/${userId}`, userData),
+  ): Promise<AxiosResponse<User>> =>
+    api.put(`/users/${userId}`, { id: userId, ...userData }),
 
   /**
    * Delete a user
    */
   deleteUser: (userId: string): Promise<AxiosResponse<void>> =>
     api.delete(`/users/${userId}`),
-
-  /**
-   * Update user password
-   */
-  updatePassword: (
-    userId: string,
-    data: { currentPassword: string; newPassword: string },
-  ): Promise<AxiosResponse<void>> => api.put(`/users/${userId}/password`, data),
-
-  /**
-   * Check if email exists (for registration validation)
-   */
-  checkEmailExists: (
-    email: string,
-  ): Promise<AxiosResponse<{ exists: boolean }>> =>
-    api.get(`/users/check-email?email=${encodeURIComponent(email)}`),
 };
