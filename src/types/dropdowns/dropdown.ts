@@ -3,12 +3,17 @@
  */
 
 /**
+ * Valid dropdown type values
+ */
+export type DropdownType = "territory" | "role" | "branch";
+
+/**
  * Dropdown type definition with all possible fields
  */
 export type Dropdown = {
   id: string;
   name: string;
-  type: string;
+  type: DropdownType;
   createdAt: string;
   updatedAt: string;
 };
@@ -18,7 +23,7 @@ export type Dropdown = {
  */
 export type CreateDropdownData = {
   name: string;
-  type: string;
+  type: DropdownType;
 };
 
 /**
