@@ -176,7 +176,9 @@
       "table": {
         "name": "Name",
         "type": "Type",
-        "createdAt": "Created At"
+        "createdAt": "Created At",
+        "sortAsc": "Sort ascending",
+        "sortDesc": "Sort descending"
       },
       "filters": {
         "searchPlaceholder": "Search by name or type",
@@ -187,9 +189,11 @@
       "dialog": {
         "addDropdown": "Add dropdown value",
         "editDropdown": "Edit dropdown value",
+        "deleteDropdown": "Delete dropdown value",
         "cancel": "Cancel",
         "save": "Save",
         "saving": "Saving...",
+        "deleting": "Deleting...",
         "confirmDelete": "Are you sure you want to delete this value?",
         "delete": "Delete",
         "dropdownCreated": "Value added successfully",
@@ -197,19 +201,24 @@
         "dropdownDeleted": "Value deleted successfully",
         "errorCreating": "Error while creating",
         "errorUpdating": "Error while updating",
-        "errorDeleting": "Error while deleting"
+        "errorDeleting": "Error while deleting",
+        "success": "Success",
+        "error": "Error"
       },
       "form": {
         "name": "Name",
         "namePlaceholder": "Enter a name",
+        "nameRequired": "Name is required",
         "type": "Type",
+        "typeRequired": "Type is required",
         "typePlaceholder": "Enter a type (e.g.: country, status, category)"
       },
       "error": {
         "title": "Error",
         "description": "An error occurred while loading data"
       },
-      "noData": "No dropdown values found"
+      "noData": "No dropdown values found",
+      "loading": "Loading data..."
     },
     "settings": {
       "title": "Settings",

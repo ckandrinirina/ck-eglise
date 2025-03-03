@@ -3,7 +3,10 @@
     "home": "Fandraisana",
     "dashboard": "Tabilao",
     "login": "Hiditra",
-    "logout": "Hiala"
+    "logout": "Hiala",
+    "signup": "Hisoratra anarana",
+    "profile": "Mombamomba",
+    "settings": "Firafitra"
   },
   "language": {
     "en": "Anglisy",
@@ -66,8 +69,10 @@
     },
     "users": {
       "title": "Mpampiasa",
+      "subtitle": "Fitantanana ny mpampiasa",
       "description": "Fitantanana ny kaonty sy ny fahazoan-dalana.",
       "addUser": "Hanampy Mpampiasa",
+      "createNew": "Hamorona mpampiasa vaovao",
       "search": {
         "placeholder": "Hikaroka mpampiasa...",
         "clearFilters": "Hamafa ny sivana",
@@ -145,6 +150,62 @@
         "roleAdmin": "Mpitantana"
       }
     },
+    "dropdowns": {
+      "title": "Fitantanana ny lisitra misoridina",
+      "subtitle": "Fitantanana ny sanda ampiasaina any anatin'ny lisitra misoridina",
+      "buttons": {
+        "add": "Hanampy sanda",
+        "edit": "Hanova",
+        "delete": "Hamafa",
+        "options": "Safidy"
+      },
+      "table": {
+        "name": "Anarana",
+        "type": "Karazana",
+        "createdAt": "Daty namoronana",
+        "sortAsc": "Laharana miakatra",
+        "sortDesc": "Laharana midina"
+      },
+      "filters": {
+        "searchPlaceholder": "Hikaroka araka ny anarana na karazana",
+        "typeAll": "Karazana rehetra",
+        "apply": "Ampiharo",
+        "clear": "Hamafa"
+      },
+      "dialog": {
+        "addDropdown": "Hanampy sanda",
+        "editDropdown": "Hanova sanda",
+        "deleteDropdown": "Hamafa sanda",
+        "cancel": "Aoka ihany",
+        "save": "Hitahiry",
+        "saving": "Mitahiry...",
+        "deleting": "Mamafa...",
+        "confirmDelete": "Tena te hamafa ity sanda ity ve ianao?",
+        "delete": "Hamafa",
+        "dropdownCreated": "Sanda voaforona soa aman-tsara",
+        "dropdownUpdated": "Sanda nohavaozina soa aman-tsara",
+        "dropdownDeleted": "Sanda voafafa soa aman-tsara",
+        "errorCreating": "Nisy hadisoana tamin'ny famoronana",
+        "errorUpdating": "Nisy hadisoana tamin'ny fanavaozana",
+        "errorDeleting": "Nisy hadisoana tamin'ny famafana",
+        "success": "Fahombiazana",
+        "error": "Hadisoana"
+      },
+      "form": {
+        "name": "Anarana",
+        "namePlaceholder": "Ampidiro ny anarana",
+        "nameRequired": "Tsy maintsy ampidirina ny anarana",
+        "type": "Karazana",
+        "typeRequired": "Tsy maintsy ampidirina ny karazana",
+        "typePlaceholder": "Ampidiro ny karazana (oh: firenena, toetra, sokajy)"
+      },
+      "error": {
+        "title": "Hadisoana",
+        "description": "Nisy olana nitranga tamin'ny fakana ny data"
+      },
+      "noData": "Tsy misy sanda hita",
+      "loading": "Eo am-pampidirana data..."
+    },
     "settings": {
       "title": "Firafitra",
       "description": "Fitantanana ny firafitry ny rindranasa",
@@ -167,5 +228,22 @@
     "breadcrumbs": {
       "home": "Fandraisana"
     }
+  },
+  "actions": {
+    "submit": "Alefa",
+    "cancel": "Aoka ihany",
+    "save": "Hitahiry",
+    "delete": "Hamafa",
+    "edit": "Hanova",
+    "add": "Hanampy"
+  },
+  "header": {
+    "home": "Fandraisana",
+    "dashboard": "Tabilao",
+    "admin": "Fitantanana"
+  },
+  "profile": {
+    "title": "Mombamomba ny mpampiasa",
+    "updateInformation": "Havaozina ny mombamomba"
   }
 }
