@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { UserService } from "@/lib/services/user.service";
-import { User, UserSortConfig } from "@/types/user";
+import { User, UserSortConfig } from "@/types/users/user";
 
 type CreateUserData = {
   name: string;

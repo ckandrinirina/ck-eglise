@@ -31,7 +31,7 @@ import {
   ArrowUpDown,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { UserDialog } from "@/components/shared/admin/user-dialog";
+import { UserDialog } from "@/components/shared/admin/users/user-dialog";
 import { format } from "date-fns";
 import { useUsersManagement } from "@/hooks/admin/useUsersManagement";
 import { toast } from "sonner";

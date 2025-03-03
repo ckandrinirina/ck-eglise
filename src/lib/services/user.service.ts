@@ -1,5 +1,5 @@
 import { api, AxiosResponse } from "@/lib/api";
-import { User, CreateUserData, UpdateUserData } from "@/types/user";
+import { User, CreateUserData, UpdateUserData } from "@/types/users/user";
 
 export const UserService = {
   /**

@@ -28,7 +28,7 @@ import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useEffect } from "react";
-import { User } from "@/types/user";
+import { User } from "@/types/users/user";
 
 // Schema definitions for user forms
 const baseUserSchema = z.object({

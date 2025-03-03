@@ -3,7 +3,7 @@
 import { LanguageSwitcher } from "@/components/shared/language-switcher";
 import { AdminSidebar } from "@/components/shared/admin/sidebar";
 import { Breadcrumbs } from "@/components/shared/admin/breadcrumbs";
-import { UserMenu } from "@/components/shared/admin/user-menu";
+import { UserMenu } from "@/components/shared/admin/users/user-menu";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
