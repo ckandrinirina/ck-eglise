@@ -29,7 +29,7 @@ src/
 │   ├── auth/            # Authentication-related hooks
 │   ├── admin/           # Admin-related hooks
 │   └── common/          # General purpose hooks
-├── models/                # TypeScript definitions
+├── types/                # TypeScript definitions
 ├── styles/              # Global styles
 ├── db/                   # Database architecture
 │   ├── schema.prisma     # Prisma schema definition
@@ -129,9 +129,9 @@ export const GET = async () => {
 
 ### Type Definitions Pattern
 ```ts
-// All interface and type definitions must be placed in the models folder
+// All interface and type definitions must be placed in the types folder
 // ✅ Correct Pattern
-// src/models/user.ts
+// src/types/user.ts
 export interface User {
   id: string;
   name: string;
@@ -142,7 +142,7 @@ export interface User {
 // ❌ Incorrect Pattern
 // Don't define types/interfaces in component or hook files
 // src/components/UserList.tsx
-interface User { // ❌ Should be in models folder
+interface User { // ❌ Should be in types folder
   id: string;
   name: string;
 }

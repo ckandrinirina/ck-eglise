@@ -26,11 +26,11 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import * as z from "zod";
 import { useEffect } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { User } from "@/types/user";
 
+// Schema definitions for user forms
 const baseUserSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
@@ -40,11 +40,18 @@ const baseUserSchema = z.object({
 });
 
 const createUserSchema = baseUserSchema.extend({
-  password: z.string().min(8),
+  password: z.string().min(8, {
+    message: "Password must be at least 8 characters.",
+  }),
 });
 
 const editUserSchema = baseUserSchema.extend({
-  password: z.string().min(8).optional(),
+  password: z
+    .string()
+    .min(8, {
+      message: "Password must be at least 8 characters.",
+    })
+    .or(z.literal("")),
 });
 
 type CreateUserFormValues = z.infer<typeof createUserSchema>;
@@ -54,67 +61,57 @@ type UserFormValues = CreateUserFormValues | EditUserFormValues;
 interface UserDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  user?: {
-    id: string;
-    name: string | null;
-    email: string | null;
-    role: string;
-  };
+  user?: User;
+  onSave?: (userData: UserFormValues) => void;
 }
 
-export function UserDialog({ open, onOpenChange, user }: UserDialogProps) {
+export function UserDialog({
+  open,
+  onOpenChange,
+  user,
+  onSave,
+}: UserDialogProps) {
   const t = useTranslations("admin.users");
-  const queryClient = useQueryClient();
 
-  const form = useForm<EditUserFormValues>({
-    resolver: zodResolver(user ? editUserSchema : createUserSchema),
+  // Determine which schema to use based on whether we're editing or creating
+  const schema = user ? editUserSchema : createUserSchema;
+
+  const form = useForm<UserFormValues>({
+    resolver: zodResolver(schema),
     defaultValues: {
       name: user?.name || "",
       email: user?.email || "",
       role: (user?.role as "user" | "admin") || "user",
-      password: undefined,
+      password: "",
     },
+    mode: "onChange", // Validate on change for better UX
   });
 
-  // Reset form when user prop changes
+  // Reset form when user prop changes or dialog opens
   useEffect(() => {
     if (open) {
       form.reset({
         name: user?.name || "",
         email: user?.email || "",
         role: (user?.role as "user" | "admin") || "user",
+        password: "", // Always reset password field
       });
     }
   }, [user, open, form]);
 
-  async function onSubmit(data: UserFormValues) {
-    toast.promise(
-      async () => {
-        const url = user ? `/api/users/${user.id}` : "/api/users";
-        const res = await fetch(url, {
-          method: user ? "PUT" : "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
-
-        if (!res.ok) {
-          const error = await res.text();
-          throw new Error(error || "Failed to save user");
-        }
-
-        queryClient.invalidateQueries({ queryKey: ["users"] });
-        onOpenChange(false);
-      },
-      {
-        loading: t("dialog.saving"),
-        success: t(user ? "dialog.userUpdated" : "dialog.userCreated"),
-        error: t("dialog.errorSaving"),
-      },
-    );
+  // Handle form submission
+  function onSubmit(data: UserFormValues) {
+    // Remove empty password when editing
+    if (user && data.password === "") {
+      const { ...restData } = data;
+      onSave?.(restData);
+    } else {
+      onSave?.(data);
+    }
   }
 
   // Get form validation state
-  const { isValid, isDirty } = form.formState;
+  const { isValid, isDirty, isSubmitting } = form.formState;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -136,7 +133,7 @@ export function UserDialog({ open, onOpenChange, user }: UserDialogProps) {
                 <FormItem>
                   <FormLabel>{t("form.name")}</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input placeholder={t("form.namePlaceholder")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -151,29 +148,43 @@ export function UserDialog({ open, onOpenChange, user }: UserDialogProps) {
                   <FormControl>
                     <Input
                       type="email"
+                      placeholder={t("form.emailPlaceholder")}
                       {...field}
-                      disabled={!!user} // Disable field when editing existing user
+                      disabled={!!user} // Disable email editing for existing users
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            {!user && (
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("form.password")}</FormLabel>
-                    <FormControl>
-                      <Input type="password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {user ? t("form.newPassword") : t("form.password")}
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder={
+                        user
+                          ? t("form.newPasswordPlaceholder")
+                          : t("form.passwordPlaceholder")
+                      }
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                  {user && (
+                    <p className="text-xs text-muted-foreground">
+                      {t("form.passwordHint")}
+                    </p>
+                  )}
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="role"
@@ -201,7 +212,18 @@ export function UserDialog({ open, onOpenChange, user }: UserDialogProps) {
               )}
             />
             <DialogFooter>
-              <Button type="submit" disabled={!isValid || !isDirty}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => onOpenChange(false)}
+                disabled={isSubmitting}
+              >
+                {t("dialog.cancel")}
+              </Button>
+              <Button
+                type="submit"
+                disabled={!isValid || !isDirty || isSubmitting}
+              >
                 {t(user ? "dialog.save" : "dialog.create")}
               </Button>
             </DialogFooter>

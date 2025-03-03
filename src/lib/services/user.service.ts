@@ -1,24 +1,52 @@
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: "/api",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-export type User = {
-  id: string;
-  name: string | null;
-  email: string | null;
-  role: string;
-  createdAt: string;
-};
+import { api, AxiosResponse } from "@/lib/api";
+import { User, CreateUserData, UpdateUserData } from "@/types/user";
 
 export const UserService = {
-  getUsers: () => api.get<User[]>("/users"),
-  deleteUser: (userId: string) => api.delete(`/users/${userId}`),
-  createUser: (userData: Partial<User>) => api.post("/users", userData),
-  updateUser: (userId: string, userData: Partial<User>) =>
-    api.put(`/users/${userId}`, userData),
+  /**
+   * Get all users with optional filtering
+   */
+  getUsers: (params?: { role?: string }): Promise<AxiosResponse<User[]>> =>
+    api.get("/users", { params }),
+
+  /**
+   * Get a specific user by ID
+   */
+  getUser: (userId: string): Promise<AxiosResponse<User>> =>
+    api.get(`/users/${userId}`),
+
+  /**
+   * Create a new user
+   */
+  createUser: (userData: CreateUserData): Promise<AxiosResponse<User>> =>
+    api.post("/users", userData),
+
+  /**
+   * Update an existing user
+   */
+  updateUser: (
+    userId: string,
+    userData: UpdateUserData,
+  ): Promise<AxiosResponse<User>> => api.put(`/users/${userId}`, userData),
+
+  /**
+   * Delete a user
+   */
+  deleteUser: (userId: string): Promise<AxiosResponse<void>> =>
+    api.delete(`/users/${userId}`),
+
+  /**
+   * Update user password
+   */
+  updatePassword: (
+    userId: string,
+    data: { currentPassword: string; newPassword: string },
+  ): Promise<AxiosResponse<void>> => api.put(`/users/${userId}/password`, data),
+
+  /**
+   * Check if email exists (for registration validation)
+   */
+  checkEmailExists: (
+    email: string,
+  ): Promise<AxiosResponse<{ exists: boolean }>> =>
+    api.get(`/users/check-email?email=${encodeURIComponent(email)}`),
 };
