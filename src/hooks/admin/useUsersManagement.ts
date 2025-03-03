@@ -4,26 +4,37 @@ import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { UserService } from "@/lib/services/user.service";
 import { User, UserSortConfig } from "@/types/user";
-import debounce from "lodash/debounce";
+
+type CreateUserData = {
+  name: string;
+  email: string;
+  password: string;
+  role: "admin" | "user";
+};
+
+type UpdateUserData = Partial<Omit<CreateUserData, "password">>;
 
 export const useUsersManagement = () => {
   const t = useTranslations("admin.users");
   const queryClient = useQueryClient();
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [tempSearchQuery, setTempSearchQuery] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [tempRoleFilter, setTempRoleFilter] = useState<
+    "all" | "admin" | "user"
+  >("all");
   const [roleFilter, setRoleFilter] = useState<"all" | "admin" | "user">("all");
   const [sortConfig, setSortConfig] = useState<UserSortConfig>({
     field: "name",
     direction: "asc",
   });
 
-  // Fetch users with improved caching strategy
   const {
     data: users = [],
     isLoading,
     isError,
-  } = useQuery({
+  } = useQuery<User[]>({
     queryKey: ["users", roleFilter],
     queryFn: async () => {
       const response = await UserService.getUsers(
@@ -32,74 +43,45 @@ export const useUsersManagement = () => {
       return response.data;
     },
     staleTime: 60000, // 1 minute before refetch
-    cacheTime: 300000, // 5 minutes cache
     retry: 2,
-    onError: () => {
-      toast.error(t("dialog.errorLoading"));
-    },
   });
 
   // Filter and sort users
   const filteredAndSortedUsers = useMemo(() => {
-    let result = [...users];
+    const result = users ?? [];
 
     // Apply search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      result = result.filter(
+      return result.filter(
         (user) =>
           user.name?.toLowerCase().includes(query) ||
           user.email?.toLowerCase().includes(query),
       );
     }
 
-    // Apply sorting
-    result.sort((a, b) => {
+    return result.sort((a, b) => {
       const aValue = a[sortConfig.field];
       const bValue = b[sortConfig.field];
 
       if (!aValue || !bValue) return 0;
 
-      let comparison = 0;
-      if (typeof aValue === "string") {
-        comparison = aValue.localeCompare(bValue as string);
-      } else {
-        comparison =
-          new Date(aValue).getTime() - new Date(bValue as string).getTime();
+      if (sortConfig.field === "createdAt") {
+        return sortConfig.direction === "asc"
+          ? new Date(aValue).getTime() - new Date(bValue).getTime()
+          : new Date(bValue).getTime() - new Date(aValue).getTime();
       }
 
+      const comparison = String(aValue).localeCompare(String(bValue));
       return sortConfig.direction === "asc" ? comparison : -comparison;
     });
-
-    return result;
   }, [users, searchQuery, sortConfig]);
-
-  // Debounced search handler
-  const handleSearch = useMemo(
-    () =>
-      debounce((query: string) => {
-        setSearchQuery(query);
-      }, 300),
-    [],
-  );
-
-  // Sort handler
-  const handleSort = useCallback((field: UserSortConfig["field"]) => {
-    setSortConfig((current) => ({
-      field,
-      direction:
-        current.field === field && current.direction === "asc" ? "desc" : "asc",
-    }));
-  }, []);
-
-  // Filter handler
-  const handleFilterRole = useCallback((role: typeof roleFilter) => {
-    setRoleFilter(role);
-  }, []);
 
   // Clear filters
   const handleClearFilters = useCallback(() => {
+    setTempSearchQuery("");
     setSearchQuery("");
+    setTempRoleFilter("all");
     setRoleFilter("all");
     setSortConfig({ field: "name", direction: "asc" });
   }, []);
@@ -121,7 +103,7 @@ export const useUsersManagement = () => {
 
   // Create user mutation
   const createUser = useMutation({
-    mutationFn: UserService.createUser,
+    mutationFn: (data: CreateUserData) => UserService.createUser(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
       toast.success(t("dialog.userCreated"));
@@ -135,7 +117,7 @@ export const useUsersManagement = () => {
 
   // Update user mutation
   const updateUser = useMutation({
-    mutationFn: ({ id, data }: { id: string; data: Partial<User> }) =>
+    mutationFn: ({ id, data }: { id: string; data: UpdateUserData }) =>
       UserService.updateUser(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
@@ -175,18 +157,32 @@ export const useUsersManagement = () => {
   }, []);
 
   const handleSaveUser = useCallback(
-    (userData: Partial<User>) => {
+    (userData: CreateUserData) => {
       if (selectedUser) {
+        const { ...updateData } = userData;
         updateUser.mutate({
           id: selectedUser.id,
-          data: userData,
+          data: updateData,
         });
       } else {
         createUser.mutate(userData);
       }
     },
-    [selectedUser, createUser, updateUser],
+    [selectedUser, createUser, updateUser, t],
   );
+
+  const handleSearchChange = (query: string) => {
+    setTempSearchQuery(query);
+  };
+
+  const handleRoleFilterChange = (role: "all" | "admin" | "user") => {
+    setTempRoleFilter(role);
+  };
+
+  const applyFilters = () => {
+    setSearchQuery(tempSearchQuery);
+    setRoleFilter(tempRoleFilter);
+  };
 
   return {
     users: filteredAndSortedUsers,
@@ -195,11 +191,13 @@ export const useUsersManagement = () => {
     selectedUser,
     dialogOpen,
     searchQuery,
+    tempSearchQuery,
     roleFilter,
+    tempRoleFilter,
     sortConfig,
-    handleSearch,
-    handleSort,
-    handleFilterRole,
+    handleSearchChange,
+    handleRoleFilterChange,
+    applyFilters,
     handleClearFilters,
     handleEdit,
     handleDelete,

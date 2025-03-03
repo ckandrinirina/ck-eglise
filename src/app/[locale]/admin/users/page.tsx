@@ -54,11 +54,14 @@ export default function UsersPage() {
     selectedUser,
     dialogOpen,
     searchQuery,
+    tempSearchQuery,
     roleFilter,
+    tempRoleFilter,
     sortConfig,
-    handleSearch,
+    handleSearchChange,
+    handleRoleFilterChange,
+    applyFilters,
     handleSort,
-    handleFilterRole,
     handleClearFilters,
     handleEdit,
     handleDelete,
@@ -145,22 +148,20 @@ export default function UsersPage() {
 
       <Card className="p-4">
         <div className="flex flex-col sm:flex-row gap-4 mb-4">
-          <div className="flex-1">
-            <div className="relative">
+          <div className="flex gap-2 flex-1">
+            <div className="relative flex-1">
               <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder={t("search.placeholder")}
-                onChange={(e) => handleSearch(e.target.value)}
+                onChange={(e) => handleSearchChange(e.target.value)}
                 className="pl-8"
-                value={searchQuery}
+                value={tempSearchQuery}
               />
             </div>
-          </div>
-          <div className="flex gap-2">
             <Select
-              value={roleFilter}
+              value={tempRoleFilter}
               onValueChange={(value: "all" | "admin" | "user") =>
-                handleFilterRole(value)
+                handleRoleFilterChange(value)
               }
             >
               <SelectTrigger className="w-[180px]">
@@ -172,6 +173,9 @@ export default function UsersPage() {
                 <SelectItem value="user">{t("filter.user")}</SelectItem>
               </SelectContent>
             </Select>
+            <Button onClick={applyFilters} className="shrink-0">
+              {t("filter.apply")}
+            </Button>
             {(searchQuery ||
               roleFilter !== "all" ||
               sortConfig.field !== "name" ||

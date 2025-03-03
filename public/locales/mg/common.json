@@ -3,7 +3,7 @@
     "home": "Fandraisana",
     "dashboard": "Tabilao",
     "login": "Hiditra",
-    "logout": "Hivoaka"
+    "logout": "Hiala"
   },
   "language": {
     "en": "Anglisy",
@@ -12,29 +12,29 @@
   },
   "home": {
     "welcome": "Tonga soa",
-    "description": "Rindran-draharahan'ny Fiangonana"
+    "description": "Fitantanana ny Fiangonana"
   },
   "auth": {
     "login": {
       "title": "Tonga soa indray",
-      "description": "Ampidiro ny mombamomba anao mba hiditra amin'ny kaontinao",
+      "description": "Ampidiro ny mombamomba anao mba hiditra ao amin'ny kaontinao",
       "username": "Anarana",
-      "password": "Teny miafina",
+      "password": "Tenimiafina",
       "email": "Mailaka",
-      "emailPlaceholder": "Ampidiro ny adiresy mailaka anao",
-      "usernamePlaceholder": "Ampidiro ny anaranao",
-      "passwordPlaceholder": "Ampidiro ny teny miafina",
+      "emailPlaceholder": "Ampidiro ny adiresy mailaka",
+      "usernamePlaceholder": "Ampidiro ny anarana",
+      "passwordPlaceholder": "Ampidiro ny tenimiafina",
       "submit": "Hiditra",
-      "submitting": "Am-pidirana...",
+      "submitting": "Eo am-pidirana...",
       "validation": {
-        "usernameRequired": "Ny anarana dia tsy maintsy ahitana litera 3 farafahakeliny",
-        "passwordRequired": "Ny teny miafina dia tsy maintsy ahitana litera 8 farafahakeliny",
-        "emailRequired": "Ampidiro ny adiresy mailaka marina"
+        "usernameRequired": "Ny anarana dia tsy maintsy mihoatra ny 3 tarehintsoratra",
+        "passwordRequired": "Ny tenimiafina dia tsy maintsy mihoatra ny 8 tarehintsoratra",
+        "emailRequired": "Mampidira mailaka marina azafady"
       },
       "error": {
-        "title": "Hadisoana amin'ny fidirana",
-        "invalidCredentials": "Mailaka na teny miafina diso",
-        "generic": "Nisy hadisoana nitranga tamin'ny fidirana"
+        "title": "Hadisoana tamin'ny fidirana",
+        "invalidCredentials": "Diso ny mailaka na ny tenimiafina",
+        "generic": "Nisy olana nitranga tamin'ny fidirana"
       },
       "success": {
         "loggedIn": "Tafiditra soa aman-tsara"
@@ -42,89 +42,91 @@
     }
   },
   "admin": {
-    "title": "Toerana Mpitantana",
+    "title": "Fitantanana",
     "account": {
       "anonymous": "Mpampiasa"
     },
     "navigation": {
-      "title": "Fizorana"
+      "title": "Fivoahana"
     },
     "administration": {
       "title": "Fitantanana"
     },
     "dashboard": {
       "title": "Tabilao",
-      "welcome": "Tongasoa eto amin'ny tabilaonao",
+      "welcome": "Tonga soa eto amin'ny tabilaonao",
       "stats": {
         "totalUsers": "Isan'ny Mpampiasa",
         "activeSessions": "Mpampiasa Mavitrika",
         "totalEvents": "Isan'ny Hetsika"
       },
-      "recentActivity": "Asa Vao Haingana",
+      "recentActivity": "Hetsika Farany",
       "userGrowth": "Fitomboan'ny Mpampiasa",
-      "quickStats": "Antontan'isa Haingana"
+      "quickStats": "Antontan'isa Fohifohy"
     },
     "users": {
       "title": "Mpampiasa",
-      "description": "Hitantana ny kaonty sy ny fahazoan-dàlana ny mpampiasa.",
-      "addUser": "Hanampy mpampiasa",
-      "error": {
-        "title": "Hadisoana amin'ny fakana",
-        "description": "Nisy hadisoana nitranga teo am-paka ny mpampiasa. Andramo indray afaka kelikely."
-      },
-      "noUsers": {
-        "title": "Tsy Misy Mpampiasa Hita",
-        "description": "Mbola tsy misy mpampiasa ao amin'ny rafitra. Ampio ny mpampiasa voalohany mba hanombohana."
-      },
+      "description": "Fitantanana ny kaonty sy ny fahazoan-dalana.",
+      "addUser": "Hanampy Mpampiasa",
       "search": {
-        "placeholder": "Hitady mpampiasa...",
-        "clearFilters": "Fafao ny sivana"
+        "placeholder": "Hikaroka mpampiasa...",
+        "clearFilters": "Hamafa ny sivana",
+        "apply": "Ampiharo"
       },
       "filter": {
-        "all": "Andraikitra rehetra",
+        "all": "Anjara rehetra",
         "byRole": "Sivana araka ny andraikitra",
         "admin": "Mpitantana",
-        "user": "Mpampiasa"
+        "user": "Mpampiasa",
+        "apply": "Ampiharo"
       },
       "noSearchResults": {
         "title": "Tsy misy valiny",
-        "description": "Tsy misy mpampiasa mifanaraka amin'ny fikarohana. Andramo ny teny fikarohana hafa."
+        "description": "Tsy misy mpampiasa mifanaraka amin'ny fikarohana. Andramo amin'ny teny hafa."
+      },
+      "error": {
+        "title": "Hadisoana tamin'ny fakana",
+        "description": "Nisy olana nitranga tamin'ny fakana ny mpampiasa. Andramo indray."
+      },
+      "noUsers": {
+        "title": "Tsy misy mpampiasa",
+        "description": "Tsy mbola misy mpampiasa ao amin'ny rafitra. Ampio ny mpampiasa voalohany."
       },
       "table": {
         "name": "Anarana",
         "email": "Mailaka",
         "role": "Andraikitra",
-        "status": "Toe-javatra",
-        "createdAt": "Noforonina tamin'ny",
-        "sortAsc": "Lahatry miakatra",
-        "sortDesc": "Lahatry midina"
+        "status": "Toetra",
+        "createdAt": "Noforonina",
+        "sortAsc": "Laharana miakatra",
+        "sortDesc": "Laharana midina"
       },
       "actions": {
+        "more": "Bebe kokoa",
         "edit": "Hanova",
-        "delete": "Hamafa",
-        "more": "Bebe kokoa"
+        "delete": "Hamafa"
       },
       "dialog": {
-        "createUser": "Hamorona mpampiasa",
-        "editUser": "Hanova mpampiasa",
-        "createUserDesc": "Hanampy mpampiasa vaovao amin'ny rafitra.",
-        "editUserDesc": "Hanova ny mombamomba sy ny fahazoan-dàlana ny mpampiasa.",
+        "createUser": "Hamorona Mpampiasa",
+        "editUser": "Hanova Mpampiasa",
+        "createUserDesc": "Hanampy mpampiasa vaovao ao amin'ny rafitra.",
+        "editUserDesc": "Hanova ny mombamomba sy ny fahazoan-dalan'ny mpampiasa.",
         "success": "Fahombiazana",
         "error": "Hadisoana",
         "userCreated": "Mpampiasa noforonina soa aman-tsara",
         "userUpdated": "Mpampiasa nohavaozina soa aman-tsara",
         "userDeleted": "Mpampiasa voafafa soa aman-tsara",
-        "errorSaving": "Tsy nahomby ny fitahirizana",
+        "errorSaving": "Tsy nahomby ny fanovana",
         "errorDeleting": "Tsy nahomby ny famafana",
-        "errorLoading": "Tsy nahomby ny fakàna mpampiasa",
+        "errorLoading": "Tsy nahomby ny fakana mpampiasa",
         "errorCreating": "Tsy nahomby ny famoronana mpampiasa",
         "errorUpdating": "Tsy nahomby ny fanavaozana mpampiasa",
         "confirmDelete": "Tena te hamafa ity mpampiasa ity ve ianao?",
         "save": "Hitahiry fanovana",
         "create": "Hamorona mpampiasa",
-        "saving": "Am-pitahirizana...",
-        "deleting": "Am-pamafana...",
-        "cancel": "Ajanona",
+        "saving": "Mitahiry...",
+        "deleting": "Mamafa...",
+        "cancel": "Aoka ihany",
         "confirm": "Ekena"
       },
       "form": {
@@ -134,9 +136,9 @@
         "emailPlaceholder": "Ampidiro ny adiresy mailaka",
         "password": "Tenimiafina",
         "passwordPlaceholder": "Ampidiro ny tenimiafina",
-        "newPassword": "Tenimiafina vaovao",
-        "newPasswordPlaceholder": "Ampidiro ny tenimiafina vaovao (safidy)",
-        "passwordHint": "Avelao ho foana raha toa ka tsy hanova tenimiafina",
+        "newPassword": "Tenimiafina Vaovao",
+        "newPasswordPlaceholder": "Ampidiro ny tenimiafina vaovao (tsy voatery)",
+        "passwordHint": "Avelao foana raha tsy hanova tenimiafina",
         "role": "Andraikitra",
         "selectRole": "Misafidiana andraikitra",
         "roleUser": "Mpampiasa",
@@ -144,18 +146,18 @@
       }
     },
     "settings": {
-      "title": "Safidy",
-      "description": "Fitantanana ny safidy fampiharana",
+      "title": "Firafitra",
+      "description": "Fitantanana ny firafitry ny rindranasa",
       "general": {
-        "title": "Safidy Ankapobeny",
+        "title": "Firafitra Ankapobeny",
         "siteName": "Anaran'ny Tranonkala",
         "siteNameDescription": "Ny anaran'ny tranonkalanao aseho amin'ny mpampiasa",
         "environment": "Tontolo",
-        "environmentDescription": "Tontolo fampiharana ankehitriny"
+        "environmentDescription": "Ny tontolo ampiasana ankehitriny"
       },
       "security": {
-        "title": "Fiarovana",
-        "sessionTimeout": "Fe-potoana Fivoahana",
+        "title": "Firafitry ny Fiarovana",
+        "sessionTimeout": "Fe-potoana Hivoahana",
         "sessionTimeoutDescription": "Fotoana hivoahan'ny mpampiasa tsy mavitrika"
       },
       "actions": {

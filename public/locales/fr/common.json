@@ -70,13 +70,15 @@
       "addUser": "Ajouter un utilisateur",
       "search": {
         "placeholder": "Rechercher un utilisateur...",
-        "clearFilters": "Effacer les filtres"
+        "clearFilters": "Effacer les filtres",
+        "apply": "Appliquer"
       },
       "filter": {
         "all": "Tous les rôles",
         "byRole": "Filtrer par rôle",
         "admin": "Administrateur",
-        "user": "Utilisateur"
+        "user": "Utilisateur",
+        "apply": "Appliquer"
       },
       "noSearchResults": {
         "title": "Aucun résultat trouvé",
