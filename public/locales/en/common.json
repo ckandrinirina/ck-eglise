@@ -82,7 +82,7 @@
       "quickStats": "Quick Stats"
     },
     "users": {
-      "title": "Users Management",
+      "title": "Users",
       "subtitle": "Manage application users",
       "createNew": "Create new user",
       "description": "Manage user accounts and permissions.",
@@ -165,7 +165,7 @@
       }
     },
     "dropdowns": {
-      "title": "Dropdown Management",
+      "title": "Dropdown",
       "subtitle": "Manage dropdown values used throughout the application",
       "buttons": {
         "add": "Add value",

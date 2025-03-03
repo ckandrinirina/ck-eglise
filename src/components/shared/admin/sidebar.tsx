@@ -51,6 +51,10 @@ const navItems = [
         url: "/admin/users",
       },
       {
+        title: "dropdowns", // Added new item
+        url: "/admin/dropdowns",
+      },
+      {
         title: "settings", // Changed to match translation key pattern
         url: "/admin/settings",
       },

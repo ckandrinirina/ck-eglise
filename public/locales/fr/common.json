@@ -82,7 +82,7 @@
       "quickStats": "Statistiques Rapides"
     },
     "users": {
-      "title": "Gestion des utilisateurs",
+      "title": "Utilisateurs",
       "subtitle": "Gérer les utilisateurs de l'application",
       "createNew": "Créer un nouvel utilisateur",
       "description": "Gérez les comptes et les permissions des utilisateurs.",
@@ -165,7 +165,7 @@
       }
     },
     "dropdowns": {
-      "title": "Gestion des listes déroulantes",
+      "title": "Listes déroulantes",
       "subtitle": "Gérer les valeurs disponibles dans les menus déroulants",
       "buttons": {
         "add": "Ajouter une valeur",
