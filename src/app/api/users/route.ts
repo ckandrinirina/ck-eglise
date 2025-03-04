@@ -25,6 +25,15 @@ export async function GET(request: Request) {
         name: true,
         email: true,
         role: true,
+        territoryId: true,
+        territory: {
+          select: {
+            id: true,
+            name: true,
+            nameFr: true,
+            nameMg: true,
+          },
+        },
         createdAt: true,
         updatedAt: true,
       },
@@ -49,7 +58,7 @@ export async function POST(req: Request) {
     }
 
     const data = await req.json();
-    const { name, email, password, role } = data;
+    const { name, email, password, role, territoryId } = data;
 
     // Check if user exists
     const existingUser = await prisma.user.findUnique({
@@ -69,6 +78,7 @@ export async function POST(req: Request) {
         name,
         email,
         role,
+        territoryId,
         password: hashedPassword,
       },
       select: {
@@ -76,6 +86,15 @@ export async function POST(req: Request) {
         name: true,
         email: true,
         role: true,
+        territoryId: true,
+        territory: {
+          select: {
+            id: true,
+            name: true,
+            nameFr: true,
+            nameMg: true,
+          },
+        },
         createdAt: true,
         updatedAt: true,
       },
@@ -97,7 +116,7 @@ export async function PUT(req: Request) {
     }
 
     const data = await req.json();
-    const { id, name, password, role } = data;
+    const { id, name, password, role, territoryId } = data;
 
     // Check if user exists
     const existingUser = await prisma.user.findUnique({
@@ -112,6 +131,7 @@ export async function PUT(req: Request) {
     const updateData: Prisma.UserUpdateInput = {
       name,
       role,
+      territoryId,
     };
 
     // Only update password if provided
@@ -127,6 +147,15 @@ export async function PUT(req: Request) {
         name: true,
         email: true,
         role: true,
+        territoryId: true,
+        territory: {
+          select: {
+            id: true,
+            name: true,
+            nameFr: true,
+            nameMg: true,
+          },
+        },
         createdAt: true,
         updatedAt: true,
       },

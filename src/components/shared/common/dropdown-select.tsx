@@ -90,7 +90,7 @@ export const DropdownSelect = memo(
     value,
     onChange,
     isMultiple = false,
-    placeholder = "Select...",
+    placeholder,
     className,
     label,
     description,
@@ -243,12 +243,12 @@ export const DropdownSelect = memo(
         <SelectTrigger
           className={cn("w-full", error && "border-destructive", className)}
         >
-          <SelectValue placeholder={placeholder} />
+          <SelectValue placeholder={placeholder || t("dropdown.select")} />
         </SelectTrigger>
         <SelectContent>
           {dropdownItems.length === 0 ? (
             <p className="p-2 text-sm text-muted-foreground">
-              {isLoading ? t("common.loading") : t("common.noOptions")}
+              {isLoading ? t("dropdown.loading") : t("dropdown.noOptions")}
             </p>
           ) : (
             dropdownItems.map((item) => (
@@ -305,7 +305,9 @@ export const DropdownSelect = memo(
                     </Badge>
                   ))
                 ) : (
-                  <span className="text-muted-foreground">{placeholder}</span>
+                  <span className="text-muted-foreground">
+                    {placeholder || t("dropdown.select")}
+                  </span>
                 )}
               </div>
               <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
@@ -313,9 +315,9 @@ export const DropdownSelect = memo(
           </PopoverTrigger>
           <PopoverContent className="w-full p-0" align="start">
             <Command>
-              <CommandInput placeholder={t("common.search")} />
+              <CommandInput placeholder={t("dropdown.search")} />
               <CommandEmpty>
-                {isLoading ? t("common.loading") : t("common.noResults")}
+                {isLoading ? t("dropdown.loading") : t("dropdown.noResults")}
               </CommandEmpty>
               <CommandGroup className="max-h-64 overflow-y-auto">
                 {dropdownItems.map((item) => (
@@ -346,7 +348,7 @@ export const DropdownSelect = memo(
                     onClick={clearSelection}
                     type="button"
                   >
-                    {t("common.clearSelection")}
+                    {t("dropdown.clearSelection")}
                   </Button>
                 </div>
               )}

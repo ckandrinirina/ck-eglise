@@ -116,6 +116,7 @@
         "email": "Email",
         "role": "Role",
         "status": "Status",
+        "territory": "Territory",
         "createdAt": "Created At",
         "sortAsc": "Sort ascending",
         "sortDesc": "Sort descending"
@@ -161,7 +162,10 @@
         "role": "Role",
         "selectRole": "Select a role",
         "roleUser": "User",
-        "roleAdmin": "Administrator"
+        "roleAdmin": "Administrator",
+        "territory": "Territory",
+        "territoryDescription": "User's assigned territory",
+        "selectTerritory": "Select a territory"
       }
     },
     "dropdowns": {
@@ -273,5 +277,14 @@
   "profile": {
     "title": "User Profile",
     "updateInformation": "Update Information"
+  },
+  "dropdown": {
+    "loading": "Loading...",
+    "noOptions": "No options available",
+    "noResults": "No results found",
+    "search": "Search...",
+    "clearSelection": "Clear selection",
+    "select": "Select...",
+    "selectedItems": "{count} item(s) selected"
   }
 }

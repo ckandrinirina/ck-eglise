@@ -45,9 +45,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { usePathname } from "next/navigation";
+import { useCallback } from "react";
+import { User } from "@/types/users/user";
 
 export default function UsersPage() {
   const t = useTranslations("admin.users");
+  const pathname = usePathname();
+  const locale = pathname?.split("/")[1];
   const {
     users,
     isLoading,
@@ -70,6 +75,23 @@ export default function UsersPage() {
     handleDialogClose,
     handleSaveUser,
   } = useUsersManagement();
+
+  // Function to get localized territory name
+  const getTerritoryName = useCallback(
+    (user: User) => {
+      if (!user.territory) return "-";
+
+      switch (locale) {
+        case "fr":
+          return user.territory.nameFr || user.territory.name;
+        case "mg":
+          return user.territory.nameMg || user.territory.name;
+        default:
+          return user.territory.name;
+      }
+    },
+    [locale],
+  );
 
   const showDeleteConfirmation = (userId: string) => {
     const { confirmDelete } = handleDelete(userId);
@@ -143,7 +165,6 @@ export default function UsersPage() {
         <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
         <p className="text-muted-foreground">{t("description")}</p>
       </div>
-
       <Card className="p-6">
         <div className="flex justify-between items-center mb-6">
           <div className="flex gap-2">
@@ -278,6 +299,11 @@ export default function UsersPage() {
                       />
                     </div>
                   </TableHead>
+                  <TableHead>
+                    <div className="flex items-center">
+                      {t("table.territory")}
+                    </div>
+                  </TableHead>
                   <TableHead
                     onClick={() => handleSort("createdAt")}
                     className="cursor-pointer"
@@ -315,6 +341,7 @@ export default function UsersPage() {
                         {user.role}
                       </Badge>
                     </TableCell>
+                    <TableCell>{getTerritoryName(user)}</TableCell>
                     <TableCell>
                       {format(new Date(user.createdAt), "PPp")}
                     </TableCell>
