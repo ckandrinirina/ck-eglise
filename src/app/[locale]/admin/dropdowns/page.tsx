@@ -195,9 +195,50 @@ export default function DropdownsPage() {
     );
   };
 
+  // Render loading state
+  if (isLoading) {
+    return (
+      <div className="space-y-4 p-8">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
+          <p className="text-muted-foreground">{t("subtitle")}</p>
+        </div>
+        <Card className="p-6">
+          <div className="space-y-2">
+            {[...Array(5)].map((_, index) => (
+              <Skeleton key={index} className="h-12 w-full" />
+            ))}
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  // Render error state
+  if (isError) {
+    return (
+      <div className="space-y-4 p-8">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
+          <p className="text-muted-foreground">{t("subtitle")}</p>
+        </div>
+        <Card className="p-6">
+          <Alert variant="destructive" className="mb-4">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>{t("error.title")}</AlertTitle>
+            <AlertDescription>{t("error.description")}</AlertDescription>
+          </Alert>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-4 p-8">
-      <h1 className="text-3xl font-bold">{t("title")}</h1>
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
+        <p className="text-muted-foreground">{t("subtitle")}</p>
+      </div>
 
       <Card className="p-6">
         <div className="flex justify-between items-center mb-6">
@@ -268,8 +309,7 @@ export default function DropdownsPage() {
               size="sm"
               disabled={!searchQuery && parentFilter === "all" && !showDisabled}
             >
-              <X className="mr-2 h-4 w-4" />
-              {t("filters.clear")}
+              <X className="h-4 w-4" />
             </Button>
           </div>
         </div>

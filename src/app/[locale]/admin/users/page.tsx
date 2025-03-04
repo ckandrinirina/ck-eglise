@@ -44,6 +44,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
 
 export default function UsersPage() {
   const t = useTranslations("admin.users");
@@ -101,17 +102,16 @@ export default function UsersPage() {
   // Render loading state
   if (isLoading) {
     return (
-      <div className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div className="space-y-1">
-            <Skeleton className="h-8 w-48" />
-            <Skeleton className="h-4 w-64" />
-          </div>
-          <Skeleton className="h-9 w-32" />
+      <div className="space-y-4 p-8">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
+          <p className="text-muted-foreground">{t("description")}</p>
         </div>
-        <Card>
-          <div className="p-1">
-            <Skeleton className="h-[300px] w-full" />
+        <Card className="p-6">
+          <div className="space-y-2">
+            {[...Array(5)].map((_, index) => (
+              <Skeleton key={index} className="h-12 w-full" />
+            ))}
           </div>
         </Card>
       </div>
@@ -121,50 +121,59 @@ export default function UsersPage() {
   // Render error state
   if (isError) {
     return (
-      <Alert variant="destructive">
-        <AlertCircle className="h-4 w-4" />
-        <AlertTitle>{t("error.title")}</AlertTitle>
-        <AlertDescription>{t("error.description")}</AlertDescription>
-      </Alert>
+      <div className="space-y-4 p-8">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
+          <p className="text-muted-foreground">{t("description")}</p>
+        </div>
+        <Card className="p-6">
+          <Alert variant="destructive" className="mb-4">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>{t("error.title")}</AlertTitle>
+            <AlertDescription>{t("error.description")}</AlertDescription>
+          </Alert>
+        </Card>
+      </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div className="space-y-1">
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            {t("title")}
-          </h1>
-          <p className="text-sm sm:text-base text-muted-foreground">
-            {t("description")}
-          </p>
-        </div>
-        <Button onClick={handleAdd} className="w-full sm:w-auto">
-          <UserPlus className="mr-2 h-4 w-4" />
-          {t("addUser")}
-        </Button>
+    <div className="space-y-4 p-8">
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
+        <p className="text-muted-foreground">{t("description")}</p>
       </div>
 
-      <Card className="p-4">
-        <div className="flex flex-col sm:flex-row gap-4 mb-4">
-          <div className="flex gap-2 flex-1">
-            <div className="relative flex-1">
-              <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder={t("search.placeholder")}
-                onChange={(e) => handleSearchChange(e.target.value)}
-                className="pl-8"
-                value={tempSearchQuery}
-              />
-            </div>
+      <Card className="p-6">
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex gap-2">
+            <Button onClick={handleAdd} size="sm">
+              <UserPlus className="mr-2 h-4 w-4" />
+              {t("addUser")}
+            </Button>
+          </div>
+        </div>
+
+        {/* Filters */}
+        <div className="mb-6 flex flex-wrap gap-4">
+          {/* Search filter */}
+          <div className="flex-1 min-w-[200px]">
+            <Input
+              placeholder={t("search.placeholder")}
+              onChange={(e) => handleSearchChange(e.target.value)}
+              value={tempSearchQuery}
+            />
+          </div>
+
+          {/* Role filter */}
+          <div className="w-[200px]">
             <Select
               value={tempRoleFilter}
               onValueChange={(value: "all" | "admin" | "user") =>
                 handleRoleFilterChange(value)
               }
             >
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger>
                 <SelectValue placeholder={t("filter.byRole")} />
               </SelectTrigger>
               <SelectContent>
@@ -173,45 +182,54 @@ export default function UsersPage() {
                 <SelectItem value="user">{t("filter.user")}</SelectItem>
               </SelectContent>
             </Select>
-            <Button onClick={applyFilters} className="shrink-0">
+          </div>
+
+          {/* Apply/Clear filters */}
+          <div className="flex gap-2 ml-auto">
+            <Button variant="secondary" onClick={applyFilters} size="sm">
+              <Search className="mr-2 h-4 w-4" />
               {t("filter.apply")}
             </Button>
-            {(searchQuery ||
-              roleFilter !== "all" ||
-              sortConfig.field !== "name" ||
-              sortConfig.direction !== "asc") && (
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={handleClearFilters}
-                className="shrink-0"
-              >
-                <X className="h-4 w-4" />
-                <span className="sr-only">{t("search.clearFilters")}</span>
-              </Button>
-            )}
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  onClick={handleClearFilters}
+                  size="sm"
+                  disabled={
+                    searchQuery === "" &&
+                    roleFilter === "all" &&
+                    sortConfig.field === "name" &&
+                    sortConfig.direction === "asc"
+                  }
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{t("search.clearFilters")}</p>
+              </TooltipContent>
+            </Tooltip>
           </div>
         </div>
 
         {users.length === 0 ? (
-          <div className="text-center py-10">
-            <h3 className="text-lg font-medium mb-2">
-              {searchQuery ? t("noSearchResults.title") : t("noUsers.title")}
-            </h3>
-            <p className="text-muted-foreground mb-4">
+          <div className="py-8 text-center">
+            <p className="text-muted-foreground">
               {searchQuery
                 ? t("noSearchResults.description")
                 : t("noUsers.description")}
             </p>
             {!searchQuery && (
-              <Button onClick={handleAdd}>
+              <Button onClick={handleAdd} className="mt-4">
                 <UserPlus className="mr-2 h-4 w-4" />
                 {t("addUser")}
               </Button>
             )}
           </div>
         ) : (
-          <div className="min-w-[600px] overflow-x-auto">
+          <div className="rounded-md border overflow-hidden">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -219,46 +237,63 @@ export default function UsersPage() {
                     onClick={() => handleSort("name")}
                     className="cursor-pointer"
                   >
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center">
                       {t("table.name")}
-                      <ArrowUpDown className="h-4 w-4" />
-                      {sortConfig.field === "name" && (
-                        <span className="sr-only">
-                          {sortConfig.direction === "asc"
-                            ? t("table.sortAsc")
-                            : t("table.sortDesc")}
-                        </span>
-                      )}
+                      <ArrowUpDown
+                        className={`ml-2 h-4 w-4 ${
+                          sortConfig.field === "name"
+                            ? "opacity-100"
+                            : "opacity-40"
+                        }`}
+                      />
                     </div>
                   </TableHead>
                   <TableHead
                     onClick={() => handleSort("email")}
                     className="cursor-pointer"
                   >
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center">
                       {t("table.email")}
-                      <ArrowUpDown className="h-4 w-4" />
+                      <ArrowUpDown
+                        className={`ml-2 h-4 w-4 ${
+                          sortConfig.field === "email"
+                            ? "opacity-100"
+                            : "opacity-40"
+                        }`}
+                      />
                     </div>
                   </TableHead>
                   <TableHead
                     onClick={() => handleSort("role")}
                     className="cursor-pointer"
                   >
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center">
                       {t("table.role")}
-                      <ArrowUpDown className="h-4 w-4" />
+                      <ArrowUpDown
+                        className={`ml-2 h-4 w-4 ${
+                          sortConfig.field === "role"
+                            ? "opacity-100"
+                            : "opacity-40"
+                        }`}
+                      />
                     </div>
                   </TableHead>
                   <TableHead
                     onClick={() => handleSort("createdAt")}
                     className="cursor-pointer"
                   >
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center">
                       {t("table.createdAt")}
-                      <ArrowUpDown className="h-4 w-4" />
+                      <ArrowUpDown
+                        className={`ml-2 h-4 w-4 ${
+                          sortConfig.field === "createdAt"
+                            ? "opacity-100"
+                            : "opacity-40"
+                        }`}
+                      />
                     </div>
                   </TableHead>
-                  <TableHead className="w-[48px]"></TableHead>
+                  <TableHead className="w-[80px]"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -269,50 +304,55 @@ export default function UsersPage() {
                       {user.email}
                     </TableCell>
                     <TableCell>
-                      <span
-                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      <Badge
+                        variant="outline"
+                        className={`${
                           user.role === "admin"
-                            ? "bg-blue-100 text-blue-800"
+                            ? "bg-blue-50 text-blue-700 border-blue-200"
                             : "bg-gray-100 text-gray-800"
                         }`}
                       >
                         {user.role}
-                      </span>
+                      </Badge>
                     </TableCell>
                     <TableCell>
                       {format(new Date(user.createdAt), "PPp")}
                     </TableCell>
                     <TableCell>
-                      <DropdownMenu>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <DropdownMenuTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-8 w-8"
-                              >
-                                <MoreHorizontal className="h-4 w-4" />
-                                <span className="sr-only">
-                                  {t("actions.more")}
-                                </span>
-                              </Button>
-                            </DropdownMenuTrigger>
-                          </TooltipTrigger>
-                          <TooltipContent>{t("actions.more")}</TooltipContent>
-                        </Tooltip>
-                        <DropdownMenuContent align="end" className="w-[160px]">
-                          <DropdownMenuItem onClick={() => handleEdit(user)}>
-                            {t("actions.edit")}
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            className="text-red-600"
-                            onClick={() => showDeleteConfirmation(user.id)}
+                      <div className="flex justify-end">
+                        <DropdownMenu>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <DropdownMenuTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  className="h-8 w-8 p-0"
+                                  aria-label={t("actions.more")}
+                                >
+                                  <MoreHorizontal className="h-4 w-4" />
+                                </Button>
+                              </DropdownMenuTrigger>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>{t("actions.more")}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                          <DropdownMenuContent
+                            align="end"
+                            className="w-[160px]"
                           >
-                            {t("actions.delete")}
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
+                            <DropdownMenuItem onClick={() => handleEdit(user)}>
+                              {t("actions.edit")}
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              className="text-red-600"
+                              onClick={() => showDeleteConfirmation(user.id)}
+                            >
+                              {t("actions.delete")}
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}
