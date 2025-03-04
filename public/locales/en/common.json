@@ -95,6 +95,7 @@
       "filter": {
         "all": "All roles",
         "byRole": "Filter by role",
+        "byTerritory": "Filter by territory",
         "admin": "Administrator",
         "user": "User",
         "apply": "Apply"

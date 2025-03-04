@@ -81,6 +81,7 @@
       "filter": {
         "all": "Anjara rehetra",
         "byRole": "Sivana araka ny andraikitra",
+        "byTerritory": "Sivana araka ny faritra",
         "admin": "Mpitantana",
         "user": "Mpampiasa",
         "apply": "Ampiharo"

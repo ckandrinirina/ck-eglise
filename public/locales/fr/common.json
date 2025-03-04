@@ -95,6 +95,7 @@
       "filter": {
         "all": "Tous les rôles",
         "byRole": "Filtrer par rôle",
+        "byTerritory": "Filtrer par territoire",
         "admin": "Administrateur",
         "user": "Utilisateur",
         "apply": "Appliquer"
