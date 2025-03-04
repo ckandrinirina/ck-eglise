@@ -140,6 +140,15 @@ pnpm prisma db push
 pnpm prisma db seed
 ```
 
+### Migration Guidelines
+- Migrations must preserve existing data - no deletions allowed
+- Use soft deletion by adding status/deleted_at fields
+- Always include both up and down migration scripts
+- Test thoroughly in development environment
+- Document all data transformations
+- Follow semantic versioning for migration names
+- Include validation checks in migrations
+
 ### API Routes Pattern
 ```ts
 // Route handlers use initialization check
