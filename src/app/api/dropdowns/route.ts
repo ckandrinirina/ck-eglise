@@ -5,14 +5,29 @@ import { prisma } from "@/lib/db";
 import { z } from "zod";
 
 // Validation schema for creating dropdowns
-const createDropdownSchema = z.object({
-  name: z.string().min(1),
-  nameFr: z.string().nullable().optional(),
-  nameMg: z.string().nullable().optional(),
-  isParent: z.boolean().default(false),
-  parentId: z.string().nullable().optional(),
-  isEnabled: z.boolean().default(true),
-});
+const createDropdownSchema = z
+  .object({
+    name: z.string().min(1),
+    nameFr: z.string().nullable().optional(),
+    nameMg: z.string().nullable().optional(),
+    key: z.string().nullable().optional(),
+    isParent: z.boolean().default(false),
+    parentId: z.string().nullable().optional(),
+    isEnabled: z.boolean().default(true),
+  })
+  .refine(
+    (data) => {
+      // Key is required if dropdown is a parent
+      if (data.isParent && (!data.key || data.key.trim() === "")) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: "Key is required for parent categories",
+      path: ["key"],
+    },
+  );
 
 // GET /api/dropdowns - Get all dropdowns with optional filters
 export async function GET(request: NextRequest) {
@@ -57,6 +72,7 @@ export async function GET(request: NextRequest) {
             name: true,
             nameFr: true,
             nameMg: true,
+            key: true,
             isParent: true,
           },
         },
@@ -66,6 +82,7 @@ export async function GET(request: NextRequest) {
             name: true,
             nameFr: true,
             nameMg: true,
+            key: true,
             isEnabled: true,
           },
           where: includeDisabled ? undefined : { isEnabled: true },
@@ -101,7 +118,7 @@ export async function POST(request: NextRequest) {
       return new NextResponse(`Invalid data: ${errorMessage}`, { status: 400 });
     }
 
-    const { name, nameFr, nameMg, isParent, parentId, isEnabled } =
+    const { name, nameFr, nameMg, key, isParent, parentId, isEnabled } =
       validation.data;
 
     // Validate parent-child relationship
@@ -121,12 +138,24 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Check if key is unique if provided
+    if (key) {
+      const existingDropdown = await prisma.dropdown.findFirst({
+        where: { key },
+      });
+
+      if (existingDropdown) {
+        return new NextResponse("Key must be unique", { status: 400 });
+      }
+    }
+
     // Create dropdown
     const dropdown = await prisma.dropdown.create({
       data: {
         name,
         nameFr,
         nameMg,
+        key: isParent ? key : null, // Only set key for parent dropdowns
         isParent,
         parentId,
         isEnabled: isEnabled ?? true,

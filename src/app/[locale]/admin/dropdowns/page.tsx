@@ -33,6 +33,7 @@ import {
   Ban,
   Layers,
   ChevronRight,
+  Key,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { DropdownDialog } from "@/components/shared/admin/dropdowns/dropdown-dialog";
@@ -137,6 +138,16 @@ export default function DropdownsPage() {
           <Badge variant="outline" className="ml-2">
             <Layers className="h-3 w-3 mr-1" />
             {t("table.parent")}
+          </Badge>
+        )}
+
+        {dropdown.isParent && dropdown.key && (
+          <Badge
+            variant="outline"
+            className="ml-2 bg-blue-50 text-blue-700 border-blue-200"
+          >
+            <Key className="h-3 w-3 mr-1" />
+            {dropdown.key}
           </Badge>
         )}
 

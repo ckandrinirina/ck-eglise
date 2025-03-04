@@ -36,15 +36,30 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 
-// Form schema
-const formSchema = z.object({
-  name: z.string().min(1, { message: "Name is required" }),
-  nameFr: z.string().nullable().optional(),
-  nameMg: z.string().nullable().optional(),
-  isParent: z.boolean().default(false),
-  parentId: z.string().nullable().optional(),
-  isEnabled: z.boolean().default(true),
-});
+// Form schema with conditional validation for key field
+const formSchema = z
+  .object({
+    name: z.string().min(1, { message: "Name is required" }),
+    nameFr: z.string().nullable().optional(),
+    nameMg: z.string().nullable().optional(),
+    key: z.string().nullable().optional(),
+    isParent: z.boolean().default(false),
+    parentId: z.string().nullable().optional(),
+    isEnabled: z.boolean().default(true),
+  })
+  .refine(
+    (data) => {
+      // Key is required if the dropdown is a parent
+      if (data.isParent && (!data.key || data.key.trim() === "")) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: "Key is required for parent categories",
+      path: ["key"],
+    },
+  );
 
 type FormValues = z.infer<typeof formSchema>;
 
@@ -81,6 +96,7 @@ export const DropdownDialog = ({
       name: "",
       nameFr: null,
       nameMg: null,
+      key: null,
       isParent: false,
       parentId: null,
       isEnabled: true,
@@ -98,6 +114,7 @@ export const DropdownDialog = ({
           name: dropdown.name,
           nameFr: dropdown.nameFr || null,
           nameMg: dropdown.nameMg || null,
+          key: dropdown.key || null,
           isParent: dropdown.isParent,
           parentId: dropdown.parentId || null,
           isEnabled: dropdown.isEnabled,
@@ -107,6 +124,7 @@ export const DropdownDialog = ({
           name: "",
           nameFr: null,
           nameMg: null,
+          key: null,
           isParent: false,
           parentId: null,
           isEnabled: true,
@@ -132,6 +150,7 @@ export const DropdownDialog = ({
         ...data,
         nameFr: data.nameFr?.trim() === "" ? null : data.nameFr,
         nameMg: data.nameMg?.trim() === "" ? null : data.nameMg,
+        key: data.isParent ? data.key?.trim() || null : null, // Only use key for parent dropdowns
         // If it's a parent, ensure parentId is null
         parentId: data.isParent ? null : data.parentId,
       };
@@ -229,6 +248,30 @@ export const DropdownDialog = ({
                 </FormItem>
               )}
             />
+
+            {/* Key field (only visible when isParent is true) */}
+            {isParentValue && (
+              <FormField
+                control={form.control}
+                name="key"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("form.key")}</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder={t("form.keyPlaceholder")}
+                        value={field.value || ""}
+                        onChange={(e) => field.onChange(e.target.value)}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      {t("form.keyDescription")}
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
 
             {/* Parent dropdown selector (only visible when isParent is false) */}
             {!isParentValue && (

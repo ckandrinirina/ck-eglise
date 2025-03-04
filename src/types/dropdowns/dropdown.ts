@@ -15,6 +15,7 @@ export type Dropdown = {
   name: string; // Default name (fallback)
   nameFr?: string; // French name
   nameMg?: string; // Malagasy name
+  key?: string; // Unique identifier key for parent dropdowns
   isParent: boolean; // True if it's a parent category
   parentId?: string | null; // ID of parent dropdown (null for parent items)
   parent?: Dropdown | null; // Parent dropdown reference
@@ -31,6 +32,7 @@ export type CreateDropdownData = {
   name: string;
   nameFr?: string | null;
   nameMg?: string | null;
+  key?: string | null; // Unique key for parent dropdowns
   isParent: boolean;
   parentId?: string | null;
   isEnabled?: boolean;
@@ -44,6 +46,7 @@ export type UpdateDropdownData = Partial<{
   name: string;
   nameFr: string | null;
   nameMg: string | null;
+  key: string | null; // Unique key for parent dropdowns
   isParent: boolean;
   parentId: string | null;
   isEnabled: boolean;

@@ -9,6 +9,7 @@ const updateDropdownSchema = z.object({
   name: z.string().min(1).optional(),
   nameFr: z.string().nullable().optional(),
   nameMg: z.string().nullable().optional(),
+  key: z.string().nullable().optional(),
   isParent: z.boolean().optional(),
   parentId: z.string().nullable().optional(),
   isEnabled: z.boolean().optional(),
@@ -41,6 +42,7 @@ export async function GET(
             name: true,
             nameFr: true,
             nameMg: true,
+            key: true,
             isParent: true,
           },
         },
@@ -50,6 +52,7 @@ export async function GET(
             name: true,
             nameFr: true,
             nameMg: true,
+            key: true,
             isEnabled: true,
           },
         },
@@ -95,7 +98,7 @@ export async function PUT(
       return new NextResponse(`Invalid data: ${errorMessage}`, { status: 400 });
     }
 
-    const { isParent, parentId } = validation.data;
+    const { isParent, parentId, key } = validation.data;
 
     // Check if dropdown exists
     const existingDropdown = await prisma.dropdown.findUnique({
@@ -144,6 +147,35 @@ export async function PUT(
       }
     }
 
+    // Check if key is provided and if dropdown will be or is currently a parent
+    const willBeParent =
+      isParent !== undefined ? isParent : existingDropdown.isParent;
+
+    if (willBeParent) {
+      // Key is required for parent dropdowns
+      const keyToUse = key !== undefined ? key : existingDropdown.key;
+
+      if (!keyToUse) {
+        return new NextResponse("Key is required for parent categories", {
+          status: 400,
+        });
+      }
+
+      // Check if key already exists on another dropdown
+      if (key !== undefined && key !== existingDropdown.key) {
+        const duplicateKey = await prisma.dropdown.findFirst({
+          where: {
+            key,
+            id: { not: id }, // Exclude current dropdown
+          },
+        });
+
+        if (duplicateKey) {
+          return new NextResponse("Key must be unique", { status: 400 });
+        }
+      }
+    }
+
     // If changing isParent from true to false, check if it has children
     if (
       existingDropdown.isParent &&
@@ -156,10 +188,16 @@ export async function PUT(
       );
     }
 
+    // Prepare data to update, ensuring key is null if not parent
+    const updateData = {
+      ...validation.data,
+      key: willBeParent ? (key ?? existingDropdown.key) : null,
+    };
+
     // Update dropdown
     const updated = await prisma.dropdown.update({
       where: { id },
-      data: validation.data,
+      data: updateData,
       include: {
         parent: {
           select: {
@@ -167,6 +205,7 @@ export async function PUT(
             name: true,
             nameFr: true,
             nameMg: true,
+            key: true,
             isParent: true,
           },
         },
@@ -176,6 +215,7 @@ export async function PUT(
             name: true,
             nameFr: true,
             nameMg: true,
+            key: true,
             isEnabled: true,
           },
         },
@@ -194,38 +234,27 @@ async function checkCircularReference(
   currentId: string,
   targetParentId: string,
 ): Promise<boolean> {
-  // Resolve all parents of targetParentId to check if currentId is in the chain
-  let parentId = targetParentId;
-  const visitedIds = new Set<string>();
+  // Check if the target parent is actually a child of the current dropdown
+  const targetParent = await prisma.dropdown.findUnique({
+    where: { id: targetParentId },
+  });
 
-  while (parentId) {
-    // If we've already seen this ID, there's a circular reference
-    if (visitedIds.has(parentId)) {
-      return true;
-    }
-
-    // If the current item is in the parent chain, there's a circular reference
-    if (parentId === currentId) {
-      return true;
-    }
-
-    visitedIds.add(parentId);
-
-    // Get the parent of the current item
-    const parent = await prisma.dropdown.findUnique({
-      where: { id: parentId },
-      select: { parentId: true },
-    });
-
-    // Break the loop if no parent found
-    if (!parent || !parent.parentId) {
-      break;
-    }
-
-    parentId = parent.parentId;
+  if (!targetParent) {
+    return false; // Target parent doesn't exist, no circular reference
   }
 
-  return false;
+  // If target parent has no parent, no circular reference
+  if (!targetParent.parentId) {
+    return false;
+  }
+
+  // Check if the target parent's parent is the current dropdown
+  if (targetParent.parentId === currentId) {
+    return true; // Direct circular reference found
+  }
+
+  // Recursively check up the parent chain
+  return await checkCircularReference(currentId, targetParent.parentId);
 }
 
 // DELETE /api/dropdowns/[id] - Delete a specific dropdown
