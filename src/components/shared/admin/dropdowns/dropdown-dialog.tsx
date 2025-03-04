@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useTranslations } from "next-intl";
+import { useQuery } from "@tanstack/react-query";
 
 import {
   Dialog,
@@ -20,10 +21,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Dropdown } from "@/types/dropdowns/dropdown";
+import { DropdownService } from "@/lib/services/dropdown.service";
 import {
   Select,
   SelectContent,
@@ -31,15 +34,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 
 // Form schema
 const formSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
-  nameFr: z.string().optional(),
-  nameMg: z.string().optional(),
-  type: z.enum(["territory", "role", "branch"], {
-    required_error: "Type is required",
-  }),
+  nameFr: z.string().nullable().optional(),
+  nameMg: z.string().nullable().optional(),
+  isParent: z.boolean().default(false),
+  parentId: z.string().nullable().optional(),
+  isEnabled: z.boolean().default(true),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -60,16 +64,31 @@ export const DropdownDialog = ({
   const t = useTranslations("admin.dropdowns");
   const [isPending, setIsPending] = useState(false);
 
+  // Fetch parent dropdowns for the select field
+  const { data: parentDropdowns = [] } = useQuery({
+    queryKey: ["parentDropdowns"],
+    queryFn: async () => {
+      const response = await DropdownService.getParentDropdowns(true);
+      return response.data;
+    },
+    enabled: open, // Only fetch when dialog is open
+  });
+
   // Initialize form
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      nameFr: "",
-      nameMg: "",
-      type: "territory", // Set default type
+      nameFr: null,
+      nameMg: null,
+      isParent: false,
+      parentId: null,
+      isEnabled: true,
     },
   });
+
+  // Handle parent dropdown selection logic
+  const isParentValue = form.watch("isParent");
 
   // Reset form and populate with dropdown data if editing
   useEffect(() => {
@@ -77,26 +96,47 @@ export const DropdownDialog = ({
       if (dropdown) {
         form.reset({
           name: dropdown.name,
-          nameFr: dropdown.nameFr || "",
-          nameMg: dropdown.nameMg || "",
-          type: dropdown.type as "territory" | "role" | "branch", // Type assertion since we know it's valid
+          nameFr: dropdown.nameFr || null,
+          nameMg: dropdown.nameMg || null,
+          isParent: dropdown.isParent,
+          parentId: dropdown.parentId || null,
+          isEnabled: dropdown.isEnabled,
         });
       } else {
         form.reset({
           name: "",
-          nameFr: "",
-          nameMg: "",
-          type: "territory", // Reset to default type
+          nameFr: null,
+          nameMg: null,
+          isParent: false,
+          parentId: null,
+          isEnabled: true,
         });
       }
     }
   }, [open, dropdown, form]);
 
+  // Clear parentId when isParent is set to true
+  useEffect(() => {
+    if (isParentValue) {
+      form.setValue("parentId", null);
+    }
+  }, [isParentValue, form]);
+
   // Handle form submission
   const onSubmit = async (data: FormValues) => {
     try {
       setIsPending(true);
-      await onSave(data);
+
+      // Transform empty strings to null for optional fields
+      const formattedData = {
+        ...data,
+        nameFr: data.nameFr?.trim() === "" ? null : data.nameFr,
+        nameMg: data.nameMg?.trim() === "" ? null : data.nameMg,
+        // If it's a parent, ensure parentId is null
+        parentId: data.isParent ? null : data.parentId,
+      };
+
+      await onSave(formattedData);
       form.reset();
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -115,6 +155,7 @@ export const DropdownDialog = ({
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            {/* Base name (English) */}
             <FormField
               control={form.control}
               name="name"
@@ -128,6 +169,8 @@ export const DropdownDialog = ({
                 </FormItem>
               )}
             />
+
+            {/* French name */}
             <FormField
               control={form.control}
               name="nameFr"
@@ -137,13 +180,16 @@ export const DropdownDialog = ({
                   <FormControl>
                     <Input
                       placeholder={t("form.nameFrPlaceholder")}
-                      {...field}
+                      value={field.value || ""}
+                      onChange={(e) => field.onChange(e.target.value)}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
+            {/* Malagasy name */}
             <FormField
               control={form.control}
               name="nameMg"
@@ -153,44 +199,92 @@ export const DropdownDialog = ({
                   <FormControl>
                     <Input
                       placeholder={t("form.nameMgPlaceholder")}
-                      {...field}
+                      value={field.value || ""}
+                      onChange={(e) => field.onChange(e.target.value)}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
+            {/* Is Parent switch */}
             <FormField
               control={form.control}
-              name="type"
+              name="isParent"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("form.type")}</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder={t("form.typePlaceholder")} />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="territory">
-                        {t("form.types.territory")}
-                      </SelectItem>
-                      <SelectItem value="role">
-                        {t("form.types.role")}
-                      </SelectItem>
-                      <SelectItem value="branch">
-                        {t("form.types.branch")}
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                  <div className="space-y-0.5">
+                    <FormLabel>{t("form.isParent")}</FormLabel>
+                    <FormDescription>
+                      {t("form.isParentDescription")}
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
                 </FormItem>
               )}
             />
+
+            {/* Parent dropdown selector (only visible when isParent is false) */}
+            {!isParentValue && (
+              <FormField
+                control={form.control}
+                name="parentId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("form.parentCategory")}</FormLabel>
+                    <Select
+                      value={field.value || ""}
+                      onValueChange={field.onChange}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue
+                            placeholder={t("form.parentCategoryPlaceholder")}
+                          />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {parentDropdowns.map((parent) => (
+                          <SelectItem key={parent.id} value={parent.id}>
+                            {parent.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+
+            {/* Enabled status */}
+            <FormField
+              control={form.control}
+              name="isEnabled"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                  <div className="space-y-0.5">
+                    <FormLabel>{t("form.isEnabled")}</FormLabel>
+                    <FormDescription>
+                      {t("form.isEnabledDescription")}
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
             <DialogFooter>
               <Button
                 type="button"

@@ -156,19 +156,28 @@
       "buttons": {
         "add": "Hanampy sanda",
         "edit": "Hanova",
+        "disable": "Hanakantona",
+        "enable": "Hampiasa",
         "delete": "Hamafa",
         "options": "Safidy"
       },
       "table": {
         "name": "Anarana",
-        "type": "Karazana",
+        "category": "Sokajy",
+        "parent": "Ray",
+        "parentCategory": "Sokajy ray",
         "createdAt": "Daty namoronana",
+        "status": "Toe-javatra",
+        "enabled": "Ampiasaina",
+        "disabled": "Voakantona",
         "sortAsc": "Laharana miakatra",
         "sortDesc": "Laharana midina"
       },
       "filters": {
-        "searchPlaceholder": "Hikaroka araka ny anarana na karazana",
-        "typeAll": "Karazana rehetra",
+        "searchPlaceholder": "Hikaroka araka ny anarana",
+        "parentAll": "Sokajy rehetra",
+        "parentsOnly": "Sokajy ray ihany",
+        "showDisabled": "Haneho ny voakantona",
         "apply": "Ampiharo",
         "clear": "Hamafa"
       },
@@ -182,9 +191,15 @@
         "deleting": "Mamafa...",
         "confirmDelete": "Tena te hamafa ity sanda ity ve ianao?",
         "delete": "Hamafa",
+        "confirmDisable": "Tena te hanakantona ity sanda ity ve ianao?",
+        "disable": "Hanakantona",
+        "confirmEnable": "Tena te hampiasa ity sanda ity ve ianao?",
+        "enable": "Hampiasa",
         "dropdownCreated": "Sanda voaforona soa aman-tsara",
         "dropdownUpdated": "Sanda nohavaozina soa aman-tsara",
         "dropdownDeleted": "Sanda voafafa soa aman-tsara",
+        "dropdownEnabled": "Sanda ampiasaina indray soa aman-tsara",
+        "dropdownDisabled": "Sanda nakantona soa aman-tsara",
         "errorCreating": "Nisy hadisoana tamin'ny famoronana",
         "errorUpdating": "Nisy hadisoana tamin'ny fanavaozana",
         "errorDeleting": "Nisy hadisoana tamin'ny famafana",
@@ -199,17 +214,20 @@
         "nameMg": "Anarana amin'ny teny malagasy",
         "nameMgPlaceholder": "Ampidiro ny anarana amin'ny teny malagasy",
         "nameRequired": "Tsy maintsy ampidirina ny anarana",
-        "type": "Karazana",
-        "typeRequired": "Tsy maintsy ampidirina ny karazana",
-        "typePlaceholder": "Misafidiana karazana",
-        "types": {
-          "territory": "Faritra",
-          "role": "Andraikitra",
-          "branch": "Sampana"
-        }
+        "isParent": "Sokajy ray",
+        "isParentDescription": "Ity dia sokajy ambony afaka manana zanaka",
+        "parentCategory": "Sokajy ray",
+        "parentCategoryPlaceholder": "Safidio ny sokajy ray",
+        "isEnabled": "Ampiasaina",
+        "isEnabledDescription": "Ity sanda ity dia azo ampiasaina amin'ny fisy fidirana"
       },
       "translation": {
         "fallback": "Mampiasa ny anarana tsotra (tsy misy ny dikany)"
+      },
+      "noData": "Tsy misy sanda hita. Ampio ny sanda voalohany amin'ny tsindrina ny 'Hanampy sanda'.",
+      "error": {
+        "title": "Hadisoana",
+        "description": "Nisy olana nitranga tamin'ny fakana ny sanda"
       }
     },
     "settings": {

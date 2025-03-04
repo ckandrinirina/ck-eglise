@@ -29,6 +29,10 @@ import {
   Search,
   X,
   ArrowUpDown,
+  Check,
+  Ban,
+  Layers,
+  ChevronRight,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { DropdownDialog } from "@/components/shared/admin/dropdowns/dropdown-dialog";
@@ -45,6 +49,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useParams } from "next/navigation";
+import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
+import { Dropdown } from "@/types/dropdowns/dropdown";
 
 export default function DropdownsPage() {
   const t = useTranslations("admin.dropdowns");
@@ -57,17 +64,19 @@ export default function DropdownsPage() {
     dialogOpen,
     searchQuery,
     tempSearchQuery,
-    typeFilter,
-    tempTypeFilter,
+    parentFilter,
+    tempParentFilter,
+    showDisabled,
     sortConfig,
-    dropdownTypes,
+    parentCategories,
     handleSearchChange,
-    handleTypeFilterChange,
+    handleParentFilterChange,
+    handleShowDisabledChange,
     applyFilters,
     handleSort,
     handleClearFilters,
     handleEdit,
-    handleDelete,
+    handleToggleStatus,
     handleAdd,
     handleDialogClose,
     handleSaveDropdown,
@@ -100,7 +109,19 @@ export default function DropdownsPage() {
 
     return (
       <div className="flex items-center gap-2">
-        <span>{name}</span>
+        {/* Add indent for child items */}
+        {!dropdown.isParent && dropdown.parentId && (
+          <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+        )}
+
+        <span
+          className={
+            !dropdown.isEnabled ? "text-muted-foreground line-through" : ""
+          }
+        >
+          {name}
+        </span>
+
         {isFallback && (
           <Tooltip>
             <TooltipTrigger asChild>
@@ -111,30 +132,47 @@ export default function DropdownsPage() {
             </TooltipContent>
           </Tooltip>
         )}
+
+        {dropdown.isParent && (
+          <Badge variant="outline" className="ml-2">
+            <Layers className="h-3 w-3 mr-1" />
+            {t("table.parent")}
+          </Badge>
+        )}
+
+        {!dropdown.isEnabled && (
+          <Badge variant="outline" className="ml-2 bg-muted">
+            {t("table.disabled")}
+          </Badge>
+        )}
       </div>
     );
   };
 
-  const showDeleteConfirmation = (dropdownId: string) => {
-    const { confirmDelete } = handleDelete(dropdownId);
+  const showToggleStatusConfirmation = (dropdown: Dropdown) => {
+    const action = dropdown.isEnabled ? "disable" : "enable";
 
     toast.custom(
       () => (
         <div className="rounded-lg bg-background p-6 shadow-lg space-y-4">
-          <h3 className="text-lg font-medium">{t("dialog.confirmDelete")}</h3>
+          <h3 className="text-lg font-medium">
+            {t(
+              `dialog.confirm${action.charAt(0).toUpperCase() + action.slice(1)}`,
+            )}
+          </h3>
           <div className="flex gap-2 justify-end">
             <Button variant="outline" size="sm" onClick={() => toast.dismiss()}>
               {t("dialog.cancel")}
             </Button>
             <Button
-              variant="destructive"
+              variant={dropdown.isEnabled ? "destructive" : "default"}
               size="sm"
               onClick={() => {
-                confirmDelete();
+                handleToggleStatus(dropdown);
                 toast.dismiss();
               }}
             >
-              {t("dialog.delete")}
+              {t(`dialog.${action}`)}
             </Button>
           </div>
         </div>
@@ -162,6 +200,7 @@ export default function DropdownsPage() {
 
         {/* Filters */}
         <div className="mb-6 flex flex-wrap gap-4">
+          {/* Search filter */}
           <div className="flex-1 min-w-[200px]">
             <Input
               placeholder={t("filters.searchPlaceholder")}
@@ -170,25 +209,44 @@ export default function DropdownsPage() {
               className="w-full"
             />
           </div>
+
+          {/* Parent category filter */}
           <div className="w-[200px]">
             <Select
-              value={tempTypeFilter}
-              onValueChange={handleTypeFilterChange}
+              value={tempParentFilter}
+              onValueChange={handleParentFilterChange}
             >
               <SelectTrigger>
-                <SelectValue placeholder={t("filters.typeAll")} />
+                <SelectValue placeholder={t("filters.parentAll")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">{t("filters.typeAll")}</SelectItem>
-                {dropdownTypes.map((type) => (
-                  <SelectItem key={type} value={type}>
-                    {t(`form.types.${type}`)}
+                <SelectItem value="all">{t("filters.parentAll")}</SelectItem>
+                <SelectItem value="parents-only">
+                  {t("filters.parentsOnly")}
+                </SelectItem>
+                {parentCategories.map((parent) => (
+                  <SelectItem key={parent.id} value={parent.id}>
+                    {parent.name}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
-          <div className="flex gap-2">
+
+          {/* Show disabled switch */}
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="show-disabled"
+              checked={showDisabled}
+              onCheckedChange={handleShowDisabledChange}
+            />
+            <label htmlFor="show-disabled" className="text-sm cursor-pointer">
+              {t("filters.showDisabled")}
+            </label>
+          </div>
+
+          {/* Apply/Clear filters */}
+          <div className="flex gap-2 ml-auto">
             <Button variant="secondary" onClick={applyFilters} size="sm">
               <Search className="mr-2 h-4 w-4" />
               {t("filters.apply")}
@@ -197,7 +255,7 @@ export default function DropdownsPage() {
               variant="outline"
               onClick={handleClearFilters}
               size="sm"
-              disabled={!searchQuery && typeFilter === "all"}
+              disabled={!searchQuery && parentFilter === "all" && !showDisabled}
             >
               <X className="mr-2 h-4 w-4" />
               {t("filters.clear")}
@@ -244,13 +302,13 @@ export default function DropdownsPage() {
                   </TableHead>
                   <TableHead
                     className="cursor-pointer"
-                    onClick={() => handleSort("type")}
+                    onClick={() => handleSort("isParent")}
                   >
                     <div className="flex items-center">
-                      {t("table.type")}
+                      {t("table.category")}
                       <ArrowUpDown
                         className={`ml-2 h-4 w-4 ${
-                          sortConfig.field === "type"
+                          sortConfig.field === "isParent"
                             ? "opacity-100"
                             : "opacity-40"
                         }`}
@@ -272,16 +330,54 @@ export default function DropdownsPage() {
                       />
                     </div>
                   </TableHead>
+                  <TableHead className="text-center">
+                    {t("table.status")}
+                  </TableHead>
                   <TableHead className="w-[80px]"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {dropdowns.map((dropdown) => (
-                  <TableRow key={dropdown.id}>
+                  <TableRow
+                    key={dropdown.id}
+                    className={!dropdown.isEnabled ? "opacity-60" : ""}
+                  >
                     <TableCell>{getLocalizedName(dropdown)}</TableCell>
-                    <TableCell>{t(`form.types.${dropdown.type}`)}</TableCell>
+                    <TableCell>
+                      {dropdown.isParent ? (
+                        t("table.parentCategory")
+                      ) : dropdown.parent ? (
+                        <div className="flex items-center gap-2">
+                          <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                          {dropdown.parent.name}
+                        </div>
+                      ) : (
+                        "-"
+                      )}
+                    </TableCell>
                     <TableCell>
                       {format(new Date(dropdown.createdAt), "PPP")}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <div className="flex justify-center">
+                        {dropdown.isEnabled ? (
+                          <Badge
+                            variant="outline"
+                            className="bg-green-50 text-green-700 border-green-200"
+                          >
+                            <Check className="h-3 w-3 mr-1" />
+                            {t("table.enabled")}
+                          </Badge>
+                        ) : (
+                          <Badge
+                            variant="outline"
+                            className="bg-red-50 text-red-700 border-red-200"
+                          >
+                            <Ban className="h-3 w-3 mr-1" />
+                            {t("table.disabled")}
+                          </Badge>
+                        )}
+                      </div>
                     </TableCell>
                     <TableCell>
                       <div className="flex justify-end">
@@ -309,12 +405,13 @@ export default function DropdownsPage() {
                               {t("buttons.edit")}
                             </DropdownMenuItem>
                             <DropdownMenuItem
-                              className="text-destructive"
                               onClick={() =>
-                                showDeleteConfirmation(dropdown.id)
+                                showToggleStatusConfirmation(dropdown)
                               }
                             >
-                              {t("buttons.delete")}
+                              {dropdown.isEnabled
+                                ? t("buttons.disable")
+                                : t("buttons.enable")}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>

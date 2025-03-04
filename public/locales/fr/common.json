@@ -170,19 +170,28 @@
       "buttons": {
         "add": "Ajouter une valeur",
         "edit": "Modifier",
+        "disable": "Désactiver",
+        "enable": "Activer",
         "delete": "Supprimer",
         "options": "Options"
       },
       "table": {
         "name": "Nom",
-        "type": "Type",
+        "category": "Catégorie",
+        "parent": "Parent",
+        "parentCategory": "Catégorie parente",
         "createdAt": "Date de création",
+        "status": "Statut",
+        "enabled": "Activé",
+        "disabled": "Désactivé",
         "sortAsc": "Trier par ordre croissant",
         "sortDesc": "Trier par ordre décroissant"
       },
       "filters": {
-        "searchPlaceholder": "Rechercher par nom ou type",
-        "typeAll": "Tous les types",
+        "searchPlaceholder": "Rechercher par nom",
+        "parentAll": "Toutes les catégories",
+        "parentsOnly": "Catégories parentes uniquement",
+        "showDisabled": "Afficher les éléments désactivés",
         "apply": "Appliquer",
         "clear": "Effacer les filtres"
       },
@@ -196,9 +205,15 @@
         "deleting": "Suppression...",
         "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette valeur ?",
         "delete": "Supprimer",
+        "confirmDisable": "Êtes-vous sûr de vouloir désactiver cette valeur ?",
+        "disable": "Désactiver",
+        "confirmEnable": "Êtes-vous sûr de vouloir activer cette valeur ?",
+        "enable": "Activer",
         "dropdownCreated": "Valeur ajoutée avec succès",
         "dropdownUpdated": "Valeur mise à jour avec succès",
         "dropdownDeleted": "Valeur supprimée avec succès",
+        "dropdownEnabled": "Valeur activée avec succès",
+        "dropdownDisabled": "Valeur désactivée avec succès",
         "errorCreating": "Erreur lors de la création",
         "errorUpdating": "Erreur lors de la mise à jour",
         "errorDeleting": "Erreur lors de la suppression",
@@ -213,17 +228,20 @@
         "nameMg": "Nom en malgache",
         "nameMgPlaceholder": "Entrez le nom en malgache",
         "nameRequired": "Le nom est requis",
-        "type": "Type",
-        "typeRequired": "Le type est requis",
-        "typePlaceholder": "Sélectionnez un type",
-        "types": {
-          "territory": "Territoire",
-          "role": "Rôle",
-          "branch": "Branche"
-        }
+        "isParent": "Catégorie parente",
+        "isParentDescription": "Ceci est une catégorie de premier niveau qui peut avoir des enfants",
+        "parentCategory": "Catégorie parente",
+        "parentCategoryPlaceholder": "Sélectionnez une catégorie parente",
+        "isEnabled": "Activé",
+        "isEnabledDescription": "Cette valeur est disponible pour la sélection dans les formulaires"
       },
       "translation": {
         "fallback": "Utilisation du nom par défaut (traduction non disponible)"
+      },
+      "noData": "Aucune valeur trouvée. Créez votre première valeur en cliquant sur 'Ajouter une valeur'.",
+      "error": {
+        "title": "Erreur",
+        "description": "Une erreur s'est produite lors du chargement des valeurs"
       }
     },
     "settings": {

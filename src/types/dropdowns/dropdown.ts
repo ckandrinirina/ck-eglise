@@ -15,7 +15,11 @@ export type Dropdown = {
   name: string; // Default name (fallback)
   nameFr?: string; // French name
   nameMg?: string; // Malagasy name
-  type: DropdownType;
+  isParent: boolean; // True if it's a parent category
+  parentId?: string | null; // ID of parent dropdown (null for parent items)
+  parent?: Dropdown | null; // Parent dropdown reference
+  children?: Dropdown[]; // Child dropdowns
+  isEnabled: boolean; // Whether the dropdown is enabled
   createdAt: string;
   updatedAt: string;
 };
@@ -25,9 +29,11 @@ export type Dropdown = {
  */
 export type CreateDropdownData = {
   name: string;
-  nameFr?: string;
-  nameMg?: string;
-  type: DropdownType;
+  nameFr?: string | null;
+  nameMg?: string | null;
+  isParent: boolean;
+  parentId?: string | null;
+  isEnabled?: boolean;
 };
 
 /**
@@ -36,15 +42,17 @@ export type CreateDropdownData = {
  */
 export type UpdateDropdownData = Partial<{
   name: string;
-  nameFr: string;
-  nameMg: string;
-  type: string;
+  nameFr: string | null;
+  nameMg: string | null;
+  isParent: boolean;
+  parentId: string | null;
+  isEnabled: boolean;
 }>;
 
 /**
  * Sort configuration for dropdown list
  */
 export type DropdownSortConfig = {
-  field: "name" | "type" | "createdAt";
+  field: "name" | "isParent" | "createdAt";
   direction: "asc" | "desc";
 };

@@ -5,13 +5,35 @@ import {
   UpdateDropdownData,
 } from "@/types/dropdowns/dropdown";
 
+/**
+ * Service for managing dropdown values with parent-child hierarchy
+ */
 export const DropdownService = {
   /**
-   * Get all dropdown values with optional filtering by type
+   * Get all dropdown values with optional filtering
    */
   getDropdowns: (params?: {
-    type?: string;
+    parentId?: string | null;
+    isParent?: boolean;
+    includeDisabled?: boolean;
   }): Promise<AxiosResponse<Dropdown[]>> => api.get("/dropdowns", { params }),
+
+  /**
+   * Get parent dropdown categories only
+   */
+  getParentDropdowns: (
+    includeDisabled: boolean = false,
+  ): Promise<AxiosResponse<Dropdown[]>> =>
+    api.get("/dropdowns", { params: { isParent: true, includeDisabled } }),
+
+  /**
+   * Get child dropdowns for a specific parent
+   */
+  getChildDropdowns: (
+    parentId: string,
+    includeDisabled: boolean = false,
+  ): Promise<AxiosResponse<Dropdown[]>> =>
+    api.get("/dropdowns", { params: { parentId, includeDisabled } }),
 
   /**
    * Get a specific dropdown by ID
@@ -33,11 +55,21 @@ export const DropdownService = {
     dropdownId: string,
     dropdownData: UpdateDropdownData,
   ): Promise<AxiosResponse<Dropdown>> =>
-    api.put(`/dropdowns/${dropdownId}`, { id: dropdownId, ...dropdownData }),
+    api.put(`/dropdowns/${dropdownId}`, dropdownData),
 
   /**
-   * Delete a dropdown value
+   * Enable or disable a dropdown value
    */
-  deleteDropdown: (dropdownId: string): Promise<AxiosResponse<void>> =>
+  toggleDropdownStatus: (
+    dropdownId: string,
+    isEnabled: boolean,
+  ): Promise<AxiosResponse<Dropdown>> =>
+    api.put(`/dropdowns/${dropdownId}`, { isEnabled }),
+
+  /**
+   * Delete a dropdown value (now just disables it)
+   * @deprecated Use toggleDropdownStatus instead
+   */
+  deleteDropdown: (dropdownId: string): Promise<AxiosResponse<Dropdown>> =>
     api.delete(`/dropdowns/${dropdownId}`),
 };

@@ -10,98 +10,144 @@ import {
   UpdateDropdownData,
 } from "@/types/dropdowns/dropdown";
 
+/**
+ * Hook for managing dropdowns in the admin interface
+ * Includes state management, CRUD operations, filtering, sorting
+ */
 export const useDropdownsManagement = () => {
   const t = useTranslations("admin.dropdowns");
   const queryClient = useQueryClient();
+
+  // State management
   const [selectedDropdown, setSelectedDropdown] = useState<Dropdown | null>(
     null,
   );
   const [dialogOpen, setDialogOpen] = useState(false);
   const [tempSearchQuery, setTempSearchQuery] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [tempTypeFilter, setTempTypeFilter] = useState<string>("all");
-  const [typeFilter, setTypeFilter] = useState<string>("all");
+  const [tempParentFilter, setTempParentFilter] = useState<string>("all");
+  const [parentFilter, setParentFilter] = useState<string>("all");
+  const [showDisabled, setShowDisabled] = useState(false);
   const [sortConfig, setSortConfig] = useState<DropdownSortConfig>({
     field: "name",
     direction: "asc",
   });
 
-  // Query to fetch dropdowns with optional type filtering
+  // Query to fetch all dropdowns with optional filtering
   const {
-    data: dropdowns = [],
+    data: dropdownsData = [],
     isLoading,
     isError,
   } = useQuery<Dropdown[]>({
-    queryKey: ["dropdowns", typeFilter],
+    queryKey: ["dropdowns", parentFilter, showDisabled],
     queryFn: async () => {
-      const response = await DropdownService.getDropdowns(
-        typeFilter !== "all" ? { type: typeFilter } : undefined,
-      );
+      // Build filter parameters
+      const params: Record<string, boolean | string> = {
+        includeDisabled: showDisabled,
+      };
+
+      // Apply parent filter if specified
+      if (parentFilter === "parents-only") {
+        params.isParent = true;
+      } else if (parentFilter !== "all") {
+        params.parentId = parentFilter;
+      }
+
+      const response = await DropdownService.getDropdowns(params);
       return response.data;
     },
     staleTime: 60000, // 1 minute before refetch
     retry: 2,
   });
 
-  // Get all available dropdown types for filtering (constant)
-  const dropdownTypes = useMemo(() => {
-    return ["territory", "role", "branch"].sort();
-  }, []); // No dependencies since it's a constant array
+  // Query to fetch parent categories for filtering
+  const { data: parentCategories = [] } = useQuery<Dropdown[]>({
+    queryKey: ["parentCategories"],
+    queryFn: async () => {
+      const response = await DropdownService.getParentDropdowns(true);
+      return response.data;
+    },
+    staleTime: 300000, // 5 minutes before refetch
+  });
 
   // Filter and sort dropdowns
   const filteredAndSortedDropdowns = useMemo(() => {
-    const result = dropdowns ?? [];
+    let result = dropdownsData ?? [];
 
-    // Apply search filter
+    // Apply search filter if specified
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      return result.filter(
+      result = result.filter(
         (dropdown) =>
           dropdown.name?.toLowerCase().includes(query) ||
           dropdown.nameFr?.toLowerCase().includes(query) ||
-          dropdown.nameMg?.toLowerCase().includes(query) ||
-          dropdown.type?.toLowerCase().includes(query),
+          dropdown.nameMg?.toLowerCase().includes(query),
       );
     }
 
+    // Apply sorting
     return result.sort((a, b) => {
-      const aValue = a[sortConfig.field];
-      const bValue = b[sortConfig.field];
+      // Special handling for isParent field to ensure parents come first
+      if (sortConfig.field === "isParent") {
+        if (sortConfig.direction === "asc") {
+          // Sort with parents first
+          return a.isParent === b.isParent ? 0 : a.isParent ? -1 : 1;
+        } else {
+          // Sort with parents last
+          return a.isParent === b.isParent ? 0 : a.isParent ? 1 : -1;
+        }
+      }
 
-      if (!aValue || !bValue) return 0;
+      // For other fields
+      const aValue = a[sortConfig.field] as string | number;
+      const bValue = b[sortConfig.field] as string | number;
 
+      if (aValue === undefined || bValue === undefined) return 0;
+
+      // Handle date sorting
       if (sortConfig.field === "createdAt") {
         return sortConfig.direction === "asc"
           ? new Date(aValue).getTime() - new Date(bValue).getTime()
           : new Date(bValue).getTime() - new Date(aValue).getTime();
       }
 
+      // Handle string sorting
       const comparison = String(aValue).localeCompare(String(bValue));
       return sortConfig.direction === "asc" ? comparison : -comparison;
     });
-  }, [dropdowns, searchQuery, sortConfig]);
+  }, [dropdownsData, searchQuery, sortConfig]);
 
   // Clear filters
   const handleClearFilters = useCallback(() => {
     setTempSearchQuery("");
     setSearchQuery("");
-    setTempTypeFilter("all");
-    setTypeFilter("all");
+    setTempParentFilter("all");
+    setParentFilter("all");
+    setShowDisabled(false);
     setSortConfig({ field: "name", direction: "asc" });
   }, []);
 
-  // Delete dropdown mutation
-  const deleteDropdown = useMutation({
-    mutationFn: async (dropdownId: string) => {
-      return await DropdownService.deleteDropdown(dropdownId);
+  // Toggle dropdown enabled/disabled status
+  const toggleDropdownStatus = useMutation({
+    mutationFn: async ({
+      id,
+      isEnabled,
+    }: {
+      id: string;
+      isEnabled: boolean;
+    }) => {
+      return await DropdownService.toggleDropdownStatus(id, isEnabled);
     },
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["dropdowns"] });
-      toast.success(t("dialog.dropdownDeleted"));
+      const message = variables.isEnabled
+        ? t("dialog.dropdownEnabled")
+        : t("dialog.dropdownDisabled");
+      toast.success(message);
     },
     onError: (error) => {
-      console.error("Error deleting dropdown:", error);
-      toast.error(t("dialog.errorDeleting"));
+      console.error("Error toggling dropdown status:", error);
+      toast.error(t("dialog.errorUpdating"));
     },
   });
 
@@ -111,6 +157,7 @@ export const useDropdownsManagement = () => {
       DropdownService.createDropdown(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["dropdowns"] });
+      queryClient.invalidateQueries({ queryKey: ["parentCategories"] });
       toast.success(t("dialog.dropdownCreated"));
       handleDialogClose();
     },
@@ -126,6 +173,7 @@ export const useDropdownsManagement = () => {
       DropdownService.updateDropdown(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["dropdowns"] });
+      queryClient.invalidateQueries({ queryKey: ["parentCategories"] });
       toast.success(t("dialog.dropdownUpdated"));
       handleDialogClose();
     },
@@ -135,18 +183,20 @@ export const useDropdownsManagement = () => {
     },
   });
 
+  // Event handlers
   const handleEdit = useCallback((dropdown: Dropdown) => {
     setSelectedDropdown(dropdown);
     setDialogOpen(true);
   }, []);
 
-  const handleDelete = useCallback(
-    (dropdownId: string) => {
-      return {
-        confirmDelete: () => deleteDropdown.mutate(dropdownId),
-      };
+  const handleToggleStatus = useCallback(
+    (dropdown: Dropdown) => {
+      toggleDropdownStatus.mutate({
+        id: dropdown.id,
+        isEnabled: !dropdown.isEnabled,
+      });
     },
-    [deleteDropdown],
+    [toggleDropdownStatus],
   );
 
   const handleAdd = useCallback(() => {
@@ -164,10 +214,9 @@ export const useDropdownsManagement = () => {
   const handleSaveDropdown = useCallback(
     (dropdownData: CreateDropdownData) => {
       if (selectedDropdown) {
-        const { ...updateData } = dropdownData;
         updateDropdown.mutate({
           id: selectedDropdown.id,
-          data: updateData,
+          data: dropdownData,
         });
       } else {
         createDropdown.mutate(dropdownData);
@@ -176,17 +225,22 @@ export const useDropdownsManagement = () => {
     [selectedDropdown, createDropdown, updateDropdown],
   );
 
+  // Filter handlers
   const handleSearchChange = (query: string) => {
     setTempSearchQuery(query);
   };
 
-  const handleTypeFilterChange = (type: string) => {
-    setTempTypeFilter(type);
+  const handleParentFilterChange = (parentId: string) => {
+    setTempParentFilter(parentId);
+  };
+
+  const handleShowDisabledChange = (show: boolean) => {
+    setShowDisabled(show);
   };
 
   const applyFilters = () => {
     setSearchQuery(tempSearchQuery);
-    setTypeFilter(tempTypeFilter);
+    setParentFilter(tempParentFilter);
   };
 
   const handleSort = useCallback((field: DropdownSortConfig["field"]) => {
@@ -205,17 +259,19 @@ export const useDropdownsManagement = () => {
     dialogOpen,
     searchQuery,
     tempSearchQuery,
-    typeFilter,
-    tempTypeFilter,
+    parentFilter,
+    tempParentFilter,
+    showDisabled,
     sortConfig,
-    dropdownTypes,
+    parentCategories,
     handleSearchChange,
-    handleTypeFilterChange,
+    handleParentFilterChange,
+    handleShowDisabledChange,
     applyFilters,
     handleSort,
     handleClearFilters,
     handleEdit,
-    handleDelete,
+    handleToggleStatus,
     handleAdd,
     handleDialogClose,
     handleSaveDropdown,

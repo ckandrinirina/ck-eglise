@@ -7,10 +7,14 @@ import { z } from "zod";
 // Validation schema for creating dropdowns
 const createDropdownSchema = z.object({
   name: z.string().min(1),
-  type: z.enum(["territory", "role", "branch"]),
+  nameFr: z.string().nullable().optional(),
+  nameMg: z.string().nullable().optional(),
+  isParent: z.boolean().default(false),
+  parentId: z.string().nullable().optional(),
+  isEnabled: z.boolean().default(true),
 });
 
-// GET /api/dropdowns - Get all dropdowns with optional type filter
+// GET /api/dropdowns - Get all dropdowns with optional filters
 export async function GET(request: NextRequest) {
   try {
     // Check authentication
@@ -21,11 +25,52 @@ export async function GET(request: NextRequest) {
 
     // Extract query parameters
     const { searchParams } = new URL(request.url);
-    const type = searchParams.get("type");
+    const parentId = searchParams.get("parentId");
+    const isParent = searchParams.get("isParent") === "true";
+    const includeDisabled = searchParams.get("includeDisabled") === "true";
 
-    // Fetch dropdowns with optional filter
+    // Build where clause based on filter parameters
+    const where: Record<string, unknown> = {};
+
+    // Filter by parent ID if provided
+    if (parentId) {
+      where.parentId = parentId;
+    }
+
+    // Filter for only parent items if requested
+    if (searchParams.has("isParent")) {
+      where.isParent = isParent;
+    }
+
+    // By default, only return enabled dropdowns unless includeDisabled is true
+    if (!includeDisabled) {
+      where.isEnabled = true;
+    }
+
+    // Fetch dropdowns with filters
     const dropdowns = await prisma.dropdown.findMany({
-      where: type ? { type } : undefined,
+      where,
+      include: {
+        parent: {
+          select: {
+            id: true,
+            name: true,
+            nameFr: true,
+            nameMg: true,
+            isParent: true,
+          },
+        },
+        children: {
+          select: {
+            id: true,
+            name: true,
+            nameFr: true,
+            nameMg: true,
+            isEnabled: true,
+          },
+          where: includeDisabled ? undefined : { isEnabled: true },
+        },
+      },
       orderBy: { createdAt: "desc" },
     });
 
@@ -56,13 +101,35 @@ export async function POST(request: NextRequest) {
       return new NextResponse(`Invalid data: ${errorMessage}`, { status: 400 });
     }
 
-    const { name, type } = validation.data;
+    const { name, nameFr, nameMg, isParent, parentId, isEnabled } =
+      validation.data;
+
+    // Validate parent-child relationship
+    if (parentId) {
+      const parentExists = await prisma.dropdown.findUnique({
+        where: { id: parentId },
+      });
+
+      if (!parentExists) {
+        return new NextResponse("Parent dropdown not found", { status: 400 });
+      }
+
+      if (!parentExists.isParent) {
+        return new NextResponse("Selected parent is not a parent type", {
+          status: 400,
+        });
+      }
+    }
 
     // Create dropdown
     const dropdown = await prisma.dropdown.create({
       data: {
         name,
-        type,
+        nameFr,
+        nameMg,
+        isParent,
+        parentId,
+        isEnabled: isEnabled ?? true,
       },
     });
 
