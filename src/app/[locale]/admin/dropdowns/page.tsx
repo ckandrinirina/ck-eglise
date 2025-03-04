@@ -53,6 +53,7 @@ import { useParams } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Dropdown } from "@/types/dropdowns/dropdown";
+import { getLocalizedName } from "@/lib/utils";
 
 export default function DropdownsPage() {
   const t = useTranslations("admin.dropdowns");
@@ -83,30 +84,8 @@ export default function DropdownsPage() {
     handleSaveDropdown,
   } = useDropdownsManagement();
 
-  const getLocalizedName = (dropdown: Dropdown) => {
-    let name: string;
-    let isFallback = false;
-
-    switch (locale) {
-      case "fr":
-        if (dropdown.nameFr) {
-          name = dropdown.nameFr;
-        } else {
-          name = dropdown.name;
-          isFallback = true;
-        }
-        break;
-      case "mg":
-        if (dropdown.nameMg) {
-          name = dropdown.nameMg;
-        } else {
-          name = dropdown.name;
-          isFallback = true;
-        }
-        break;
-      default:
-        name = dropdown.name;
-    }
+  const getLocalizedDisplay = (dropdown: Dropdown) => {
+    const { name, isFallback } = getLocalizedName(dropdown, locale as string);
 
     return (
       <div className="flex items-center gap-2">
@@ -393,7 +372,7 @@ export default function DropdownsPage() {
                     key={dropdown.id}
                     className={!dropdown.isEnabled ? "opacity-60" : ""}
                   >
-                    <TableCell>{getLocalizedName(dropdown)}</TableCell>
+                    <TableCell>{getLocalizedDisplay(dropdown)}</TableCell>
                     <TableCell>
                       {dropdown.isParent ? (
                         t("table.parentCategory")

@@ -48,6 +48,7 @@ import { Badge } from "@/components/ui/badge";
 import { usePathname } from "next/navigation";
 import { useCallback } from "react";
 import { User } from "@/types/users/user";
+import { getLocalizedName } from "@/lib/utils";
 
 export default function UsersPage() {
   const t = useTranslations("admin.users");
@@ -80,15 +81,8 @@ export default function UsersPage() {
   const getTerritoryName = useCallback(
     (user: User) => {
       if (!user.territory) return "-";
-
-      switch (locale) {
-        case "fr":
-          return user.territory.nameFr || user.territory.name;
-        case "mg":
-          return user.territory.nameMg || user.territory.name;
-        default:
-          return user.territory.name;
-      }
+      const { name } = getLocalizedName(user.territory, locale as string);
+      return name;
     },
     [locale],
   );

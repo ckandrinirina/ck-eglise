@@ -33,7 +33,7 @@ import { Label } from "@/components/ui/label";
 import { DropdownService } from "@/lib/services/dropdown.service";
 import type { Dropdown } from "@/types/dropdowns/dropdown";
 import { Check, ChevronsUpDown, X } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, getLocalizedName } from "@/lib/utils";
 
 export type DropdownSelectProps = {
   dropdownKey: string;
@@ -159,16 +159,9 @@ export const DropdownSelect = memo(
     });
 
     // Get localized name based on current locale
-    const getLocalizedName = useCallback(
+    const getLocalized = useCallback(
       (dropdown: Dropdown): string => {
-        switch (locale) {
-          case "fr":
-            return dropdown.nameFr || dropdown.name;
-          case "mg":
-            return dropdown.nameMg || dropdown.name;
-          default:
-            return dropdown.name;
-        }
+        return getLocalizedName(dropdown, locale).name;
       },
       [locale],
     );
@@ -177,9 +170,9 @@ export const DropdownSelect = memo(
     const getSelectedItemName = useCallback(
       (itemId: string): string => {
         const item = dropdownItems.find((item) => item.id === itemId);
-        return item ? getLocalizedName(item) : itemId;
+        return item ? getLocalized(item) : itemId;
       },
-      [dropdownItems, getLocalizedName],
+      [dropdownItems, getLocalized],
     );
 
     // Handle selection change
@@ -253,7 +246,7 @@ export const DropdownSelect = memo(
           ) : (
             dropdownItems.map((item) => (
               <SelectItem key={item.id} value={item.id}>
-                {getLocalizedName(item)}
+                {getLocalized(item)}
               </SelectItem>
             ))
           )}
