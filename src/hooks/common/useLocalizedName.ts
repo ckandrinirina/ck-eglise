@@ -7,16 +7,11 @@
 import { useParams } from "next/navigation";
 import { getLocalizedName as getLocalizedNameUtil } from "@/lib/utils";
 import { useCallback } from "react";
+import { Territory } from "@/types/users/user";
 
 /**
  * Interface for items that can be localized
  */
-interface LocalizedItem {
-  name: string;
-  nameFr?: string | null;
-  nameMg?: string | null;
-  [key: string]: string | number | boolean | null | undefined;
-}
 
 /**
  * Hook that provides localization functionality based on the current locale
@@ -39,7 +34,7 @@ export const useLocalizedName = () => {
    * @returns Object containing the localized name and whether a fallback was used
    */
   const getLocalizedName = useCallback(
-    (item: LocalizedItem | null | undefined) => {
+    (item: Territory | null | undefined) => {
       if (!item) return { name: "-", isFallback: false };
       return getLocalizedNameUtil(item, locale as string);
     },

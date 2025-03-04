@@ -2,7 +2,7 @@
  * Types definitions for user management
  */
 
-interface Territory {
+export interface Territory {
   id: string;
   name: string;
   nameFr: string | null;

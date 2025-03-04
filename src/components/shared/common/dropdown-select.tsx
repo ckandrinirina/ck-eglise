@@ -33,6 +33,7 @@ import { DropdownService } from "@/lib/services/dropdown.service";
 import { Check, ChevronsUpDown, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLocalizedName } from "@/hooks/common/useLocalizedName";
+import { Territory } from "@/types/users/user";
 
 export type DropdownSelectProps = {
   dropdownKey: string;
@@ -160,7 +161,7 @@ export const DropdownSelect = memo(
     const getSelectedItemName = useCallback(
       (itemId: string): string => {
         const item = dropdownItems.find((item) => item.id === itemId);
-        return item ? getLocalizedName(item).name : itemId;
+        return item ? getLocalizedName(item as Territory).name : itemId;
       },
       [dropdownItems, getLocalizedName],
     );
@@ -236,7 +237,7 @@ export const DropdownSelect = memo(
           ) : (
             dropdownItems.map((item) => (
               <SelectItem key={item.id} value={item.id}>
-                {getLocalizedName(item).name}
+                {getLocalizedName(item as Territory).name}
               </SelectItem>
             ))
           )}
@@ -318,7 +319,7 @@ export const DropdownSelect = memo(
                           : "opacity-0",
                       )}
                     />
-                    <span>{getLocalizedName(item).name}</span>
+                    <span>{getLocalizedName(item as Territory).name}</span>
                   </CommandItem>
                 ))}
               </CommandGroup>
