@@ -65,6 +65,67 @@ async function main() {
         console.log(`Territory ${territory.name} already exists`);
       }
     }
+
+    // Check if parent function exists
+    const existingFunctionParent = await prisma.dropdown.findUnique({
+      where: {
+        key: "function",
+      },
+    });
+
+    // Create parent function if it doesn't exist
+    const parentFunction =
+      existingFunctionParent ||
+      (await prisma.dropdown.create({
+        data: {
+          name: "Function",
+          nameFr: "Fonction",
+          nameMg: "Andraikitra",
+          key: "function",
+          isParent: true,
+          isEnabled: true,
+        },
+      }));
+
+    console.log("Parent function created or found:", parentFunction.name);
+
+    // Define child functions
+    const functions = [
+      {
+        name: "MPANDRAY",
+        nameFr: "MPANDRAY",
+        nameMg: "MPANDRAY",
+        isEnabled: true,
+      },
+      {
+        name: "DIAKONA",
+        nameFr: "DIAKONA",
+        nameMg: "DIAKONA",
+        isEnabled: true,
+      },
+    ];
+
+    // Create child functions
+    for (const functionItem of functions) {
+      const existingChild = await prisma.dropdown.findFirst({
+        where: {
+          name: functionItem.name,
+          parentId: parentFunction.id,
+        },
+      });
+
+      if (!existingChild) {
+        const child = await prisma.dropdown.create({
+          data: {
+            ...functionItem,
+            parentId: parentFunction.id,
+          },
+        });
+        console.log(`Created function: ${child.name}`);
+      } else {
+        console.log(`Function ${functionItem.name} already exists`);
+      }
+    }
   } catch (error) {
     console.error("Error seeding dropdowns:", error);
   } finally {
