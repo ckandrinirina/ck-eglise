@@ -1,9 +1,26 @@
 {
+  "header": {
+    "home": "Accueil",
+    "dashboard": "Tableau de bord",
+    "admin": "Administration"
+  },
   "navigation": {
     "home": "Accueil",
     "dashboard": "Tableau de bord",
     "login": "Connexion",
-    "logout": "Déconnexion"
+    "logout": "Déconnexion",
+    "signup": "S'inscrire",
+    "profile": "Profil",
+    "admin": "Administration",
+    "settings": "Paramètres"
+  },
+  "actions": {
+    "submit": "Soumettre",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "add": "Ajouter"
   },
   "language": {
     "en": "Anglais",
@@ -66,6 +83,8 @@
     },
     "users": {
       "title": "Utilisateurs",
+      "subtitle": "Gérer les utilisateurs de l'application",
+      "createNew": "Créer un nouvel utilisateur",
       "description": "Gérez les comptes et les permissions des utilisateurs.",
       "addUser": "Ajouter un utilisateur",
       "search": {
@@ -145,6 +164,89 @@
         "roleAdmin": "Administrateur"
       }
     },
+    "dropdowns": {
+      "title": "Listes déroulantes",
+      "subtitle": "Gérer les valeurs disponibles dans les menus déroulants",
+      "buttons": {
+        "add": "Ajouter une valeur",
+        "edit": "Modifier",
+        "disable": "Désactiver",
+        "enable": "Activer",
+        "delete": "Supprimer",
+        "options": "Options"
+      },
+      "table": {
+        "name": "Nom",
+        "category": "Catégorie",
+        "parent": "Parent",
+        "parentCategory": "Catégorie parente",
+        "createdAt": "Date de création",
+        "status": "Statut",
+        "enabled": "Activé",
+        "disabled": "Désactivé",
+        "sortAsc": "Trier par ordre croissant",
+        "sortDesc": "Trier par ordre décroissant"
+      },
+      "filters": {
+        "searchPlaceholder": "Rechercher par nom",
+        "parentAll": "Toutes les catégories",
+        "parentsOnly": "Catégories parentes uniquement",
+        "showDisabled": "Afficher les éléments désactivés",
+        "apply": "Appliquer",
+        "clear": "Effacer les filtres"
+      },
+      "dialog": {
+        "addDropdown": "Ajouter une valeur",
+        "editDropdown": "Modifier la valeur",
+        "deleteDropdown": "Supprimer la valeur",
+        "cancel": "Annuler",
+        "save": "Enregistrer",
+        "saving": "Enregistrement...",
+        "deleting": "Suppression...",
+        "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette valeur ?",
+        "delete": "Supprimer",
+        "confirmDisable": "Êtes-vous sûr de vouloir désactiver cette valeur ?",
+        "disable": "Désactiver",
+        "confirmEnable": "Êtes-vous sûr de vouloir activer cette valeur ?",
+        "enable": "Activer",
+        "dropdownCreated": "Valeur ajoutée avec succès",
+        "dropdownUpdated": "Valeur mise à jour avec succès",
+        "dropdownDeleted": "Valeur supprimée avec succès",
+        "dropdownEnabled": "Valeur activée avec succès",
+        "dropdownDisabled": "Valeur désactivée avec succès",
+        "errorCreating": "Erreur lors de la création",
+        "errorUpdating": "Erreur lors de la mise à jour",
+        "errorDeleting": "Erreur lors de la suppression",
+        "success": "Succès",
+        "error": "Erreur"
+      },
+      "form": {
+        "name": "Nom par défaut (Anglais)",
+        "namePlaceholder": "Entrez le nom par défaut (Anglais)",
+        "nameFr": "Nom en français",
+        "nameFrPlaceholder": "Entrez le nom en français",
+        "nameMg": "Nom en malgache",
+        "nameMgPlaceholder": "Entrez le nom en malgache",
+        "nameRequired": "Le nom est requis",
+        "key": "Clé d'identification",
+        "keyPlaceholder": "Entrez une clé unique (lettres, chiffres et tirets)",
+        "keyDescription": "Identifiant unique pour cette catégorie (obligatoire pour les catégories parentes)",
+        "isParent": "Catégorie parente",
+        "isParentDescription": "Ceci est une catégorie de premier niveau qui peut avoir des enfants",
+        "parentCategory": "Catégorie parente",
+        "parentCategoryPlaceholder": "Sélectionnez une catégorie parente",
+        "isEnabled": "Activé",
+        "isEnabledDescription": "Cette valeur est disponible pour la sélection dans les formulaires"
+      },
+      "translation": {
+        "fallback": "Utilisation du nom par défaut (traduction non disponible)"
+      },
+      "noData": "Aucune valeur trouvée. Créez votre première valeur en cliquant sur 'Ajouter une valeur'.",
+      "error": {
+        "title": "Erreur",
+        "description": "Une erreur s'est produite lors du chargement des valeurs"
+      }
+    },
     "settings": {
       "title": "Paramètres",
       "description": "Gérer les paramètres de l'application",
@@ -167,5 +269,9 @@
     "breadcrumbs": {
       "home": "Accueil"
     }
+  },
+  "profile": {
+    "title": "Profil utilisateur",
+    "updateInformation": "Mettre à jour les informations"
   }
 }

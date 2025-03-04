@@ -3,7 +3,10 @@
     "home": "Fandraisana",
     "dashboard": "Tabilao",
     "login": "Hiditra",
-    "logout": "Hiala"
+    "logout": "Hiala",
+    "signup": "Hisoratra anarana",
+    "profile": "Mombamomba",
+    "settings": "Firafitra"
   },
   "language": {
     "en": "Anglisy",
@@ -66,8 +69,10 @@
     },
     "users": {
       "title": "Mpampiasa",
+      "subtitle": "Fitantanana ny mpampiasa",
       "description": "Fitantanana ny kaonty sy ny fahazoan-dalana.",
       "addUser": "Hanampy Mpampiasa",
+      "createNew": "Hamorona mpampiasa vaovao",
       "search": {
         "placeholder": "Hikaroka mpampiasa...",
         "clearFilters": "Hamafa ny sivana",
@@ -145,6 +150,89 @@
         "roleAdmin": "Mpitantana"
       }
     },
+    "dropdowns": {
+      "title": "Karazana",
+      "subtitle": "Fitantanana ny sanda ampiasaina any anatin'ny lisitra misoridina",
+      "buttons": {
+        "add": "Hanampy sanda",
+        "edit": "Hanova",
+        "disable": "Hanakantona",
+        "enable": "Hampiasa",
+        "delete": "Hamafa",
+        "options": "Safidy"
+      },
+      "table": {
+        "name": "Anarana",
+        "category": "Sokajy",
+        "parent": "Ray",
+        "parentCategory": "Sokajy ray",
+        "createdAt": "Daty namoronana",
+        "status": "Toe-javatra",
+        "enabled": "Ampiasaina",
+        "disabled": "Voakantona",
+        "sortAsc": "Laharana miakatra",
+        "sortDesc": "Laharana midina"
+      },
+      "filters": {
+        "searchPlaceholder": "Hikaroka araka ny anarana",
+        "parentAll": "Sokajy rehetra",
+        "parentsOnly": "Sokajy ray ihany",
+        "showDisabled": "Haneho ny voakantona",
+        "apply": "Ampiharo",
+        "clear": "Hamafa"
+      },
+      "dialog": {
+        "addDropdown": "Hanampy sanda",
+        "editDropdown": "Hanova sanda",
+        "deleteDropdown": "Hamafa sanda",
+        "cancel": "Aoka ihany",
+        "save": "Hitahiry",
+        "saving": "Mitahiry...",
+        "deleting": "Mamafa...",
+        "confirmDelete": "Tena te hamafa ity sanda ity ve ianao?",
+        "delete": "Hamafa",
+        "confirmDisable": "Tena te hanakantona ity sanda ity ve ianao?",
+        "disable": "Hanakantona",
+        "confirmEnable": "Tena te hampiasa ity sanda ity ve ianao?",
+        "enable": "Hampiasa",
+        "dropdownCreated": "Sanda voaforona soa aman-tsara",
+        "dropdownUpdated": "Sanda nohavaozina soa aman-tsara",
+        "dropdownDeleted": "Sanda voafafa soa aman-tsara",
+        "dropdownEnabled": "Sanda ampiasaina indray soa aman-tsara",
+        "dropdownDisabled": "Sanda nakantona soa aman-tsara",
+        "errorCreating": "Nisy hadisoana tamin'ny famoronana",
+        "errorUpdating": "Nisy hadisoana tamin'ny fanavaozana",
+        "errorDeleting": "Nisy hadisoana tamin'ny famafana",
+        "success": "Fahombiazana",
+        "error": "Hadisoana"
+      },
+      "form": {
+        "name": "Anarana tsotra (Anglisy)",
+        "namePlaceholder": "Ampidiro ny anarana tsotra (Anglisy)",
+        "nameFr": "Anarana amin'ny teny frantsay",
+        "nameFrPlaceholder": "Ampidiro ny anarana amin'ny teny frantsay",
+        "nameMg": "Anarana amin'ny teny malagasy",
+        "nameMgPlaceholder": "Ampidiro ny anarana amin'ny teny malagasy",
+        "nameRequired": "Tsy maintsy ampidirina ny anarana",
+        "key": "Lakilen'ny famantarana",
+        "keyPlaceholder": "Ampidiro ny lakile tokana (tarehintsoratra, isa ary tirets)",
+        "keyDescription": "Famantarana tokana ho an'ity sokajy ity (tsy maintsy fenoina ho an'ny sokajy ray)",
+        "isParent": "Sokajy ray",
+        "isParentDescription": "Ity dia sokajy ambony afaka manana zanaka",
+        "parentCategory": "Sokajy ray",
+        "parentCategoryPlaceholder": "Safidio ny sokajy ray",
+        "isEnabled": "Ampiasaina",
+        "isEnabledDescription": "Ity sanda ity dia azo ampiasaina amin'ny fisy fidirana"
+      },
+      "translation": {
+        "fallback": "Mampiasa ny anarana tsotra (tsy misy ny dikany)"
+      },
+      "noData": "Tsy misy sanda hita. Ampio ny sanda voalohany amin'ny tsindrina ny 'Hanampy sanda'.",
+      "error": {
+        "title": "Hadisoana",
+        "description": "Nisy olana nitranga tamin'ny fakana ny sanda"
+      }
+    },
     "settings": {
       "title": "Firafitra",
       "description": "Fitantanana ny firafitry ny rindranasa",
@@ -167,5 +255,22 @@
     "breadcrumbs": {
       "home": "Fandraisana"
     }
+  },
+  "actions": {
+    "submit": "Alefa",
+    "cancel": "Aoka ihany",
+    "save": "Hitahiry",
+    "delete": "Hamafa",
+    "edit": "Hanova",
+    "add": "Hanampy"
+  },
+  "header": {
+    "home": "Fandraisana",
+    "dashboard": "Tabilao",
+    "admin": "Fitantanana"
+  },
+  "profile": {
+    "title": "Mombamomba ny mpampiasa",
+    "updateInformation": "Havaozina ny mombamomba"
   }
 }

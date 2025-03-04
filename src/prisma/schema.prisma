@@ -64,3 +64,22 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+// Dropdown model for managing dropdown values
+model Dropdown {
+  id        String     @id @default(cuid())
+  name      String     // Default name
+  nameFr    String?    // French name
+  nameMg    String?    // Malagasy name
+  key       String?    // Unique identifier key for parent dropdowns
+  isParent  Boolean    @default(false) // True if it is a parent type
+  parentId  String?    // Reference to parent dropdown ID
+  parent    Dropdown?  @relation("DropdownHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children  Dropdown[] @relation("DropdownHierarchy")
+  isEnabled Boolean    @default(true)  // Whether the dropdown is enabled
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@unique([key]) // Make key field unique when not null
+  @@index([parentId]) // Index for faster parent lookup
+}

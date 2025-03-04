@@ -3,7 +3,11 @@
     "home": "Home",
     "dashboard": "Dashboard",
     "login": "Login",
-    "logout": "Logout"
+    "logout": "Logout",
+    "signup": "Sign up",
+    "profile": "Profile",
+    "admin": "Administration",
+    "settings": "Settings"
   },
   "language": {
     "en": "English",
@@ -13,6 +17,19 @@
   "home": {
     "welcome": "Welcome",
     "description": "Church Management Application"
+  },
+  "actions": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add"
+  },
+  "header": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "admin": "Administration"
   },
   "auth": {
     "login": {
@@ -66,6 +83,8 @@
     },
     "users": {
       "title": "Users",
+      "subtitle": "Manage application users",
+      "createNew": "Create new user",
       "description": "Manage user accounts and permissions.",
       "addUser": "Add User",
       "search": {
@@ -145,6 +164,89 @@
         "roleAdmin": "Administrator"
       }
     },
+    "dropdowns": {
+      "title": "Dropdowns",
+      "subtitle": "Manage dropdown values used throughout the application",
+      "buttons": {
+        "add": "Add value",
+        "edit": "Edit",
+        "disable": "Disable",
+        "enable": "Enable",
+        "delete": "Delete",
+        "options": "Options"
+      },
+      "table": {
+        "name": "Name",
+        "category": "Category",
+        "parent": "Parent",
+        "parentCategory": "Parent Category",
+        "createdAt": "Created At",
+        "status": "Status",
+        "enabled": "Enabled",
+        "disabled": "Disabled",
+        "sortAsc": "Sort ascending",
+        "sortDesc": "Sort descending"
+      },
+      "filters": {
+        "searchPlaceholder": "Search by name",
+        "parentAll": "All categories",
+        "parentsOnly": "Parent categories only",
+        "showDisabled": "Show disabled items",
+        "apply": "Apply",
+        "clear": "Clear"
+      },
+      "dialog": {
+        "addDropdown": "Add dropdown value",
+        "editDropdown": "Edit dropdown value",
+        "deleteDropdown": "Delete dropdown value",
+        "cancel": "Cancel",
+        "save": "Save",
+        "saving": "Saving...",
+        "deleting": "Deleting...",
+        "confirmDelete": "Are you sure you want to delete this value?",
+        "delete": "Delete",
+        "confirmDisable": "Are you sure you want to disable this value?",
+        "disable": "Disable",
+        "confirmEnable": "Are you sure you want to enable this value?",
+        "enable": "Enable",
+        "dropdownCreated": "Value added successfully",
+        "dropdownUpdated": "Value updated successfully",
+        "dropdownDeleted": "Value deleted successfully",
+        "dropdownEnabled": "Value enabled successfully",
+        "dropdownDisabled": "Value disabled successfully",
+        "errorCreating": "Error while creating",
+        "errorUpdating": "Error while updating",
+        "errorDeleting": "Error while deleting",
+        "success": "Success",
+        "error": "Error"
+      },
+      "form": {
+        "name": "Default Name (English)",
+        "namePlaceholder": "Enter the default name (English)",
+        "nameFr": "French Name",
+        "nameFrPlaceholder": "Enter the French name",
+        "nameMg": "Malagasy Name",
+        "nameMgPlaceholder": "Enter the Malagasy name",
+        "nameRequired": "Name is required",
+        "key": "Identifier Key",
+        "keyPlaceholder": "Enter a unique key (letters, numbers, and hyphens)",
+        "keyDescription": "Unique identifier for this category (required for parent categories)",
+        "isParent": "Parent Category",
+        "isParentDescription": "This is a top-level category that can have children",
+        "parentCategory": "Parent Category",
+        "parentCategoryPlaceholder": "Select a parent category",
+        "isEnabled": "Enabled",
+        "isEnabledDescription": "This value is available for selection in forms"
+      },
+      "translation": {
+        "fallback": "Using default name (translation not available)"
+      },
+      "noData": "No dropdown values found. Create your first one by clicking 'Add value'.",
+      "error": {
+        "title": "Error",
+        "description": "An error occurred while loading dropdown values"
+      }
+    },
     "settings": {
       "title": "Settings",
       "description": "Manage application settings",
@@ -167,5 +269,9 @@
     "breadcrumbs": {
       "home": "Home"
     }
+  },
+  "profile": {
+    "title": "User Profile",
+    "updateInformation": "Update Information"
   }
 }
