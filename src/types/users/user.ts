@@ -2,6 +2,13 @@
  * Types definitions for user management
  */
 
+export interface Territory {
+  id: string;
+  name: string;
+  nameFr: string | null;
+  nameMg: string | null;
+}
+
 /**
  * User type definition with all possible fields
  */
@@ -10,6 +17,8 @@ export type User = {
   name: string | null;
   email: string | null;
   role: "user" | "admin";
+  territoryId?: string | null;
+  territory?: Territory | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -22,6 +31,7 @@ export type CreateUserData = {
   email: string;
   password: string;
   role: "user" | "admin";
+  territoryId?: string;
 };
 
 /**
@@ -32,6 +42,7 @@ export type UpdateUserData = Partial<{
   name: string;
   password: string;
   role: "user" | "admin";
+  territoryId?: string;
 }>;
 
 /**

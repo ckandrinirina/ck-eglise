@@ -22,10 +22,14 @@ model User {
   password      String?
   image         String?
   role          String    @default("user") // "user", "admin"
+  territoryId   String?   // Reference to territory (dropdown)
+  territory     Dropdown? @relation(fields: [territoryId], references: [id], onDelete: SetNull)
   accounts      Account[]
   sessions      Session[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  
+  @@index([territoryId])
 }
 
 // Account model for OAuth providers
@@ -76,6 +80,7 @@ model Dropdown {
   parentId  String?    // Reference to parent dropdown ID
   parent    Dropdown?  @relation("DropdownHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
   children  Dropdown[] @relation("DropdownHierarchy")
+  users     User[]     // Relation to users who have this dropdown as their territory
   isEnabled Boolean    @default(true)  // Whether the dropdown is enabled
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt

@@ -14,6 +14,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
@@ -29,6 +30,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useEffect } from "react";
 import { User } from "@/types/users/user";
+import { DropdownSelect } from "@/components/shared/common/dropdown-select";
 
 // Schema definitions for user forms
 const baseUserSchema = z.object({
@@ -37,6 +39,7 @@ const baseUserSchema = z.object({
   }),
   email: z.string().email(),
   role: z.enum(["user", "admin"]),
+  territoryId: z.string().optional(),
 });
 
 const createUserSchema = baseUserSchema.extend({
@@ -83,6 +86,7 @@ export function UserDialog({
       email: user?.email || "",
       role: (user?.role as "user" | "admin") || "user",
       password: "",
+      territoryId: user?.territoryId || "",
     },
     mode: "onChange", // Validate on change for better UX
   });
@@ -95,12 +99,13 @@ export function UserDialog({
         email: user?.email || "",
         role: (user?.role as "user" | "admin") || "user",
         password: "", // Always reset password field
+        territoryId: user?.territoryId || "",
       });
     }
   }, [user, open, form]);
 
   // Handle form submission
-  function onSubmit(data: UserFormValues) {
+  const onSubmit = (data: UserFormValues) => {
     // Remove empty password when editing
     if (user && data.password === "") {
       const { ...restData } = data;
@@ -108,7 +113,7 @@ export function UserDialog({
     } else {
       onSave?.(data);
     }
-  }
+  };
 
   // Get form validation state
   const { isValid, isDirty, isSubmitting } = form.formState;
@@ -153,6 +158,28 @@ export function UserDialog({
                       disabled={!!user} // Disable email editing for existing users
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="territoryId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("form.territory")}</FormLabel>
+                  <FormControl>
+                    <DropdownSelect
+                      dropdownKey="territory"
+                      value={field.value}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                      name={field.name}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    {t("form.territoryDescription")}
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

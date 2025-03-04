@@ -102,6 +102,7 @@
         "email": "Mailaka",
         "role": "Andraikitra",
         "status": "Toetra",
+        "territory": "Faritra",
         "createdAt": "Noforonina",
         "sortAsc": "Laharana miakatra",
         "sortDesc": "Laharana midina"
@@ -147,7 +148,10 @@
         "role": "Andraikitra",
         "selectRole": "Misafidiana andraikitra",
         "roleUser": "Mpampiasa",
-        "roleAdmin": "Mpitantana"
+        "roleAdmin": "Mpitantana",
+        "territory": "Faritra",
+        "territoryDescription": "Faritra nampiandraiketana ny mpampiasa",
+        "selectTerritory": "Misafidiana faritra"
       }
     },
     "dropdowns": {
@@ -272,5 +276,14 @@
   "profile": {
     "title": "Mombamomba ny mpampiasa",
     "updateInformation": "Havaozina ny mombamomba"
+  },
+  "dropdown": {
+    "loading": "Mampiditra...",
+    "noOptions": "Tsy misy safidy",
+    "noResults": "Tsy misy valiny",
+    "search": "Hikaroka...",
+    "clearSelection": "Hamafa ny safidy",
+    "select": "Hifidy...",
+    "selectedItems": "Safidy {count}"
   }
 }

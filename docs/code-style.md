@@ -11,3 +11,10 @@
 ## Component Management
 - For adding new shadcn components, always use the command: `pnpm dlx shadcn@latest add [component name]`
 - Never manually create or copy shadcn component files
+
+## Database Migrations
+- All migrations should update data, never delete existing records
+- Use soft deletion patterns when removing data is necessary
+- Always provide migration rollback strategies
+- Test migrations thoroughly in development before applying to production
+- Document all data transformations in migration files

@@ -49,14 +49,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useParams } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Dropdown } from "@/types/dropdowns/dropdown";
+import { useLocalizedName } from "@/hooks/common/useLocalizedName";
+import { Territory } from "@/types/users/user";
 
 export default function DropdownsPage() {
   const t = useTranslations("admin.dropdowns");
-  const { locale } = useParams();
+  const { getLocalizedName } = useLocalizedName();
   const {
     dropdowns,
     isLoading,
@@ -83,30 +84,8 @@ export default function DropdownsPage() {
     handleSaveDropdown,
   } = useDropdownsManagement();
 
-  const getLocalizedName = (dropdown: Dropdown) => {
-    let name: string;
-    let isFallback = false;
-
-    switch (locale) {
-      case "fr":
-        if (dropdown.nameFr) {
-          name = dropdown.nameFr;
-        } else {
-          name = dropdown.name;
-          isFallback = true;
-        }
-        break;
-      case "mg":
-        if (dropdown.nameMg) {
-          name = dropdown.nameMg;
-        } else {
-          name = dropdown.name;
-          isFallback = true;
-        }
-        break;
-      default:
-        name = dropdown.name;
-    }
+  const getLocalizedDisplay = (dropdown: Dropdown) => {
+    const { name, isFallback } = getLocalizedName(dropdown as Territory);
 
     return (
       <div className="flex items-center gap-2">
@@ -195,9 +174,50 @@ export default function DropdownsPage() {
     );
   };
 
+  // Render loading state
+  if (isLoading) {
+    return (
+      <div className="space-y-4 p-8">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
+          <p className="text-muted-foreground">{t("subtitle")}</p>
+        </div>
+        <Card className="p-6">
+          <div className="space-y-2">
+            {[...Array(5)].map((_, index) => (
+              <Skeleton key={index} className="h-12 w-full" />
+            ))}
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  // Render error state
+  if (isError) {
+    return (
+      <div className="space-y-4 p-8">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
+          <p className="text-muted-foreground">{t("subtitle")}</p>
+        </div>
+        <Card className="p-6">
+          <Alert variant="destructive" className="mb-4">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>{t("error.title")}</AlertTitle>
+            <AlertDescription>{t("error.description")}</AlertDescription>
+          </Alert>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-4 p-8">
-      <h1 className="text-3xl font-bold">{t("title")}</h1>
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
+        <p className="text-muted-foreground">{t("subtitle")}</p>
+      </div>
 
       <Card className="p-6">
         <div className="flex justify-between items-center mb-6">
@@ -268,8 +288,7 @@ export default function DropdownsPage() {
               size="sm"
               disabled={!searchQuery && parentFilter === "all" && !showDisabled}
             >
-              <X className="mr-2 h-4 w-4" />
-              {t("filters.clear")}
+              <X className="h-4 w-4" />
             </Button>
           </div>
         </div>
@@ -353,7 +372,7 @@ export default function DropdownsPage() {
                     key={dropdown.id}
                     className={!dropdown.isEnabled ? "opacity-60" : ""}
                   >
-                    <TableCell>{getLocalizedName(dropdown)}</TableCell>
+                    <TableCell>{getLocalizedDisplay(dropdown)}</TableCell>
                     <TableCell>
                       {dropdown.isParent ? (
                         t("table.parentCategory")

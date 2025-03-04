@@ -3,16 +3,16 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { UserService } from "@/lib/services/user.service";
-import { User, UserSortConfig } from "@/types/users/user";
+import {
+  User,
+  UserSortConfig,
+  CreateUserData as UserCreateData,
+  UpdateUserData as UserUpdateData,
+} from "@/types/users/user";
 
-type CreateUserData = {
-  name: string;
-  email: string;
-  password: string;
-  role: "admin" | "user";
-};
-
-type UpdateUserData = Partial<Omit<CreateUserData, "password">>;
+// Extended local types to match form values
+type CreateUserData = UserCreateData;
+type UpdateUserData = UserUpdateData;
 
 export const useUsersManagement = () => {
   const t = useTranslations("admin.users");
