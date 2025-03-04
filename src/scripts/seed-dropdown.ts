@@ -74,58 +74,78 @@ async function main() {
     });
 
     // Create parent function if it doesn't exist
-    const parentFunction =
+    const functionParent =
       existingFunctionParent ||
       (await prisma.dropdown.create({
         data: {
-          name: "Function",
-          nameFr: "Fonction",
-          nameMg: "Andraikitra",
           key: "function",
+          name: "Functions",
+          nameFr: "Fonctions",
+          nameMg: "Andraikitra",
           isParent: true,
           isEnabled: true,
         },
       }));
 
-    console.log("Parent function created or found:", parentFunction.name);
+    console.log("Parent function created or found:", functionParent.name);
 
-    // Define child functions
+    // Create function options
     const functions = [
       {
-        name: "MPANDRAY",
-        nameFr: "MPANDRAY",
-        nameMg: "MPANDRAY",
+        name: "Pastor",
+        nameFr: "Pasteur",
+        nameMg: "Pasitera",
         isEnabled: true,
       },
       {
-        name: "DIAKONA",
-        nameFr: "DIAKONA",
-        nameMg: "DIAKONA",
+        name: "Deacon",
+        nameFr: "Diacre",
+        nameMg: "Diakona",
+        isEnabled: true,
+      },
+      {
+        name: "Elder",
+        nameFr: "Ancien",
+        nameMg: "Loholona",
+        isEnabled: true,
+      },
+      {
+        name: "Secretary",
+        nameFr: "Secrétaire",
+        nameMg: "Mpitantsoratra",
+        isEnabled: true,
+      },
+      {
+        name: "Treasurer",
+        nameFr: "Trésorier",
+        nameMg: "Mpitahiry vola",
         isEnabled: true,
       },
     ];
 
-    // Create child functions
-    for (const functionItem of functions) {
-      const existingChild = await prisma.dropdown.findFirst({
+    // Create function options if they don't exist
+    for (const func of functions) {
+      const existingFunction = await prisma.dropdown.findFirst({
         where: {
-          name: functionItem.name,
-          parentId: parentFunction.id,
+          name: func.name,
+          parentId: functionParent.id,
         },
       });
 
-      if (!existingChild) {
-        const child = await prisma.dropdown.create({
+      if (!existingFunction) {
+        const newFunc = await prisma.dropdown.create({
           data: {
-            ...functionItem,
-            parentId: parentFunction.id,
+            ...func,
+            parentId: functionParent.id,
           },
         });
-        console.log(`Created function: ${child.name}`);
+        console.log(`Created function: ${newFunc.name}`);
       } else {
-        console.log(`Function ${functionItem.name} already exists`);
+        console.log(`Function ${func.name} already exists`);
       }
     }
+
+    console.log("Function dropdowns seeded successfully");
   } catch (error) {
     console.error("Error seeding dropdowns:", error);
   } finally {
