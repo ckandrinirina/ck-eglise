@@ -49,15 +49,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useParams } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Dropdown } from "@/types/dropdowns/dropdown";
-import { getLocalizedName } from "@/lib/utils";
+import { useLocalizedName } from "@/hooks/common/useLocalizedName";
 
 export default function DropdownsPage() {
   const t = useTranslations("admin.dropdowns");
-  const { locale } = useParams();
+  const { getLocalizedName } = useLocalizedName();
   const {
     dropdowns,
     isLoading,
@@ -85,7 +84,7 @@ export default function DropdownsPage() {
   } = useDropdownsManagement();
 
   const getLocalizedDisplay = (dropdown: Dropdown) => {
-    const { name, isFallback } = getLocalizedName(dropdown, locale as string);
+    const { name, isFallback } = getLocalizedName(dropdown);
 
     return (
       <div className="flex items-center gap-2">

@@ -3,7 +3,6 @@
 import { memo, useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
-import { usePathname } from "next/navigation";
 
 // Group UI component imports
 import {
@@ -31,9 +30,9 @@ import { Label } from "@/components/ui/label";
 
 // Service and type imports
 import { DropdownService } from "@/lib/services/dropdown.service";
-import type { Dropdown } from "@/types/dropdowns/dropdown";
 import { Check, ChevronsUpDown, X } from "lucide-react";
-import { cn, getLocalizedName } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { useLocalizedName } from "@/hooks/common/useLocalizedName";
 
 export type DropdownSelectProps = {
   dropdownKey: string;
@@ -102,8 +101,7 @@ export const DropdownSelect = memo(
     onBlur,
   }: DropdownSelectProps) => {
     const t = useTranslations();
-    const pathname = usePathname();
-    const locale = pathname?.split("/")[1];
+    const { getLocalizedName } = useLocalizedName();
 
     // For multiple selections management
     const [selectedValues, setSelectedValues] = useState<string[]>(
@@ -158,21 +156,13 @@ export const DropdownSelect = memo(
       staleTime: 5 * 60 * 1000, // 5 minutes
     });
 
-    // Get localized name based on current locale
-    const getLocalized = useCallback(
-      (dropdown: Dropdown): string => {
-        return getLocalizedName(dropdown, locale).name;
-      },
-      [locale],
-    );
-
     // Find selected item name for display
     const getSelectedItemName = useCallback(
       (itemId: string): string => {
         const item = dropdownItems.find((item) => item.id === itemId);
-        return item ? getLocalized(item) : itemId;
+        return item ? getLocalizedName(item).name : itemId;
       },
-      [dropdownItems, getLocalized],
+      [dropdownItems, getLocalizedName],
     );
 
     // Handle selection change
@@ -246,7 +236,7 @@ export const DropdownSelect = memo(
           ) : (
             dropdownItems.map((item) => (
               <SelectItem key={item.id} value={item.id}>
-                {getLocalized(item)}
+                {getLocalizedName(item).name}
               </SelectItem>
             ))
           )}
@@ -328,7 +318,7 @@ export const DropdownSelect = memo(
                           : "opacity-0",
                       )}
                     />
-                    <span>{getLocalizedName(item)}</span>
+                    <span>{getLocalizedName(item).name}</span>
                   </CommandItem>
                 ))}
               </CommandGroup>

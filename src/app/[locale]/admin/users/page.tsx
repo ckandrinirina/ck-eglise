@@ -45,15 +45,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { usePathname } from "next/navigation";
-import { useCallback } from "react";
+import { useLocalizedName } from "@/hooks/common/useLocalizedName";
 import { User } from "@/types/users/user";
-import { getLocalizedName } from "@/lib/utils";
 
 export default function UsersPage() {
   const t = useTranslations("admin.users");
-  const pathname = usePathname();
-  const locale = pathname?.split("/")[1];
+  const { getLocalizedName } = useLocalizedName();
+
   const {
     users,
     isLoading,
@@ -77,15 +75,12 @@ export default function UsersPage() {
     handleSaveUser,
   } = useUsersManagement();
 
-  // Function to get localized territory name
-  const getTerritoryName = useCallback(
-    (user: User) => {
-      if (!user.territory) return "-";
-      const { name } = getLocalizedName(user.territory, locale as string);
-      return name;
-    },
-    [locale],
-  );
+  // Function to get localized territory name using our new hook
+  const getTerritoryName = (user: User) => {
+    if (!user.territory) return "-";
+    const { name } = getLocalizedName(user.territory);
+    return name;
+  };
 
   const showDeleteConfirmation = (userId: string) => {
     const { confirmDelete } = handleDelete(userId);
