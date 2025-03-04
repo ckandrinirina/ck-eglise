@@ -105,7 +105,7 @@ export function UserDialog({
   }, [user, open, form]);
 
   // Handle form submission
-  function onSubmit(data: UserFormValues) {
+  const onSubmit = (data: UserFormValues) => {
     // Remove empty password when editing
     if (user && data.password === "") {
       const { ...restData } = data;
@@ -113,7 +113,7 @@ export function UserDialog({
     } else {
       onSave?.(data);
     }
-  }
+  };
 
   // Get form validation state
   const { isValid, isDirty, isSubmitting } = form.formState;

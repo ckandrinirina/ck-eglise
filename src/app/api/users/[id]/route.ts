@@ -15,16 +15,18 @@ export async function PUT(
     }
 
     const body = await req.json();
-    const { name, email, role } = body;
+    const { name, email, role, territoryId } = body;
 
     const data: {
       name?: string;
       email?: string;
       role?: string;
+      territoryId?: string;
     } = {
       name,
       email,
       role,
+      territoryId,
     };
 
     const user = await prisma.user.update({
@@ -35,6 +37,7 @@ export async function PUT(
         name: true,
         email: true,
         role: true,
+        territoryId: true,
       },
     });
 
