@@ -49,6 +49,6 @@ export type UpdateUserData = Partial<{
  * Sort configuration for user list
  */
 export type UserSortConfig = {
-  field: "name" | "email" | "role" | "createdAt";
+  field: "name" | "email" | "role" | "territory" | "createdAt";
   direction: "asc" | "desc";
 };
