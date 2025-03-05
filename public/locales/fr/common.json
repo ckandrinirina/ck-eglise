@@ -81,6 +81,10 @@
       "userGrowth": "Croissance des Utilisateurs",
       "quickStats": "Statistiques Rapides"
     },
+    "transactions": {
+      "title": "Transactions",
+      "description": "Gestion des transactions financières"
+    },
     "users": {
       "title": "Utilisateurs",
       "subtitle": "Gérer les utilisateurs de l'application",

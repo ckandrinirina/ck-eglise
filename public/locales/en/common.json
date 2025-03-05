@@ -16,7 +16,7 @@
   },
   "home": {
     "welcome": "Welcome",
-    "description": "Church Management Application"
+    "description": "Church management application"
   },
   "actions": {
     "submit": "Submit",
@@ -33,8 +33,8 @@
   },
   "auth": {
     "login": {
-      "title": "Welcome Back",
-      "description": "Enter your credentials to log in to your account",
+      "title": "Welcome back",
+      "description": "Enter your credentials to access your account",
       "username": "Username",
       "password": "Password",
       "email": "Email",
@@ -54,12 +54,12 @@
         "generic": "An error occurred during login"
       },
       "success": {
-        "loggedIn": "Successfully logged in"
+        "loggedIn": "Login successful"
       }
     }
   },
   "admin": {
-    "title": "Administration Panel",
+    "title": "Admin Panel",
     "account": {
       "anonymous": "User"
     },
@@ -81,14 +81,18 @@
       "userGrowth": "User Growth",
       "quickStats": "Quick Stats"
     },
+    "transactions": {
+      "title": "Transactions",
+      "description": "Manage financial transactions"
+    },
     "users": {
       "title": "Users",
       "subtitle": "Manage application users",
       "createNew": "Create new user",
       "description": "Manage user accounts and permissions.",
-      "addUser": "Add User",
+      "addUser": "Add user",
       "search": {
-        "placeholder": "Search for a user...",
+        "placeholder": "Search users...",
         "clearFilters": "Clear filters",
         "apply": "Apply"
       },
@@ -101,7 +105,7 @@
         "apply": "Apply"
       },
       "noSearchResults": {
-        "title": "No Results Found",
+        "title": "No results found",
         "description": "No users match your search criteria. Try with different terms."
       },
       "error": {
@@ -120,7 +124,7 @@
         "status": "Status",
         "gender": "Gender",
         "territory": "Territory",
-        "createdAt": "Created At",
+        "createdAt": "Created at",
         "sortAsc": "Sort ascending",
         "sortDesc": "Sort descending",
         "functions": "Functions"
@@ -131,8 +135,8 @@
         "delete": "Delete"
       },
       "dialog": {
-        "createUser": "Create User",
-        "editUser": "Edit User",
+        "createUser": "Create user",
+        "editUser": "Edit user",
         "createUserDesc": "Add a new user to the system.",
         "editUserDesc": "Modify user details and permissions.",
         "success": "Success",
@@ -158,8 +162,6 @@
         "namePlaceholder": "Enter user name",
         "email": "Email",
         "emailPlaceholder": "Enter email address",
-        "phone": "Phone",
-        "phonePlaceholder": "Enter phone number",
         "password": "Password",
         "passwordPlaceholder": "Enter password",
         "newPassword": "New Password",
@@ -170,7 +172,7 @@
         "roleUser": "User",
         "roleAdmin": "Administrator",
         "territory": "Territory",
-        "territoryDescription": "User's assigned territory",
+        "territoryDescription": "Territory assigned to the user",
         "selectTerritory": "Select a territory",
         "functions": "Functions",
         "functionsDescription": "Select one or more functions for this user",
@@ -186,7 +188,7 @@
     },
     "dropdowns": {
       "title": "Dropdowns",
-      "subtitle": "Manage dropdown values used throughout the application",
+      "subtitle": "Manage dropdown menu values",
       "buttons": {
         "add": "Add value",
         "edit": "Edit",
@@ -199,8 +201,8 @@
         "name": "Name",
         "category": "Category",
         "parent": "Parent",
-        "parentCategory": "Parent Category",
-        "createdAt": "Created At",
+        "parentCategory": "Parent category",
+        "createdAt": "Creation date",
         "status": "Status",
         "enabled": "Enabled",
         "disabled": "Disabled",
@@ -213,12 +215,12 @@
         "parentsOnly": "Parent categories only",
         "showDisabled": "Show disabled items",
         "apply": "Apply",
-        "clear": "Clear"
+        "clear": "Clear filters"
       },
       "dialog": {
-        "addDropdown": "Add dropdown value",
-        "editDropdown": "Edit dropdown value",
-        "deleteDropdown": "Delete dropdown value",
+        "addDropdown": "Add value",
+        "editDropdown": "Edit value",
+        "deleteDropdown": "Delete value",
         "cancel": "Cancel",
         "save": "Save",
         "saving": "Saving...",
@@ -234,26 +236,26 @@
         "dropdownDeleted": "Value deleted successfully",
         "dropdownEnabled": "Value enabled successfully",
         "dropdownDisabled": "Value disabled successfully",
-        "errorCreating": "Error while creating",
-        "errorUpdating": "Error while updating",
-        "errorDeleting": "Error while deleting",
+        "errorCreating": "Error during creation",
+        "errorUpdating": "Error during update",
+        "errorDeleting": "Error during deletion",
         "success": "Success",
         "error": "Error"
       },
       "form": {
-        "name": "Default Name (English)",
-        "namePlaceholder": "Enter the default name (English)",
-        "nameFr": "French Name",
-        "nameFrPlaceholder": "Enter the French name",
-        "nameMg": "Malagasy Name",
-        "nameMgPlaceholder": "Enter the Malagasy name",
+        "name": "Default name (English)",
+        "namePlaceholder": "Enter default name (English)",
+        "nameFr": "Name in French",
+        "nameFrPlaceholder": "Enter name in French",
+        "nameMg": "Name in Malagasy",
+        "nameMgPlaceholder": "Enter name in Malagasy",
         "nameRequired": "Name is required",
-        "key": "Identifier Key",
+        "key": "Identification key",
         "keyPlaceholder": "Enter a unique key (letters, numbers, and hyphens)",
         "keyDescription": "Unique identifier for this category (required for parent categories)",
-        "isParent": "Parent Category",
+        "isParent": "Parent category",
         "isParentDescription": "This is a top-level category that can have children",
-        "parentCategory": "Parent Category",
+        "parentCategory": "Parent category",
         "parentCategoryPlaceholder": "Select a parent category",
         "isEnabled": "Enabled",
         "isEnabledDescription": "This value is available for selection in forms"
@@ -261,10 +263,10 @@
       "translation": {
         "fallback": "Using default name (translation not available)"
       },
-      "noData": "No dropdown values found. Create your first one by clicking 'Add value'.",
+      "noData": "No values found. Create your first value by clicking 'Add value'.",
       "error": {
         "title": "Error",
-        "description": "An error occurred while loading dropdown values"
+        "description": "An error occurred while loading values"
       }
     },
     "settings": {
@@ -273,7 +275,7 @@
       "general": {
         "title": "General Settings",
         "siteName": "Site Name",
-        "siteNameDescription": "The name of your site displayed to users",
+        "siteNameDescription": "The name of your site as displayed to users",
         "environment": "Environment",
         "environmentDescription": "Current deployment environment"
       },
@@ -291,8 +293,8 @@
     }
   },
   "profile": {
-    "title": "User Profile",
-    "updateInformation": "Update Information"
+    "title": "User profile",
+    "updateInformation": "Update information"
   },
   "dropdown": {
     "loading": "Loading...",
@@ -303,7 +305,7 @@
     "select": "Select...",
     "selectedItems": "{count} item(s) selected",
     "more": "more",
-    "selectAll": "Select All",
+    "selectAll": "Select all",
     "close": "Close"
   },
   "common": {

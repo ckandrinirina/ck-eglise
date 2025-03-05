@@ -29,6 +29,7 @@ model User {
   functions     Dropdown[] @relation("UserFunctions")
   accounts      Account[]
   sessions      Session[]
+  transactions  Transaction[] // Relation to transactions
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 
@@ -91,4 +92,18 @@ model Dropdown {
 
   @@unique([key]) // Make key field unique when not null
   @@index([parentId]) // Index for faster parent lookup
+}
+
+// Transaction model for financial transactions
+model Transaction {
+  id          String   @id @default(cuid())
+  amount      Float    // Amount of the transaction
+  type        String   // "credit" or "debit" 
+  reason      String   // Reason for the transaction
+  userId      String   // ID of the user associated with the transaction
+  user        User     @relation(fields: [userId], references: [id], onDelete: Restrict)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
 }

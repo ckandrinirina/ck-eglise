@@ -55,6 +55,10 @@ const navItems = [
         url: "/admin/dropdowns",
       },
       {
+        title: "transactions", // Added new finance section
+        url: "/admin/finance/transactions",
+      },
+      {
         title: "settings", // Changed to match translation key pattern
         url: "/admin/settings",
       },

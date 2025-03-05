@@ -3,10 +3,11 @@
     "home": "Fandraisana",
     "dashboard": "Tabilao",
     "login": "Hiditra",
-    "logout": "Hiala",
+    "logout": "Hivoaka",
     "signup": "Hisoratra anarana",
     "profile": "Mombamomba",
-    "settings": "Firafitra"
+    "admin": "Fitantanana",
+    "settings": "Safidy"
   },
   "language": {
     "en": "Anglisy",
@@ -14,30 +15,30 @@
     "mg": "Malagasy"
   },
   "home": {
-    "welcome": "Tonga soa",
-    "description": "Fitantanana ny Fiangonana"
+    "welcome": "Tongasoa",
+    "description": "Rindran-drafitra fitantanana fiangonana"
   },
   "auth": {
     "login": {
       "title": "Tonga soa indray",
-      "description": "Ampidiro ny mombamomba anao mba hiditra ao amin'ny kaontinao",
-      "username": "Anarana",
-      "password": "Tenimiafina",
+      "description": "Ampidiro ny mombamomba anao mba hidirana amin'ny kaontinao",
+      "username": "Anarana mpampiasa",
+      "password": "Teny miafina",
       "email": "Mailaka",
       "emailPlaceholder": "Ampidiro ny adiresy mailaka",
-      "usernamePlaceholder": "Ampidiro ny anarana",
-      "passwordPlaceholder": "Ampidiro ny tenimiafina",
+      "usernamePlaceholder": "Ampidiro ny anaranao",
+      "passwordPlaceholder": "Ampidiro ny teny miafina",
       "submit": "Hiditra",
-      "submitting": "Eo am-pidirana...",
+      "submitting": "Tafiditra...",
       "validation": {
-        "usernameRequired": "Ny anarana dia tsy maintsy mihoatra ny 3 tarehintsoratra",
-        "passwordRequired": "Ny tenimiafina dia tsy maintsy mihoatra ny 8 tarehintsoratra",
-        "emailRequired": "Mampidira mailaka marina azafady"
+        "usernameRequired": "Ny anarana dia tokony ahitana farafahakeliny litera 3",
+        "passwordRequired": "Ny teny miafina dia tokony ahitana farafahakeliny litera 8",
+        "emailRequired": "Mampidira adiresy mailaka marina"
       },
       "error": {
-        "title": "Hadisoana tamin'ny fidirana",
-        "invalidCredentials": "Diso ny mailaka na ny tenimiafina",
-        "generic": "Nisy olana nitranga tamin'ny fidirana"
+        "title": "Hadisoana amin'ny fidirana",
+        "invalidCredentials": "Mailaka na teny miafina diso",
+        "generic": "Nisy hadisoana nitranga nandritra ny fidirana"
       },
       "success": {
         "loggedIn": "Tafiditra soa aman-tsara"
@@ -45,12 +46,12 @@
     }
   },
   "admin": {
-    "title": "Fitantanana",
+    "title": "Fandrindrana fitantanana",
     "account": {
       "anonymous": "Mpampiasa"
     },
     "navigation": {
-      "title": "Fivoahana"
+      "title": "Fizorana"
     },
     "administration": {
       "title": "Fitantanana"
@@ -61,106 +62,110 @@
       "stats": {
         "totalUsers": "Isan'ny Mpampiasa",
         "activeSessions": "Mpampiasa Mavitrika",
-        "totalEvents": "Isan'ny Hetsika"
+        "totalEvents": "Hetsika Rehetra"
       },
-      "recentActivity": "Hetsika Farany",
-      "userGrowth": "Fitomboan'ny Mpampiasa",
-      "quickStats": "Antontan'isa Fohifohy"
+      "recentActivity": "Hetsika Vao Haingana",
+      "userGrowth": "Fitombon'ny mpampiasa",
+      "quickStats": "Statistika Haingana"
+    },
+    "transactions": {
+      "title": "Fifampiasana ara-bola",
+      "description": "Fitantanana ny fifampiasana ara-bola"
     },
     "users": {
       "title": "Mpampiasa",
-      "subtitle": "Fitantanana ny mpampiasa",
-      "description": "Fitantanana ny kaonty sy ny fahazoan-dalana.",
-      "addUser": "Hanampy Mpampiasa",
+      "subtitle": "Fitantanana ny mpampiasa rindran-drafitra",
       "createNew": "Hamorona mpampiasa vaovao",
+      "description": "Tantano ny kaonty sy fahazoan-dàlana ny mpampiasa.",
+      "addUser": "Hanampy mpampiasa",
       "search": {
         "placeholder": "Hikaroka mpampiasa...",
-        "clearFilters": "Hamafa ny sivana",
+        "clearFilters": "Hamafa sivana",
         "apply": "Ampiharo"
       },
       "filter": {
-        "all": "Anjara rehetra",
-        "byRole": "Sivana araka ny andraikitra",
+        "all": "Anjara asa rehetra",
+        "byRole": "Sivana araka ny anjara asa",
         "byTerritory": "Sivana araka ny faritra",
         "admin": "Mpitantana",
         "user": "Mpampiasa",
         "apply": "Ampiharo"
       },
       "noSearchResults": {
-        "title": "Tsy misy valiny",
-        "description": "Tsy misy mpampiasa mifanaraka amin'ny fikarohana. Andramo amin'ny teny hafa."
+        "title": "Tsy misy valiny hita",
+        "description": "Tsy misy mpampiasa mifanaraka amin'ny fikarohanao. Andramo amin'ny fepetra hafa."
       },
       "error": {
-        "title": "Hadisoana tamin'ny fakana",
-        "description": "Nisy olana nitranga tamin'ny fakana ny mpampiasa. Andramo indray."
+        "title": "Hadisoana amin'ny fakana",
+        "description": "Nisy hadisoana nitranga nandritra ny fakana mpampiasa. Andramo indray aty aoriana kely."
       },
       "noUsers": {
-        "title": "Tsy misy mpampiasa",
-        "description": "Tsy mbola misy mpampiasa ao amin'ny rafitra. Ampio ny mpampiasa voalohany."
+        "title": "Tsy misy mpampiasa hita",
+        "description": "Tsy mbola misy mpampiasa amin'ny rafitra. Ampio ny mpampiasa voalohany hatombohanao."
       },
       "table": {
         "name": "Anarana",
         "email": "Mailaka",
         "phone": "Finday",
         "role": "Andraikitra",
-        "status": "Toetra",
+        "status": "Toe-javatra",
         "gender": "Lahy/Vavy",
         "territory": "Faritra",
-        "createdAt": "Notoavina ny",
-        "sortAsc": "Laharam-pahana miakatra",
-        "sortDesc": "Laharam-pahana midina",
-        "functions": "Asa"
+        "createdAt": "Noforonina tamin'ny",
+        "sortAsc": "Laharo miakatra",
+        "sortDesc": "Laharo midina",
+        "functions": "Andraikitra"
       },
       "actions": {
         "more": "Bebe kokoa",
-        "edit": "Hanova",
-        "delete": "Hamafa"
+        "edit": "Ahitsy",
+        "delete": "Fafao"
       },
       "dialog": {
-        "createUser": "Hamorona Mpampiasa",
-        "editUser": "Hanova Mpampiasa",
+        "createUser": "Hamorona mpampiasa vaovao",
+        "editUser": "Ahitsy ny mpampiasa",
         "createUserDesc": "Hanampy mpampiasa vaovao ao amin'ny rafitra.",
-        "editUserDesc": "Hanova ny mombamomba sy ny fahazoan-dalan'ny mpampiasa.",
+        "editUserDesc": "Hanova ny mombamomba sy fahazoan-dàlana ny mpampiasa.",
         "success": "Fahombiazana",
         "error": "Hadisoana",
-        "userCreated": "Mpampiasa noforonina soa aman-tsara",
-        "userUpdated": "Mpampiasa nohavaozina soa aman-tsara",
-        "userDeleted": "Mpampiasa voafafa soa aman-tsara",
-        "errorSaving": "Tsy nahomby ny fanovana",
+        "userCreated": "Noforonina soa aman-tsara ny mpampiasa",
+        "userUpdated": "Nohavaozina soa aman-tsara ny mpampiasa",
+        "userDeleted": "Voafafa soa aman-tsara ny mpampiasa",
+        "errorSaving": "Tsy nahomby ny fitehirizana",
         "errorDeleting": "Tsy nahomby ny famafana",
         "errorLoading": "Tsy nahomby ny fakana mpampiasa",
         "errorCreating": "Tsy nahomby ny famoronana mpampiasa",
         "errorUpdating": "Tsy nahomby ny fanavaozana mpampiasa",
         "confirmDelete": "Tena te hamafa ity mpampiasa ity ve ianao?",
-        "save": "Hitahiry fanovana",
+        "save": "Tehirizo ny fanovana",
         "create": "Hamorona mpampiasa",
         "saving": "Mitahiry...",
         "deleting": "Mamafa...",
-        "cancel": "Aoka ihany",
-        "confirm": "Ekena"
+        "cancel": "Aoka",
+        "confirm": "Hamafiso"
       },
       "form": {
         "name": "Anarana",
         "namePlaceholder": "Ampidiro ny anaran'ny mpampiasa",
         "email": "Mailaka",
         "emailPlaceholder": "Ampidiro ny adiresy mailaka",
-        "password": "Tenimiafina",
-        "passwordPlaceholder": "Ampidiro ny tenimiafina",
-        "newPassword": "Tenimiafina Vaovao",
-        "newPasswordPlaceholder": "Ampidiro ny tenimiafina vaovao (tsy voatery)",
-        "passwordHint": "Avelao foana raha tsy hanova tenimiafina",
+        "password": "Teny miafina",
+        "passwordPlaceholder": "Ampidiro ny teny miafina",
+        "newPassword": "Teny miafina vaovao",
+        "newPasswordPlaceholder": "Ampidiro ny teny miafina vaovao (tsy voatery)",
+        "passwordHint": "Avelao foana raha hitazona ny teny miafina ankehitriny",
         "role": "Andraikitra",
-        "selectRole": "Misafidiana andraikitra",
+        "selectRole": "Fidio ny andraikitra",
         "roleUser": "Mpampiasa",
         "roleAdmin": "Mpitantana",
         "territory": "Faritra",
-        "territoryDescription": "Faritra nampiandraiketana ny mpampiasa",
+        "territoryDescription": "Faritra nomena ny mpampiasa",
         "selectTerritory": "Misafidiana faritra",
         "functions": "Andraikitra",
         "functionsDescription": "Safidio ny andraikitra iray na maromaro ho an'ity mpampiasa ity",
         "functionsPlaceholder": "Safidio ny andraikitra...",
         "gender": "Lahy/Vavy",
-        "selectGender": "Safidio ny lahy/vavy",
+        "selectGender": "Fidio ny lahy/vavy",
         "male": "Lahy",
         "female": "Vavy"
       },
@@ -169,105 +174,105 @@
       }
     },
     "dropdowns": {
-      "title": "Karazana",
-      "subtitle": "Fitantanana ny sanda ampiasaina any anatin'ny lisitra misoridina",
+      "title": "Lisitra azo alahatra",
+      "subtitle": "Tantano ny sanda misy ao anatin'ny lisitra azo alahatra",
       "buttons": {
         "add": "Hanampy sanda",
-        "edit": "Hanova",
-        "disable": "Hanakantona",
-        "enable": "Hampiasa",
-        "delete": "Hamafa",
+        "edit": "Ahitsy",
+        "disable": "Ajanony",
+        "enable": "Alefaso",
+        "delete": "Fafao",
         "options": "Safidy"
       },
       "table": {
         "name": "Anarana",
         "category": "Sokajy",
-        "parent": "Ray",
-        "parentCategory": "Sokajy ray",
+        "parent": "Fiaviana",
+        "parentCategory": "Sokajy fiaviana",
         "createdAt": "Daty namoronana",
         "status": "Toe-javatra",
-        "enabled": "Ampiasaina",
-        "disabled": "Voakantona",
-        "sortAsc": "Laharana miakatra",
-        "sortDesc": "Laharana midina"
+        "enabled": "Mandeha",
+        "disabled": "Najanona",
+        "sortAsc": "Laharo miakatra",
+        "sortDesc": "Laharo midina"
       },
       "filters": {
         "searchPlaceholder": "Hikaroka araka ny anarana",
         "parentAll": "Sokajy rehetra",
-        "parentsOnly": "Sokajy ray ihany",
-        "showDisabled": "Haneho ny voakantona",
+        "parentsOnly": "Sokajy fiaviana ihany",
+        "showDisabled": "Asehoy ny zavatra najanona",
         "apply": "Ampiharo",
-        "clear": "Hamafa"
+        "clear": "Hamafa sivana"
       },
       "dialog": {
         "addDropdown": "Hanampy sanda",
-        "editDropdown": "Hanova sanda",
-        "deleteDropdown": "Hamafa sanda",
-        "cancel": "Aoka ihany",
-        "save": "Hitahiry",
+        "editDropdown": "Ahitsy sanda",
+        "deleteDropdown": "Fafao sanda",
+        "cancel": "Aoka",
+        "save": "Tehirizo",
         "saving": "Mitahiry...",
         "deleting": "Mamafa...",
         "confirmDelete": "Tena te hamafa ity sanda ity ve ianao?",
-        "delete": "Hamafa",
-        "confirmDisable": "Tena te hanakantona ity sanda ity ve ianao?",
-        "disable": "Hanakantona",
-        "confirmEnable": "Tena te hampiasa ity sanda ity ve ianao?",
-        "enable": "Hampiasa",
-        "dropdownCreated": "Sanda voaforona soa aman-tsara",
+        "delete": "Fafao",
+        "confirmDisable": "Tena te hanajana ity sanda ity ve ianao?",
+        "disable": "Ajanony",
+        "confirmEnable": "Tena te hamelona ity sanda ity ve ianao?",
+        "enable": "Alefaso",
+        "dropdownCreated": "Sanda nampiana soa aman-tsara",
         "dropdownUpdated": "Sanda nohavaozina soa aman-tsara",
         "dropdownDeleted": "Sanda voafafa soa aman-tsara",
-        "dropdownEnabled": "Sanda ampiasaina indray soa aman-tsara",
-        "dropdownDisabled": "Sanda nakantona soa aman-tsara",
-        "errorCreating": "Nisy hadisoana tamin'ny famoronana",
-        "errorUpdating": "Nisy hadisoana tamin'ny fanavaozana",
-        "errorDeleting": "Nisy hadisoana tamin'ny famafana",
+        "dropdownEnabled": "Sanda nalefa soa aman-tsara",
+        "dropdownDisabled": "Sanda najanona soa aman-tsara",
+        "errorCreating": "Hadisoana nandritra ny famoronana",
+        "errorUpdating": "Hadisoana nandritra ny fanavaozana",
+        "errorDeleting": "Hadisoana nandritra ny famafana",
         "success": "Fahombiazana",
         "error": "Hadisoana"
       },
       "form": {
-        "name": "Anarana tsotra (Anglisy)",
-        "namePlaceholder": "Ampidiro ny anarana tsotra (Anglisy)",
-        "nameFr": "Anarana amin'ny teny frantsay",
-        "nameFrPlaceholder": "Ampidiro ny anarana amin'ny teny frantsay",
-        "nameMg": "Anarana amin'ny teny malagasy",
-        "nameMgPlaceholder": "Ampidiro ny anarana amin'ny teny malagasy",
-        "nameRequired": "Tsy maintsy ampidirina ny anarana",
-        "key": "Lakilen'ny famantarana",
-        "keyPlaceholder": "Ampidiro ny lakile tokana (tarehintsoratra, isa ary tirets)",
-        "keyDescription": "Famantarana tokana ho an'ity sokajy ity (tsy maintsy fenoina ho an'ny sokajy ray)",
-        "isParent": "Sokajy ray",
-        "isParentDescription": "Ity dia sokajy ambony afaka manana zanaka",
-        "parentCategory": "Sokajy ray",
-        "parentCategoryPlaceholder": "Safidio ny sokajy ray",
-        "isEnabled": "Ampiasaina",
-        "isEnabledDescription": "Ity sanda ity dia azo ampiasaina amin'ny fisy fidirana"
+        "name": "Anarana默认 (Anglisy)",
+        "namePlaceholder": "Ampidiro ny anarana默认 (Anglisy)",
+        "nameFr": "Anarana amin'ny frantsay",
+        "nameFrPlaceholder": "Ampidiro ny anarana amin'ny frantsay",
+        "nameMg": "Anarana amin'ny malagasy",
+        "nameMgPlaceholder": "Ampidiro ny anarana amin'ny malagasy",
+        "nameRequired": "Ny anarana dia ilaina",
+        "key": "Fanalahidy",
+        "keyPlaceholder": "Ampidiro fanalahidy tokana (litera, isa, ary tsipika)",
+        "keyDescription": "Famantarana tokana ho an'ity sokajy ity (ilaina ho an'ny sokajy fiaviana)",
+        "isParent": "Sokajy fiaviana",
+        "isParentDescription": "Ity dia sokajy ambony indrindra izay afaka manana zanaka",
+        "parentCategory": "Sokajy fiaviana",
+        "parentCategoryPlaceholder": "Safidio ny sokajy fiaviana",
+        "isEnabled": "Mandeha",
+        "isEnabledDescription": "Ity sanda ity dia azo fidiana ao anaty taratasy"
       },
       "translation": {
-        "fallback": "Mampiasa ny anarana tsotra (tsy misy ny dikany)"
+        "fallback": "Mampiasa anarana默认 (tsy misy fandikan-teny)"
       },
-      "noData": "Tsy misy sanda hita. Ampio ny sanda voalohany amin'ny tsindrina ny 'Hanampy sanda'.",
+      "noData": "Tsy misy sanda hita. Hamorona ny sanda voalohany amin'ny fanarahana 'Hanampy sanda'.",
       "error": {
         "title": "Hadisoana",
-        "description": "Nisy olana nitranga tamin'ny fakana ny sanda"
+        "description": "Nisy hadisoana nitranga nandritra ny fakana sanda"
       }
     },
     "settings": {
-      "title": "Firafitra",
-      "description": "Fitantanana ny firafitry ny rindranasa",
+      "title": "Safidy",
+      "description": "Tantano ny safidy rindran-drafitra",
       "general": {
-        "title": "Firafitra Ankapobeny",
-        "siteName": "Anaran'ny Tranonkala",
-        "siteNameDescription": "Ny anaran'ny tranonkalanao aseho amin'ny mpampiasa",
+        "title": "Safidy Ankapobeny",
+        "siteName": "Anaran'ny Tranokala",
+        "siteNameDescription": "Ny anaran'ny tranonkalanao asehona amin'ny mpampiasa",
         "environment": "Tontolo",
-        "environmentDescription": "Ny tontolo ampiasana ankehitriny"
+        "environmentDescription": "Tontolo fampiharana ankehitriny"
       },
       "security": {
-        "title": "Firafitry ny Fiarovana",
-        "sessionTimeout": "Fe-potoana Hivoahana",
-        "sessionTimeoutDescription": "Fotoana hivoahan'ny mpampiasa tsy mavitrika"
+        "title": "Safidy Filaminana",
+        "sessionTimeout": "Fe-potoana Fivoahana",
+        "sessionTimeoutDescription": "Faharetan'ny fotoana alohan'ny hivoahan'ny mpampiasa tsy mavitrika"
       },
       "actions": {
-        "save": "Hitahiry Fanovana"
+        "save": "Tehirizo ny Fanovana"
       }
     },
     "breadcrumbs": {
@@ -276,10 +281,10 @@
   },
   "actions": {
     "submit": "Alefa",
-    "cancel": "Aoka ihany",
-    "save": "Hitahiry",
-    "delete": "Hamafa",
-    "edit": "Hanova",
+    "cancel": "Aoka",
+    "save": "Tehirizina",
+    "delete": "Fafao",
+    "edit": "Ovao",
     "add": "Hanampy"
   },
   "header": {
@@ -289,19 +294,19 @@
   },
   "profile": {
     "title": "Mombamomba ny mpampiasa",
-    "updateInformation": "Havaozina ny mombamomba"
+    "updateInformation": "Havaozina ny fampahalalana"
   },
   "dropdown": {
-    "loading": "Mampiditra...",
-    "noOptions": "Tsy misy safidy",
-    "noResults": "Tsy misy valiny",
+    "loading": "Andrasana...",
+    "noOptions": "Tsy misy safidy misy",
+    "noResults": "Tsy misy valiny hita",
     "search": "Hikaroka...",
-    "clearSelection": "Hamafa ny safidy",
-    "select": "Hifidy...",
-    "selectedItems": "Safidy {count}",
-    "more": "amboniny",
-    "selectAll": "Hifidy rehetra",
-    "close": "Hiala"
+    "clearSelection": "Fafao ny safidy",
+    "select": "Misafidiana...",
+    "selectedItems": "{count} zavatra voafidy",
+    "more": "bebe kokoa",
+    "selectAll": "Fidio rehetra",
+    "close": "Hidio"
   },
   "common": {
     "none": "Tsy misy"
