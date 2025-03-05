@@ -1,17 +1,29 @@
+"use client";
+
 /**
  * @component UserSelect
  * @description A reusable user selection component that works with both React Hook Form and standalone usage
  */
 
+import * as React from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   FormControl,
   FormField,
@@ -20,7 +32,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { UseFormReturn, FieldValues, Path } from "react-hook-form";
-import { User } from "@/types/users/user";
 import { UserService } from "@/lib/services/user.service";
 
 interface UserSelectProps<TFieldValues extends FieldValues> {
@@ -50,19 +61,93 @@ const UserSelect = <TFieldValues extends FieldValues>({
   label,
   placeholder,
   disabled,
+  required,
   className,
 }: UserSelectProps<TFieldValues>) => {
   const t = useTranslations("common");
+  const [open, setOpen] = React.useState(false);
+  const [searchQuery, setSearchQuery] = React.useState("");
 
   // Fetch users using React Query
   const {
-    data: users,
+    data: users = [],
     isLoading,
     isError,
   } = useQuery({
     queryKey: ["users"],
     queryFn: () => UserService.getUsers(),
   });
+
+  // Filter users based on search query
+  const filteredUsers = React.useMemo(() => {
+    if (!searchQuery) return users;
+    const query = searchQuery.toLowerCase();
+    return users.filter(
+      (user) =>
+        user.name?.toLowerCase().includes(query) ||
+        user.email?.toLowerCase().includes(query),
+    );
+  }, [users, searchQuery]);
+
+  const renderCombobox = (value: string, onChange: (value: string) => void) => (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className={cn("w-full justify-between", className)}
+          disabled={disabled || isLoading}
+        >
+          {value
+            ? users?.find((user) => user.id === value)?.name || t("unnamed")
+            : placeholder || t("selectUser")}
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-full p-0" align="start">
+        <Command shouldFilter={false}>
+          <CommandInput
+            placeholder={t("searchUser")}
+            value={searchQuery}
+            onValueChange={setSearchQuery}
+          />
+          <CommandList>
+            <CommandEmpty>{t("noUsersFound")}</CommandEmpty>
+            <CommandGroup heading={t("users")}>
+              {isLoading ? (
+                <CommandItem disabled>{t("loading")}</CommandItem>
+              ) : isError ? (
+                <CommandItem disabled>{t("errorLoadingUsers")}</CommandItem>
+              ) : (
+                filteredUsers.map((user) => (
+                  <CommandItem
+                    key={user.id}
+                    value={user.id}
+                    onSelect={(currentValue) => {
+                      onChange(currentValue === value ? "" : currentValue);
+                      setOpen(false);
+                      setSearchQuery("");
+                    }}
+                  >
+                    <div className="flex items-center">
+                      {user.name || user.email || t("unnamed")}
+                      <Check
+                        className={cn(
+                          "ml-auto h-4 w-4",
+                          value === user.id ? "opacity-100" : "opacity-0",
+                        )}
+                      />
+                    </div>
+                  </CommandItem>
+                ))
+              )}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
 
   // If form is provided, render with React Hook Form integration
   if (form && name) {
@@ -72,21 +157,19 @@ const UserSelect = <TFieldValues extends FieldValues>({
         name={name}
         render={({ field }) => (
           <FormItem className={className}>
-            {label && <FormLabel>{label}</FormLabel>}
-            <Select
-              onValueChange={field.onChange}
-              defaultValue={field.value}
-              disabled={disabled || isLoading}
-            >
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder={placeholder || t("selectUser")} />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                {renderOptions(users, isLoading, isError, t)}
-              </SelectContent>
-            </Select>
+            {label && (
+              <FormLabel
+                className={cn(
+                  required &&
+                    "after:content-['*'] after:text-destructive after:ml-0.5",
+                )}
+              >
+                {label}
+              </FormLabel>
+            )}
+            <FormControl>
+              {renderCombobox(field.value, field.onChange)}
+            </FormControl>
             <FormMessage />
           </FormItem>
         )}
@@ -95,46 +178,10 @@ const UserSelect = <TFieldValues extends FieldValues>({
   }
 
   // Otherwise render as a standalone component
-  return (
-    <Select
-      onValueChange={controlledOnChange}
-      value={controlledValue}
-      disabled={disabled || isLoading}
-    >
-      <SelectTrigger className={className}>
-        <SelectValue placeholder={placeholder || t("selectUser")} />
-      </SelectTrigger>
-      <SelectContent>
-        {renderOptions(users, isLoading, isError, t)}
-      </SelectContent>
-    </Select>
+  return renderCombobox(
+    controlledValue || "",
+    controlledOnChange || (() => {}),
   );
-};
-
-// Helper function to render select options
-const renderOptions = (
-  users: User[] | undefined,
-  isLoading: boolean,
-  isError: boolean,
-  t: (key: string) => string,
-) => {
-  if (isLoading) {
-    return <SelectItem value="_loading">{t("loading")}</SelectItem>;
-  }
-
-  if (isError) {
-    return <SelectItem value="_error">{t("errorLoadingUsers")}</SelectItem>;
-  }
-
-  if (!users?.length) {
-    return <SelectItem value="_empty">{t("noUsersFound")}</SelectItem>;
-  }
-
-  return users.map((user: User) => (
-    <SelectItem key={user.id} value={user.id}>
-      {user.name || user.email || t("unnamed")}
-    </SelectItem>
-  ));
 };
 
 export default UserSelect;
