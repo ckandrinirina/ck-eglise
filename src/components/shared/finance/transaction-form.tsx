@@ -49,7 +49,7 @@ interface TransactionFormProps {
  */
 const TransactionForm = ({ isOpen, onClose }: TransactionFormProps) => {
   const t = useTranslations("finance");
-  const { form, onSubmit, isPending } = useTransactionForm();
+  const { form, onSubmit, isPending } = useTransactionForm(onClose);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

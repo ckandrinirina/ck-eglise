@@ -28,9 +28,10 @@ export type TransactionFormData = z.infer<typeof transactionSchema>;
  * Hook for managing transaction form state and submission
  *
  * @hook
+ * @param {Function} onSuccess - Callback to be called after successful submission
  * @returns {Object} Form state and handlers
  */
-export const useTransactionForm = () => {
+export const useTransactionForm = (onSuccess?: () => void) => {
   const t = useTranslations("finance");
   const queryClient = useQueryClient();
   const [isPending, setIsPending] = useState(false);
@@ -53,6 +54,7 @@ export const useTransactionForm = () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       toast.success(t("success.transactionCreated"));
       form.reset();
+      onSuccess?.(); // Call the onSuccess callback if provided
     },
     onError: (error) => {
       console.error("Failed to create transaction:", error);
