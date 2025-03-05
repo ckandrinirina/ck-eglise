@@ -8,6 +8,7 @@ export type UserBodyPut = {
   name: string;
   email: string;
   role: string;
+  gender?: "male" | "female";
   phone?: string;
   password?: string;
   territoryId: string;
@@ -26,8 +27,15 @@ export async function PUT(
     }
 
     const body = await req.json();
-    const { name, email, role, phone, territoryId, functionIds }: UserBodyPut =
-      body;
+    const {
+      name,
+      email,
+      role,
+      phone,
+      gender,
+      territoryId,
+      functionIds,
+    }: UserBodyPut = body;
 
     // Prepare update data
     const data: Prisma.UserUpdateInput = {
@@ -35,6 +43,7 @@ export async function PUT(
       email,
       role,
       phone,
+      gender,
       territory: territoryId
         ? {
             connect: { id: territoryId },
@@ -71,6 +80,7 @@ export async function PUT(
         name: true,
         email: true,
         phone: true,
+        gender: true,
         role: true,
         territoryId: true,
         territory: {

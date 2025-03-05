@@ -101,13 +101,15 @@
       "table": {
         "name": "Anarana",
         "email": "Mailaka",
+        "phone": "Finday",
         "role": "Andraikitra",
         "status": "Toetra",
+        "gender": "Lahy/Vavy",
         "territory": "Faritra",
-        "createdAt": "Noforonina",
-        "sortAsc": "Laharana miakatra",
-        "sortDesc": "Laharana midina",
-        "functions": "Andraikitra"
+        "createdAt": "Notoavina ny",
+        "sortAsc": "Laharam-pahana miakatra",
+        "sortDesc": "Laharam-pahana midina",
+        "functions": "Asa"
       },
       "actions": {
         "more": "Bebe kokoa",
@@ -156,7 +158,11 @@
         "selectTerritory": "Misafidiana faritra",
         "functions": "Andraikitra",
         "functionsDescription": "Safidio ny andraikitra iray na maromaro ho an'ity mpampiasa ity",
-        "functionsPlaceholder": "Safidio ny andraikitra..."
+        "functionsPlaceholder": "Safidio ny andraikitra...",
+        "gender": "Lahy/Vavy",
+        "selectGender": "Safidio ny lahy/vavy",
+        "male": "Lahy",
+        "female": "Vavy"
       },
       "common": {
         "none": "Tsy misy"

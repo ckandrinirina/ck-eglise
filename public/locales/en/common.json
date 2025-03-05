@@ -118,6 +118,7 @@
         "phone": "Phone",
         "role": "Role",
         "status": "Status",
+        "gender": "Gender",
         "territory": "Territory",
         "createdAt": "Created At",
         "sortAsc": "Sort ascending",
@@ -173,7 +174,11 @@
         "selectTerritory": "Select a territory",
         "functions": "Functions",
         "functionsDescription": "Select one or more functions for this user",
-        "functionsPlaceholder": "Select functions..."
+        "functionsPlaceholder": "Select functions...",
+        "gender": "Gender",
+        "selectGender": "Select gender",
+        "male": "Male",
+        "female": "Female"
       },
       "common": {
         "none": "None"

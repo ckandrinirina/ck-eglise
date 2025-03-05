@@ -115,8 +115,10 @@
       "table": {
         "name": "Nom",
         "email": "Email",
+        "phone": "Téléphone",
         "role": "Rôle",
         "status": "Statut",
+        "gender": "Genre",
         "territory": "Territoire",
         "createdAt": "Créé le",
         "sortAsc": "Trier par ordre croissant",
@@ -170,7 +172,11 @@
         "selectTerritory": "Sélectionner un territoire",
         "functions": "Fonctions",
         "functionsDescription": "Sélectionnez une ou plusieurs fonctions pour cet utilisateur",
-        "functionsPlaceholder": "Sélectionner des fonctions..."
+        "functionsPlaceholder": "Sélectionner des fonctions...",
+        "gender": "Genre",
+        "selectGender": "Sélectionner le genre",
+        "male": "Homme",
+        "female": "Femme"
       },
       "common": {
         "none": "Aucun"

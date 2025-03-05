@@ -348,6 +348,21 @@ export default function UsersPage() {
                     </div>
                   </TableHead>
                   <TableHead
+                    onClick={() => handleSort("gender")}
+                    className="cursor-pointer"
+                  >
+                    <div className="flex items-center">
+                      {t("table.gender")}
+                      <ArrowUpDown
+                        className={`ml-2 h-4 w-4 ${
+                          sortConfig.field === "gender"
+                            ? "opacity-100"
+                            : "opacity-40"
+                        }`}
+                      />
+                    </div>
+                  </TableHead>
+                  <TableHead
                     onClick={() => handleSort("createdAt")}
                     className="cursor-pointer"
                   >
@@ -399,6 +414,11 @@ export default function UsersPage() {
                       </div>
                     </TableCell>
                     <TableCell>{getTerritoryName(user)}</TableCell>
+                    <TableCell>
+                      <Badge variant="outline">
+                        {user.gender ? t(`form.${user.gender}`) : "-"}
+                      </Badge>
+                    </TableCell>
                     <TableCell>
                       {format(new Date(user.createdAt), "PPp")}
                     </TableCell>
