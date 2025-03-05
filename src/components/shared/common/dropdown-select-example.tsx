@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { DropdownSelect } from "./dropdown-select";
+import { DropdownSelectMultiple } from "./dropdown-select-multiple";
 import {
   Form,
   FormControl,
@@ -16,22 +17,31 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 // Form schema definition
 const formSchema = z.object({
   territory: z.string().min(1, "Please select a territory"),
   branches: z.array(z.string()).min(1, "Please select at least one branch"),
+  departments: z
+    .array(z.string())
+    .min(1, "Please select at least one department"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
 /**
- * Example component showing how to use DropdownSelect with and without React Hook Form
+ * Example component showing how to use DropdownSelect and DropdownSelectMultiple with and without React Hook Form
+ *
+ * @component
+ * @example
+ * <DropdownSelectExample />
  */
 export const DropdownSelectExample = () => {
   // For standalone usage
   const [selectedRole, setSelectedRole] = useState<string>("");
   const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
+  const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
 
   // For React Hook Form integration
   const form = useForm<FormValues>({
@@ -39,6 +49,7 @@ export const DropdownSelectExample = () => {
     defaultValues: {
       territory: "",
       branches: [],
+      departments: [],
     },
   });
 
@@ -59,7 +70,7 @@ export const DropdownSelectExample = () => {
         <div>
           <h3 className="font-medium mb-2">Single Selection</h3>
           <DropdownSelect
-            dropdownKey="role" // Assuming you have a dropdown with key "role"
+            dropdownKey="territory" // Assuming you have a dropdown with key "role"
             label="Select Role"
             description="Choose a role from the dropdown"
             value={selectedRole}
@@ -71,21 +82,51 @@ export const DropdownSelectExample = () => {
           </div>
         </div>
 
-        {/* Multiple select example */}
-        <div>
+        <Separator className="my-4" />
+
+        {/* Multiple select examples */}
+        <div className="space-y-6">
           <h3 className="font-medium mb-2">Multiple Selection</h3>
-          <DropdownSelect
-            dropdownKey="role" // Reusing the same dropdown for example
-            label="Select Multiple Roles"
-            description="Choose multiple roles from the dropdown"
-            value={selectedRoles}
-            onChange={(value) => setSelectedRoles(value as string[])}
-            isMultiple
-            required
-          />
-          <div className="mt-2 text-sm">
-            Selected values:{" "}
-            {selectedRoles.length ? selectedRoles.join(", ") : "(none)"}
+
+          {/* Method 1: Using DropdownSelect with isMultiple */}
+          <div>
+            <h4 className="text-sm font-medium mb-2">
+              Method 1: Using DropdownSelect with isMultiple
+            </h4>
+            <DropdownSelect
+              dropdownKey="territory" // Reusing the same dropdown for example
+              label="Select Multiple Roles"
+              description="Choose multiple roles from the dropdown (using DropdownSelect with isMultiple)"
+              value={selectedRoles}
+              onChange={(value) => setSelectedRoles(value as string[])}
+              isMultiple
+              required
+            />
+            <div className="mt-2 text-sm">
+              Selected values:{" "}
+              {selectedRoles.length ? selectedRoles.join(", ") : "(none)"}
+            </div>
+          </div>
+
+          {/* Method 2: Using DropdownSelectMultiple directly */}
+          <div>
+            <h4 className="text-sm font-medium mb-2">
+              Method 2: Using DropdownSelectMultiple directly
+            </h4>
+            <DropdownSelectMultiple
+              dropdownKey="territory" // Reusing the same dropdown for example
+              label="Select Multiple Departments"
+              description="Choose multiple departments from the dropdown (using DropdownSelectMultiple)"
+              value={selectedDepartments}
+              onChange={(value) => setSelectedDepartments(value)}
+              required
+            />
+            <div className="mt-2 text-sm">
+              Selected values:{" "}
+              {selectedDepartments.length
+                ? selectedDepartments.join(", ")
+                : "(none)"}
+            </div>
           </div>
         </div>
       </Card>
@@ -123,16 +164,18 @@ export const DropdownSelectExample = () => {
               )}
             />
 
-            {/* Multiple select with React Hook Form */}
+            {/* Multiple select with React Hook Form - Method 1 */}
             <FormField
               control={form.control}
               name="branches"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Branches</FormLabel>
+                  <FormLabel>
+                    Branches (using DropdownSelect with isMultiple)
+                  </FormLabel>
                   <FormControl>
                     <DropdownSelect
-                      dropdownKey="branch" // Assuming you have a dropdown with key "branch"
+                      dropdownKey="territory" // Assuming you have a dropdown with key "branch"
                       value={field.value}
                       onChange={field.onChange}
                       onBlur={field.onBlur}
@@ -142,6 +185,33 @@ export const DropdownSelectExample = () => {
                     />
                   </FormControl>
                   <FormDescription>Select one or more branches</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Multiple select with React Hook Form - Method 2 */}
+            <FormField
+              control={form.control}
+              name="departments"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Departments (using DropdownSelectMultiple directly)
+                  </FormLabel>
+                  <FormControl>
+                    <DropdownSelectMultiple
+                      dropdownKey="territory" // Assuming you have a dropdown with key "department"
+                      value={field.value}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                      name={field.name}
+                      error={form.formState.errors.departments?.message}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Select one or more departments
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

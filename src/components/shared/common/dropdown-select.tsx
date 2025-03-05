@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useState, useEffect, useCallback } from "react";
+import { memo, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
 
@@ -12,56 +12,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 
 // Service and type imports
 import { DropdownService } from "@/lib/services/dropdown.service";
-import { Check, ChevronsUpDown, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLocalizedName } from "@/hooks/common/useLocalizedName";
 import { Territory } from "@/types/users/user";
 
-export type DropdownSelectProps = {
-  dropdownKey: string;
-  value?: string | string[];
-  onChange?: (value: string | string[]) => void;
-  isMultiple?: boolean;
-  placeholder?: string;
-  className?: string;
-  label?: string;
-  description?: string;
-  error?: string;
-  disabled?: boolean;
-  includeDisabled?: boolean;
-  required?: boolean;
-  name?: string;
-  onBlur?: () => void;
-};
-
 /**
- * DropdownSelect component for selecting values from predefined dropdown lists
+ * DropdownSelect component for single value selection from predefined dropdown lists
  *
  * @component
  * @example
  * // Single selection
  * <DropdownSelect dropdownKey="territory" onChange={handleChange} />
- *
- * // Multiple selection
- * <DropdownSelect dropdownKey="branch" isMultiple onChange={handleMultiChange} />
  *
  * // With React Hook Form
  * <FormField
@@ -84,12 +49,79 @@ export type DropdownSelectProps = {
  *   )}
  * />
  */
+
+export type DropdownSelectProps = {
+  /**
+   * The key of the parent dropdown to fetch items for
+   */
+  dropdownKey: string;
+
+  /**
+   * The currently selected value
+   */
+  value?: string | null | undefined;
+
+  /**
+   * Callback triggered when selection changes
+   */
+  onChange?: (value: string) => void;
+
+  /**
+   * Placeholder text when no selection is made
+   */
+  placeholder?: string;
+
+  /**
+   * Additional CSS classes
+   */
+  className?: string;
+
+  /**
+   * Label for the dropdown
+   */
+  label?: string;
+
+  /**
+   * Description text below the dropdown
+   */
+  description?: string;
+
+  /**
+   * Error message to display
+   */
+  error?: string;
+
+  /**
+   * Disable the dropdown
+   */
+  disabled?: boolean;
+
+  /**
+   * Include disabled dropdown items in options
+   */
+  includeDisabled?: boolean;
+
+  /**
+   * Mark the field as required
+   */
+  required?: boolean;
+
+  /**
+   * Name attribute for the input (for forms)
+   */
+  name?: string;
+
+  /**
+   * Callback triggered on field blur
+   */
+  onBlur?: () => void;
+};
+
 export const DropdownSelect = memo(
   ({
     dropdownKey,
     value,
     onChange,
-    isMultiple = false,
     placeholder,
     className,
     label,
@@ -104,24 +136,8 @@ export const DropdownSelect = memo(
     const t = useTranslations();
     const { getLocalizedName } = useLocalizedName();
 
-    // For multiple selections management
-    const [selectedValues, setSelectedValues] = useState<string[]>(
-      Array.isArray(value) ? value : value ? [value] : [],
-    );
-
-    // For command/popover state
-    const [open, setOpen] = useState(false);
-
-    // Update local state when external value changes
-    useEffect(() => {
-      if (Array.isArray(value)) {
-        setSelectedValues(value);
-      } else if (value) {
-        setSelectedValues([value]);
-      } else {
-        setSelectedValues([]);
-      }
-    }, [value]);
+    // Convert value to string for single select, handling null/undefined cases
+    const singleValue = typeof value === "string" ? value : "";
 
     // Fetch dropdown options by key
     const { data: dropdownItems = [], isLoading } = useQuery({
@@ -157,193 +173,14 @@ export const DropdownSelect = memo(
       staleTime: 5 * 60 * 1000, // 5 minutes
     });
 
-    // Find selected item name for display
-    const getSelectedItemName = useCallback(
-      (itemId: string): string => {
-        const item = dropdownItems.find((item) => item.id === itemId);
-        return item ? getLocalizedName(item as Territory).name : itemId;
-      },
-      [dropdownItems, getLocalizedName],
-    );
-
     // Handle selection change
-    const handleSelectChange = useCallback(
+    const handleValueChange = useCallback(
       (selectedValue: string) => {
-        if (isMultiple) {
-          let newValues;
-
-          if (selectedValues.includes(selectedValue)) {
-            // Remove if already selected
-            newValues = selectedValues.filter((v) => v !== selectedValue);
-          } else {
-            // Add to selection
-            newValues = [...selectedValues, selectedValue];
-          }
-
-          setSelectedValues(newValues);
-          onChange?.(newValues);
-        } else {
-          // Single selection
-          setSelectedValues([selectedValue]);
-          onChange?.(selectedValue);
-          setOpen(false);
-        }
+        onChange?.(selectedValue);
       },
-      [isMultiple, onChange, selectedValues],
+      [onChange],
     );
 
-    // Remove item from selection (for multiple mode)
-    const removeItem = useCallback(
-      (itemId: string) => {
-        const newValues = selectedValues.filter((v) => v !== itemId);
-        setSelectedValues(newValues);
-        onChange?.(newValues);
-      },
-      [onChange, selectedValues],
-    );
-
-    // Clear all selections
-    const clearSelection = useCallback(() => {
-      setSelectedValues([]);
-      onChange?.(isMultiple ? [] : "");
-    }, [isMultiple, onChange]);
-
-    // Render single select dropdown
-    const renderSingleSelect = () => (
-      <Select
-        value={selectedValues[0] || ""}
-        onValueChange={(value) => {
-          setSelectedValues([value]);
-          onChange?.(value);
-        }}
-        disabled={disabled || isLoading}
-        name={name}
-        onOpenChange={(open) => {
-          if (!open && onBlur) {
-            onBlur();
-          }
-        }}
-      >
-        <SelectTrigger
-          className={cn("w-full", error && "border-destructive", className)}
-        >
-          <SelectValue placeholder={placeholder || t("dropdown.select")} />
-        </SelectTrigger>
-        <SelectContent>
-          {dropdownItems.length === 0 ? (
-            <p className="p-2 text-sm text-muted-foreground">
-              {isLoading ? t("dropdown.loading") : t("dropdown.noOptions")}
-            </p>
-          ) : (
-            dropdownItems.map((item) => (
-              <SelectItem key={item.id} value={item.id}>
-                {getLocalizedName(item as Territory).name}
-              </SelectItem>
-            ))
-          )}
-        </SelectContent>
-      </Select>
-    );
-
-    // Render multi-select dropdown
-    const renderMultiSelect = () => (
-      <div className={cn("flex flex-col gap-1.5", className)}>
-        <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              role="combobox"
-              aria-expanded={open}
-              className={cn(
-                "w-full justify-between",
-                selectedValues.length > 0 ? "h-auto min-h-10" : "h-10",
-                error && "border-destructive",
-                "text-left font-normal",
-              )}
-              onClick={() => setOpen(!open)}
-              disabled={disabled || isLoading}
-              type="button"
-            >
-              <div className="flex flex-wrap gap-1">
-                {selectedValues.length > 0 ? (
-                  selectedValues.map((itemId) => (
-                    <Badge key={itemId} variant="secondary" className="m-0.5">
-                      {getSelectedItemName(itemId)}
-                      <button
-                        className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter" || e.key === " ") {
-                            e.preventDefault();
-                            removeItem(itemId);
-                          }
-                        }}
-                        onMouseDown={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          removeItem(itemId);
-                        }}
-                        type="button"
-                      >
-                        <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
-                      </button>
-                    </Badge>
-                  ))
-                ) : (
-                  <span className="text-muted-foreground">
-                    {placeholder || t("dropdown.select")}
-                  </span>
-                )}
-              </div>
-              <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-full p-0" align="start">
-            <Command>
-              <CommandInput placeholder={t("dropdown.search")} />
-              <CommandEmpty>
-                {isLoading ? t("dropdown.loading") : t("dropdown.noResults")}
-              </CommandEmpty>
-              <CommandGroup className="max-h-64 overflow-y-auto">
-                {dropdownItems.map((item) => (
-                  <CommandItem
-                    key={item.id}
-                    value={item.id}
-                    onSelect={() => handleSelectChange(item.id)}
-                    className="flex items-center gap-2"
-                  >
-                    <Check
-                      className={cn(
-                        "h-4 w-4",
-                        selectedValues.includes(item.id)
-                          ? "opacity-100"
-                          : "opacity-0",
-                      )}
-                    />
-                    <span>{getLocalizedName(item as Territory).name}</span>
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-              {selectedValues.length > 0 && (
-                <div className="border-t p-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="w-full justify-center text-sm"
-                    onClick={clearSelection}
-                    type="button"
-                  >
-                    {t("dropdown.clearSelection")}
-                  </Button>
-                </div>
-              )}
-            </Command>
-          </PopoverContent>
-        </Popover>
-        <input type="hidden" name={name} value={selectedValues.join(",")} />
-      </div>
-    );
-
-    // The complete component with optional label and error
     return (
       <div className="space-y-2">
         {label && (
@@ -361,7 +198,36 @@ export const DropdownSelect = memo(
           </div>
         )}
 
-        {isMultiple ? renderMultiSelect() : renderSingleSelect()}
+        <Select
+          value={singleValue}
+          onValueChange={handleValueChange}
+          disabled={disabled || isLoading}
+          name={name}
+          onOpenChange={(open) => {
+            if (!open && onBlur) {
+              onBlur();
+            }
+          }}
+        >
+          <SelectTrigger
+            className={cn("w-full", error && "border-destructive", className)}
+          >
+            <SelectValue placeholder={placeholder || t("dropdown.select")} />
+          </SelectTrigger>
+          <SelectContent>
+            {!Array.isArray(dropdownItems) || dropdownItems.length === 0 ? (
+              <p className="p-2 text-sm text-muted-foreground">
+                {isLoading ? t("dropdown.loading") : t("dropdown.noOptions")}
+              </p>
+            ) : (
+              dropdownItems.map((item) => (
+                <SelectItem key={item.id} value={item.id}>
+                  {getLocalizedName(item as Territory).name}
+                </SelectItem>
+              ))
+            )}
+          </SelectContent>
+        </Select>
 
         {description && !error && (
           <p className="text-sm text-muted-foreground">{description}</p>

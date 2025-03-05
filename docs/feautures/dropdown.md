@@ -1,11 +1,16 @@
-# Dropdown Select Component
+# Dropdown Select Components
 
-Our application features a reusable DropdownSelect component that provides both single and multiple selection capabilities, fetches options from server-side dropdowns by key, and integrates seamlessly with React Hook Form.
+Our application features reusable dropdown selection components that provide both single and multiple selection capabilities, fetch options from server-side dropdowns by key, and integrate seamlessly with React Hook Form.
+
+## Components
+
+- **DropdownSelect**: For single value selection scenarios only
+- **DropdownSelectMultiple**: Dedicated component for multiple value selection scenarios
 
 ## Features
 
 - Dynamic dropdown options loading from the server
-- Both single-select and multi-select modes
+- Clear separation of concerns between single and multiple selection
 - Full React Hook Form compatibility
 - Internationalization support (en, fr, mg)
 - Accessibility features
@@ -31,13 +36,12 @@ import { DropdownSelect } from "@/components/shared/common/dropdown-select";
 ### Multiple Selection
 
 ```tsx
-import { DropdownSelect } from "@/components/shared/common/dropdown-select";
+// Use DropdownSelectMultiple component for multiple selection
+import { DropdownSelectMultiple } from "@/components/shared/common/dropdown-select-multiple";
 
-// Multiple selection mode
-<DropdownSelect 
+<DropdownSelectMultiple 
   dropdownKey="branch" 
   label="Select Branches"
-  isMultiple 
   value={selectedValues} 
   onChange={(values) => setSelectedValues(values)} 
 />
@@ -58,6 +62,7 @@ import {
   FormMessage 
 } from "@/components/ui/form";
 import { DropdownSelect } from "@/components/shared/common/dropdown-select";
+import { DropdownSelectMultiple } from "@/components/shared/common/dropdown-select-multiple";
 
 // Form schema definition
 const formSchema = z.object({
@@ -108,13 +113,12 @@ const form = useForm<FormValues>({
         <FormItem>
           <FormLabel>Branches</FormLabel>
           <FormControl>
-            <DropdownSelect
+            <DropdownSelectMultiple
               dropdownKey="branch"
               value={field.value}
               onChange={field.onChange}
               onBlur={field.onBlur}
               name={field.name}
-              isMultiple
             />
           </FormControl>
           <FormMessage />
@@ -127,12 +131,31 @@ const form = useForm<FormValues>({
 
 ## Props Reference
 
+### DropdownSelect Props
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `dropdownKey` | `string` | required | The key of the parent dropdown to fetch items for |
-| `value` | `string \| string[]` | `undefined` | The currently selected value(s) |
-| `onChange` | `(value: string \| string[]) => void` | `undefined` | Callback triggered when selection changes |
-| `isMultiple` | `boolean` | `false` | Enable multiple selection mode |
+| `value` | `string \| null \| undefined` | `undefined` | The currently selected value |
+| `onChange` | `(value: string) => void` | `undefined` | Callback triggered when selection changes |
+| `placeholder` | `string` | `"Select..."` | Placeholder text when no selection is made |
+| `className` | `string` | `undefined` | Additional CSS classes |
+| `label` | `string` | `undefined` | Label for the dropdown |
+| `description` | `string` | `undefined` | Description text below the dropdown |
+| `error` | `string` | `undefined` | Error message to display |
+| `disabled` | `boolean` | `false` | Disable the dropdown |
+| `includeDisabled` | `boolean` | `false` | Include disabled dropdown items in options |
+| `required` | `boolean` | `false` | Mark the field as required |
+| `name` | `string` | `undefined` | Name attribute for the input (for forms) |
+| `onBlur` | `() => void` | `undefined` | Callback triggered on field blur |
+
+### DropdownSelectMultiple Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `dropdownKey` | `string` | required | The key of the parent dropdown to fetch items for |
+| `value` | `string[]` | `[]` | The currently selected values |
+| `onChange` | `(value: string[]) => void` | `undefined` | Callback triggered when selection changes |
 | `placeholder` | `string` | `"Select..."` | Placeholder text when no selection is made |
 | `className` | `string` | `undefined` | Additional CSS classes |
 | `label` | `string` | `undefined` | Label for the dropdown |
@@ -146,7 +169,7 @@ const form = useForm<FormValues>({
 
 ## Implementation Details
 
-The component uses the following internal logic:
+The components use the following internal logic:
 
 1. Fetches dropdown options using `DropdownService` based on the provided key
 2. Supports both controlled and uncontrolled usage
@@ -155,12 +178,18 @@ The component uses the following internal logic:
 5. Uses shadcn/ui components for consistent styling
 6. Provides accessible keyboard navigation
 7. Implements React Hook Form compatibility
-8. Shows badges for multiple selections with removal capability
+8. DropdownSelectMultiple shows badges for selections with removal capability
+
+## Component Architecture
+
+- **DropdownSelect**: Focused exclusively on single value selection with a clean, simple interface
+- **DropdownSelectMultiple**: Dedicated to multiple value selection scenarios with optimized UX for managing multiple selections
 
 ## Best Practices
 
-1. Always provide a specific `dropdownKey` that matches a parent dropdown in the database
-2. Use the `isMultiple` prop when multiple selections are needed
-3. Handle the returned value appropriately - string for single selection, string[] for multiple selection
-4. Add proper validation in your form schema for required fields
-5. Consider accessibility by providing clear labels and error messages
+1. For single selection, use `DropdownSelect`
+2. For multiple selection, use `DropdownSelectMultiple` 
+3. Always provide a specific `dropdownKey` that matches a parent dropdown in the database
+4. Handle the returned value appropriately - string for single selection, string[] for multiple selection
+5. Add proper validation in your form schema for required fields
+6. Consider accessibility by providing clear labels and error messages
