@@ -285,6 +285,9 @@
     "search": "Hikaroka...",
     "clearSelection": "Hamafa ny safidy",
     "select": "Hifidy...",
-    "selectedItems": "Safidy {count}"
+    "selectedItems": "Safidy {count}",
+    "more": "amboniny",
+    "selectAll": "Hifidy rehetra",
+    "close": "Hiala"
   }
 }

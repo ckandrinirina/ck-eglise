@@ -41,7 +41,6 @@ export const DropdownSelectExample = () => {
   // For standalone usage
   const [selectedRole, setSelectedRole] = useState<string>("");
   const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
-  const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
 
   // For React Hook Form integration
   const form = useForm<FormValues>({
@@ -49,7 +48,6 @@ export const DropdownSelectExample = () => {
     defaultValues: {
       territory: "",
       branches: [],
-      departments: [],
     },
   });
 
@@ -70,11 +68,11 @@ export const DropdownSelectExample = () => {
         <div>
           <h3 className="font-medium mb-2">Single Selection</h3>
           <DropdownSelect
-            dropdownKey="territory" // Assuming you have a dropdown with key "role"
-            label="Select Role"
-            description="Choose a role from the dropdown"
+            dropdownKey="territory" // Assuming you have a dropdown with key "territory"
+            label="Select Territory"
+            description="Choose a territory from the dropdown"
             value={selectedRole}
-            onChange={(value) => setSelectedRole(value as string)}
+            onChange={(value) => setSelectedRole(value)}
             required
           />
           <div className="mt-2 text-sm">
@@ -84,49 +82,22 @@ export const DropdownSelectExample = () => {
 
         <Separator className="my-4" />
 
-        {/* Multiple select examples */}
-        <div className="space-y-6">
+        {/* Multiple select example */}
+        <div>
           <h3 className="font-medium mb-2">Multiple Selection</h3>
-
-          {/* Method 1: Using DropdownSelect with isMultiple */}
-          <div>
-            <h4 className="text-sm font-medium mb-2">
-              Method 1: Using DropdownSelect with isMultiple
-            </h4>
-            <DropdownSelect
-              dropdownKey="territory" // Reusing the same dropdown for example
-              label="Select Multiple Roles"
-              description="Choose multiple roles from the dropdown (using DropdownSelect with isMultiple)"
-              value={selectedRoles}
-              onChange={(value) => setSelectedRoles(value as string[])}
-              isMultiple
-              required
-            />
-            <div className="mt-2 text-sm">
-              Selected values:{" "}
-              {selectedRoles.length ? selectedRoles.join(", ") : "(none)"}
-            </div>
-          </div>
-
-          {/* Method 2: Using DropdownSelectMultiple directly */}
-          <div>
-            <h4 className="text-sm font-medium mb-2">
-              Method 2: Using DropdownSelectMultiple directly
-            </h4>
-            <DropdownSelectMultiple
-              dropdownKey="territory" // Reusing the same dropdown for example
-              label="Select Multiple Departments"
-              description="Choose multiple departments from the dropdown (using DropdownSelectMultiple)"
-              value={selectedDepartments}
-              onChange={(value) => setSelectedDepartments(value)}
-              required
-            />
-            <div className="mt-2 text-sm">
-              Selected values:{" "}
-              {selectedDepartments.length
-                ? selectedDepartments.join(", ")
-                : "(none)"}
-            </div>
+          <DropdownSelectMultiple
+            dropdownKey="territory" // Assuming you have a dropdown with key "territory"
+            label="Select Multiple Territories"
+            description="Choose multiple territories from the dropdown"
+            value={selectedRoles}
+            onChange={(values) => setSelectedRoles(values)}
+            required
+            maxDisplay={2}
+            badgeVariant="secondary"
+          />
+          <div className="mt-2 text-sm">
+            Selected values:{" "}
+            {selectedRoles.length ? selectedRoles.join(", ") : "(none)"}
           </div>
         </div>
       </Card>
@@ -164,23 +135,20 @@ export const DropdownSelectExample = () => {
               )}
             />
 
-            {/* Multiple select with React Hook Form - Method 1 */}
+            {/* Multiple select with React Hook Form */}
             <FormField
               control={form.control}
               name="branches"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    Branches (using DropdownSelect with isMultiple)
-                  </FormLabel>
+                  <FormLabel>Branches</FormLabel>
                   <FormControl>
-                    <DropdownSelect
+                    <DropdownSelectMultiple
                       dropdownKey="territory" // Assuming you have a dropdown with key "branch"
                       value={field.value}
                       onChange={field.onChange}
                       onBlur={field.onBlur}
                       name={field.name}
-                      isMultiple
                       error={form.formState.errors.branches?.message}
                     />
                   </FormControl>
@@ -190,15 +158,13 @@ export const DropdownSelectExample = () => {
               )}
             />
 
-            {/* Multiple select with React Hook Form - Method 2 */}
+            {/* Multiple select with React Hook Form - Additional styling options */}
             <FormField
               control={form.control}
               name="departments"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    Departments (using DropdownSelectMultiple directly)
-                  </FormLabel>
+                  <FormLabel>Departments</FormLabel>
                   <FormControl>
                     <DropdownSelectMultiple
                       dropdownKey="territory" // Assuming you have a dropdown with key "department"
@@ -207,6 +173,8 @@ export const DropdownSelectExample = () => {
                       onBlur={field.onBlur}
                       name={field.name}
                       error={form.formState.errors.departments?.message}
+                      maxDisplay={3}
+                      badgeVariant="default"
                     />
                   </FormControl>
                   <FormDescription>

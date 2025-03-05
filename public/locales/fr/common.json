@@ -282,7 +282,10 @@
     "search": "Rechercher...",
     "clearSelection": "Effacer la sélection",
     "select": "Sélectionner...",
-    "selectedItems": "{count} élément(s) sélectionné(s)"
+    "selectedItems": "{count} élément(s) sélectionné(s)",
+    "more": "plus",
+    "selectAll": "Tout sélectionner",
+    "close": "Fermer"
   },
   "profile": {
     "title": "Profil utilisateur",

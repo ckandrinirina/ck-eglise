@@ -286,6 +286,9 @@
     "search": "Search...",
     "clearSelection": "Clear selection",
     "select": "Select...",
-    "selectedItems": "{count} item(s) selected"
+    "selectedItems": "{count} item(s) selected",
+    "more": "more",
+    "selectAll": "Select All",
+    "close": "Close"
   }
 }
