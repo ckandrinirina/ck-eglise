@@ -298,6 +298,21 @@ export default function UsersPage() {
                     </div>
                   </TableHead>
                   <TableHead
+                    onClick={() => handleSort("phone")}
+                    className="cursor-pointer"
+                  >
+                    <div className="flex items-center">
+                      {t("table.phone")}
+                      <ArrowUpDown
+                        className={`ml-2 h-4 w-4 ${
+                          sortConfig.field === "phone"
+                            ? "opacity-100"
+                            : "opacity-40"
+                        }`}
+                      />
+                    </div>
+                  </TableHead>
+                  <TableHead
                     onClick={() => handleSort("role")}
                     className="cursor-pointer"
                   >
@@ -357,6 +372,7 @@ export default function UsersPage() {
                     <TableCell className="truncate max-w-[200px]">
                       {user.email}
                     </TableCell>
+                    <TableCell>{user.phone || "-"}</TableCell>
                     <TableCell>
                       <Badge
                         variant="outline"

@@ -9,6 +9,7 @@ export type UserBodyPost = {
   email: string;
   role: string;
   password: string;
+  phone?: string;
   territoryId: string;
   functionIds?: string[];
 };
@@ -32,6 +33,7 @@ export async function GET(request: Request) {
         id: true,
         name: true,
         email: true,
+        phone: true,
         role: true,
         territoryId: true,
         territory: {
@@ -79,6 +81,7 @@ export async function POST(req: Request) {
       email,
       password,
       role,
+      phone,
       territoryId,
       functionIds,
     }: UserBodyPost = data;
@@ -101,6 +104,7 @@ export async function POST(req: Request) {
         name,
         email,
         role,
+        phone,
         territoryId,
         password: hashedPassword,
         functions: functionIds?.length
@@ -111,6 +115,7 @@ export async function POST(req: Request) {
         id: true,
         name: true,
         email: true,
+        phone: true,
         role: true,
         territoryId: true,
         territory: {

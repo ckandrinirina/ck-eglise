@@ -16,6 +16,7 @@ export type User = {
   id: string;
   name: string | null;
   email: string | null;
+  phone: string | null;
   role: "user" | "admin";
   territoryId?: string | null;
   territory?: DropdownUser | null;
@@ -30,6 +31,7 @@ export type User = {
 export type CreateUserData = {
   name: string;
   email: string;
+  phone?: string;
   password: string;
   role: "user" | "admin";
   territoryId?: string;
@@ -42,6 +44,7 @@ export type CreateUserData = {
  */
 export type UpdateUserData = Partial<{
   name: string;
+  phone: string;
   password: string;
   role: "user" | "admin";
   territoryId?: string;
@@ -52,6 +55,6 @@ export type UpdateUserData = Partial<{
  * Sort configuration for user list
  */
 export type UserSortConfig = {
-  field: "name" | "email" | "role" | "territory" | "createdAt";
+  field: "name" | "email" | "phone" | "role" | "territory" | "createdAt";
   direction: "asc" | "desc";
 };

@@ -21,6 +21,7 @@ model User {
   emailVerified DateTime?
   password      String?
   image         String?
+  phone         String?    // User's phone number
   role          String     @default("user") // "user", "admin"
   territoryId   String? // Reference to territory (dropdown)
   territory     Dropdown?  @relation("UserTerritory", fields: [territoryId], references: [id], onDelete: SetNull)

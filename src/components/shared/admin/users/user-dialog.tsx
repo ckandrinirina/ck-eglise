@@ -39,6 +39,7 @@ const baseUserSchema = z.object({
     message: "Name must be at least 2 characters.",
   }),
   email: z.string().email(),
+  phone: z.string().optional(),
   role: z.enum(["user", "admin"]),
   territoryId: z.string().optional(),
   functionIds: z.array(z.string()).optional(),
@@ -86,6 +87,7 @@ export function UserDialog({
     defaultValues: {
       name: user?.name || "",
       email: user?.email || "",
+      phone: user?.phone || "",
       role: (user?.role as "user" | "admin") || "user",
       password: "",
       territoryId: user?.territoryId || "",
@@ -100,6 +102,7 @@ export function UserDialog({
       form.reset({
         name: user?.name || "",
         email: user?.email || "",
+        phone: user?.phone || "",
         role: (user?.role as "user" | "admin") || "user",
         password: "", // Always reset password field
         territoryId: user?.territoryId || "",
@@ -160,6 +163,23 @@ export function UserDialog({
                       placeholder={t("form.emailPlaceholder")}
                       {...field}
                       disabled={!!user} // Disable email editing for existing users
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("form.phone")}</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="tel"
+                      placeholder={t("form.phonePlaceholder")}
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />

@@ -115,6 +115,7 @@
       "table": {
         "name": "Name",
         "email": "Email",
+        "phone": "Phone",
         "role": "Role",
         "status": "Status",
         "territory": "Territory",
@@ -156,6 +157,8 @@
         "namePlaceholder": "Enter user name",
         "email": "Email",
         "emailPlaceholder": "Enter email address",
+        "phone": "Phone",
+        "phonePlaceholder": "Enter phone number",
         "password": "Password",
         "passwordPlaceholder": "Enter password",
         "newPassword": "New Password",
