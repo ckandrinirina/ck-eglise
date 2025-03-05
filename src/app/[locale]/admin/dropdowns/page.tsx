@@ -53,7 +53,7 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Dropdown } from "@/types/dropdowns/dropdown";
 import { useLocalizedName } from "@/hooks/common/useLocalizedName";
-import { Territory } from "@/types/users/user";
+import { DropdownUser } from "@/types/users/user";
 
 export default function DropdownsPage() {
   const t = useTranslations("admin.dropdowns");
@@ -85,7 +85,7 @@ export default function DropdownsPage() {
   } = useDropdownsManagement();
 
   const getLocalizedDisplay = (dropdown: Dropdown) => {
-    const { name, isFallback } = getLocalizedName(dropdown as Territory);
+    const { name, isFallback } = getLocalizedName(dropdown as DropdownUser);
 
     return (
       <div className="flex items-center gap-2">

@@ -7,7 +7,7 @@
 import { useParams } from "next/navigation";
 import { getLocalizedName as getLocalizedNameUtil } from "@/lib/utils";
 import { useCallback } from "react";
-import { Territory } from "@/types/users/user";
+import { DropdownUser } from "@/types/users/user";
 
 /**
  * Interface for items that can be localized
@@ -34,7 +34,7 @@ export const useLocalizedName = () => {
    * @returns Object containing the localized name and whether a fallback was used
    */
   const getLocalizedName = useCallback(
-    (item: Territory | null | undefined) => {
+    (item: DropdownUser | null | undefined) => {
       if (!item) return { name: "-", isFallback: false };
       return getLocalizedNameUtil(item, locale as string);
     },

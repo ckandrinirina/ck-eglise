@@ -15,20 +15,21 @@ datasource db {
 
 // User model for authentication
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?    @unique
   emailVerified DateTime?
   password      String?
   image         String?
-  role          String    @default("user") // "user", "admin"
-  territoryId   String?   // Reference to territory (dropdown)
-  territory     Dropdown? @relation(fields: [territoryId], references: [id], onDelete: SetNull)
+  role          String     @default("user") // "user", "admin"
+  territoryId   String? // Reference to territory (dropdown)
+  territory     Dropdown?  @relation("UserTerritory", fields: [territoryId], references: [id], onDelete: SetNull)
+  functions     Dropdown[] @relation("UserFunctions")
   accounts      Account[]
   sessions      Session[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
   @@index([territoryId])
 }
 
@@ -71,19 +72,20 @@ model VerificationToken {
 
 // Dropdown model for managing dropdown values
 model Dropdown {
-  id        String     @id @default(cuid())
-  name      String     // Default name
-  nameFr    String?    // French name
-  nameMg    String?    // Malagasy name
-  key       String?    // Unique identifier key for parent dropdowns
-  isParent  Boolean    @default(false) // True if it is a parent type
-  parentId  String?    // Reference to parent dropdown ID
-  parent    Dropdown?  @relation("DropdownHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
-  children  Dropdown[] @relation("DropdownHierarchy")
-  users     User[]     // Relation to users who have this dropdown as their territory
-  isEnabled Boolean    @default(true)  // Whether the dropdown is enabled
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id            String     @id @default(cuid())
+  name          String // Default name
+  nameFr        String? // French name
+  nameMg        String? // Malagasy name
+  key           String? // Unique identifier key for parent dropdowns
+  isParent      Boolean    @default(false) // True if it is a parent type
+  parentId      String? // Reference to parent dropdown ID
+  parent        Dropdown?  @relation("DropdownHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children      Dropdown[] @relation("DropdownHierarchy")
+  users         User[]     @relation("UserTerritory") // Users who have this as territory
+  userFunctions User[]     @relation("UserFunctions") // Users who have this as function
+  isEnabled     Boolean    @default(true) // Whether the dropdown is enabled
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
 
   @@unique([key]) // Make key field unique when not null
   @@index([parentId]) // Index for faster parent lookup

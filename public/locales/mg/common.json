@@ -81,6 +81,7 @@
       "filter": {
         "all": "Anjara rehetra",
         "byRole": "Sivana araka ny andraikitra",
+        "byTerritory": "Sivana araka ny faritra",
         "admin": "Mpitantana",
         "user": "Mpampiasa",
         "apply": "Ampiharo"
@@ -105,7 +106,8 @@
         "territory": "Faritra",
         "createdAt": "Noforonina",
         "sortAsc": "Laharana miakatra",
-        "sortDesc": "Laharana midina"
+        "sortDesc": "Laharana midina",
+        "functions": "Andraikitra"
       },
       "actions": {
         "more": "Bebe kokoa",
@@ -151,7 +153,13 @@
         "roleAdmin": "Mpitantana",
         "territory": "Faritra",
         "territoryDescription": "Faritra nampiandraiketana ny mpampiasa",
-        "selectTerritory": "Misafidiana faritra"
+        "selectTerritory": "Misafidiana faritra",
+        "functions": "Andraikitra",
+        "functionsDescription": "Safidio ny andraikitra iray na maromaro ho an'ity mpampiasa ity",
+        "functionsPlaceholder": "Safidio ny andraikitra..."
+      },
+      "common": {
+        "none": "Tsy misy"
       }
     },
     "dropdowns": {
@@ -284,6 +292,12 @@
     "search": "Hikaroka...",
     "clearSelection": "Hamafa ny safidy",
     "select": "Hifidy...",
-    "selectedItems": "Safidy {count}"
+    "selectedItems": "Safidy {count}",
+    "more": "amboniny",
+    "selectAll": "Hifidy rehetra",
+    "close": "Hiala"
+  },
+  "common": {
+    "none": "Tsy misy"
   }
 }

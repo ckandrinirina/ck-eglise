@@ -95,6 +95,7 @@
       "filter": {
         "all": "All roles",
         "byRole": "Filter by role",
+        "byTerritory": "Filter by territory",
         "admin": "Administrator",
         "user": "User",
         "apply": "Apply"
@@ -119,7 +120,8 @@
         "territory": "Territory",
         "createdAt": "Created At",
         "sortAsc": "Sort ascending",
-        "sortDesc": "Sort descending"
+        "sortDesc": "Sort descending",
+        "functions": "Functions"
       },
       "actions": {
         "more": "More",
@@ -165,7 +167,13 @@
         "roleAdmin": "Administrator",
         "territory": "Territory",
         "territoryDescription": "User's assigned territory",
-        "selectTerritory": "Select a territory"
+        "selectTerritory": "Select a territory",
+        "functions": "Functions",
+        "functionsDescription": "Select one or more functions for this user",
+        "functionsPlaceholder": "Select functions..."
+      },
+      "common": {
+        "none": "None"
       }
     },
     "dropdowns": {
@@ -285,6 +293,12 @@
     "search": "Search...",
     "clearSelection": "Clear selection",
     "select": "Select...",
-    "selectedItems": "{count} item(s) selected"
+    "selectedItems": "{count} item(s) selected",
+    "more": "more",
+    "selectAll": "Select All",
+    "close": "Close"
+  },
+  "common": {
+    "none": "None"
   }
 }

@@ -3,7 +3,15 @@ import { prisma } from "@/lib/db";
 import { hash } from "bcryptjs";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-// import { Prisma } from "@prisma/client";
+
+export type UserBodyPost = {
+  name: string;
+  email: string;
+  role: string;
+  password: string;
+  territoryId: string;
+  functionIds?: string[];
+};
 
 // GET all users with optional role filter
 export async function GET(request: Request) {
@@ -27,6 +35,14 @@ export async function GET(request: Request) {
         role: true,
         territoryId: true,
         territory: {
+          select: {
+            id: true,
+            name: true,
+            nameFr: true,
+            nameMg: true,
+          },
+        },
+        functions: {
           select: {
             id: true,
             name: true,
@@ -58,7 +74,14 @@ export async function POST(req: Request) {
     }
 
     const data = await req.json();
-    const { name, email, password, role, territoryId } = data;
+    const {
+      name,
+      email,
+      password,
+      role,
+      territoryId,
+      functionIds,
+    }: UserBodyPost = data;
 
     // Check if user exists
     const existingUser = await prisma.user.findUnique({
@@ -72,7 +95,7 @@ export async function POST(req: Request) {
     // Hash password
     const hashedPassword = await hash(password, 10);
 
-    // Create user
+    // Create user with functions
     const user = await prisma.user.create({
       data: {
         name,
@@ -80,6 +103,9 @@ export async function POST(req: Request) {
         role,
         territoryId,
         password: hashedPassword,
+        functions: functionIds?.length
+          ? { connect: functionIds.map((id) => ({ id })) }
+          : undefined,
       },
       select: {
         id: true,
@@ -88,6 +114,14 @@ export async function POST(req: Request) {
         role: true,
         territoryId: true,
         territory: {
+          select: {
+            id: true,
+            name: true,
+            nameFr: true,
+            nameMg: true,
+          },
+        },
+        functions: {
           select: {
             id: true,
             name: true,

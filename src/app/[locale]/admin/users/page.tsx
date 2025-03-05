@@ -47,6 +47,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { useLocalizedName } from "@/hooks/common/useLocalizedName";
 import { User } from "@/types/users/user";
+import { DropdownSelect } from "@/components/shared/common/dropdown-select";
 
 export default function UsersPage() {
   const t = useTranslations("admin.users");
@@ -62,9 +63,12 @@ export default function UsersPage() {
     tempSearchQuery,
     roleFilter,
     tempRoleFilter,
+    territoryFilter,
+    tempTerritoryFilter,
     sortConfig,
     handleSearchChange,
     handleRoleFilterChange,
+    handleTerritoryFilterChange,
     applyFilters,
     handleSort,
     handleClearFilters,
@@ -80,6 +84,15 @@ export default function UsersPage() {
     if (!user.territory) return "-";
     const { name } = getLocalizedName(user.territory);
     return name;
+  };
+
+  // Function to get localized function names
+  const getFunctionNames = (user: User) => {
+    if (!user.functions?.length) return [t("common.none")];
+    return user.functions.map((func) => {
+      const { name } = getLocalizedName(func);
+      return name;
+    });
   };
 
   const showDeleteConfirmation = (userId: string) => {
@@ -194,6 +207,16 @@ export default function UsersPage() {
             </Select>
           </div>
 
+          {/* Territory filter */}
+          <div className="w-[200px]">
+            <DropdownSelect
+              dropdownKey="territory"
+              value={tempTerritoryFilter}
+              onChange={(value) => handleTerritoryFilterChange(value as string)}
+              placeholder={t("filter.byTerritory")}
+            />
+          </div>
+
           {/* Apply/Clear filters */}
           <div className="flex gap-2 ml-auto">
             <Button variant="secondary" onClick={applyFilters} size="sm">
@@ -208,8 +231,9 @@ export default function UsersPage() {
                   onClick={handleClearFilters}
                   size="sm"
                   disabled={
-                    searchQuery === "" &&
+                    !searchQuery &&
                     roleFilter === "all" &&
+                    !territoryFilter &&
                     sortConfig.field === "name" &&
                     sortConfig.direction === "asc"
                   }
@@ -290,7 +314,22 @@ export default function UsersPage() {
                   </TableHead>
                   <TableHead>
                     <div className="flex items-center">
+                      {t("table.functions")}
+                    </div>
+                  </TableHead>
+                  <TableHead
+                    onClick={() => handleSort("territory")}
+                    className="cursor-pointer"
+                  >
+                    <div className="flex items-center">
                       {t("table.territory")}
+                      <ArrowUpDown
+                        className={`ml-2 h-4 w-4 ${
+                          sortConfig.field === "territory"
+                            ? "opacity-100"
+                            : "opacity-40"
+                        }`}
+                      />
                     </div>
                   </TableHead>
                   <TableHead
@@ -329,6 +368,19 @@ export default function UsersPage() {
                       >
                         {user.role}
                       </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex flex-wrap gap-1">
+                        {getFunctionNames(user).map((funcName, index) => (
+                          <Badge
+                            key={index}
+                            variant="secondary"
+                            className="text-xs"
+                          >
+                            {funcName}
+                          </Badge>
+                        ))}
+                      </div>
                     </TableCell>
                     <TableCell>{getTerritoryName(user)}</TableCell>
                     <TableCell>

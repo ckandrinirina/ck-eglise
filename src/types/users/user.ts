@@ -2,7 +2,7 @@
  * Types definitions for user management
  */
 
-export interface Territory {
+export interface DropdownUser {
   id: string;
   name: string;
   nameFr: string | null;
@@ -18,7 +18,8 @@ export type User = {
   email: string | null;
   role: "user" | "admin";
   territoryId?: string | null;
-  territory?: Territory | null;
+  territory?: DropdownUser | null;
+  functions?: DropdownUser[];
   createdAt: string;
   updatedAt: string;
 };
@@ -32,6 +33,7 @@ export type CreateUserData = {
   password: string;
   role: "user" | "admin";
   territoryId?: string;
+  functionIds?: string[];
 };
 
 /**
@@ -43,12 +45,13 @@ export type UpdateUserData = Partial<{
   password: string;
   role: "user" | "admin";
   territoryId?: string;
+  functionIds?: string[];
 }>;
 
 /**
  * Sort configuration for user list
  */
 export type UserSortConfig = {
-  field: "name" | "email" | "role" | "createdAt";
+  field: "name" | "email" | "role" | "territory" | "createdAt";
   direction: "asc" | "desc";
 };

@@ -25,6 +25,8 @@ export const useUsersManagement = () => {
     "all" | "admin" | "user"
   >("all");
   const [roleFilter, setRoleFilter] = useState<"all" | "admin" | "user">("all");
+  const [tempTerritoryFilter, setTempTerritoryFilter] = useState<string>("");
+  const [territoryFilter, setTerritoryFilter] = useState<string>("");
   const [sortConfig, setSortConfig] = useState<UserSortConfig>({
     field: "name",
     direction: "asc",
@@ -42,40 +44,63 @@ export const useUsersManagement = () => {
       );
       return response.data;
     },
-    staleTime: 60000, // 1 minute before refetch
+    staleTime: 60000,
     retry: 2,
   });
 
   // Filter and sort users
   const filteredAndSortedUsers = useMemo(() => {
-    const result = users ?? [];
+    let result = users ?? [];
 
     // Apply search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      return result.filter(
+      result = result.filter(
         (user) =>
           user.name?.toLowerCase().includes(query) ||
-          user.email?.toLowerCase().includes(query),
+          user.email?.toLowerCase().includes(query) ||
+          user.functions?.some(
+            (f) =>
+              f.name.toLowerCase().includes(query) ||
+              f.nameFr?.toLowerCase().includes(query) ||
+              f.nameMg?.toLowerCase().includes(query),
+          ) ||
+          user.territory?.name.toLowerCase().includes(query) ||
+          user.territory?.nameFr?.toLowerCase().includes(query) ||
+          user.territory?.nameMg?.toLowerCase().includes(query),
       );
     }
 
+    // Apply role filter
+    if (roleFilter !== "all") {
+      result = result.filter((user) => user.role === roleFilter);
+    }
+
+    // Apply territory filter
+    if (territoryFilter) {
+      result = result.filter((user) => user.territoryId === territoryFilter);
+    }
+
+    // Apply sorting
     return result.sort((a, b) => {
-      const aValue = a[sortConfig.field];
-      const bValue = b[sortConfig.field];
+      let aValue, bValue;
 
-      if (!aValue || !bValue) return 0;
-
-      if (sortConfig.field === "createdAt") {
-        return sortConfig.direction === "asc"
-          ? new Date(aValue).getTime() - new Date(bValue).getTime()
-          : new Date(bValue).getTime() - new Date(aValue).getTime();
+      if (sortConfig.field === "territory") {
+        aValue = a.territory?.name || "";
+        bValue = b.territory?.name || "";
+      } else {
+        aValue = a[sortConfig.field];
+        bValue = b[sortConfig.field];
       }
+
+      if (!aValue && !bValue) return 0;
+      if (!aValue) return 1;
+      if (!bValue) return -1;
 
       const comparison = String(aValue).localeCompare(String(bValue));
       return sortConfig.direction === "asc" ? comparison : -comparison;
     });
-  }, [users, searchQuery, sortConfig]);
+  }, [users, searchQuery, roleFilter, territoryFilter, sortConfig]);
 
   // Clear filters
   const handleClearFilters = useCallback(() => {
@@ -83,6 +108,8 @@ export const useUsersManagement = () => {
     setSearchQuery("");
     setTempRoleFilter("all");
     setRoleFilter("all");
+    setTempTerritoryFilter("");
+    setTerritoryFilter("");
     setSortConfig({ field: "name", direction: "asc" });
   }, []);
 
@@ -157,7 +184,7 @@ export const useUsersManagement = () => {
   }, []);
 
   const handleSaveUser = useCallback(
-    (userData: CreateUserData) => {
+    (userData: CreateUserData | UpdateUserData) => {
       if (selectedUser) {
         const { ...updateData } = userData;
         updateUser.mutate({
@@ -165,7 +192,7 @@ export const useUsersManagement = () => {
           data: updateData,
         });
       } else {
-        createUser.mutate(userData);
+        createUser.mutate(userData as CreateUserData);
       }
     },
     [selectedUser, createUser, updateUser],
@@ -179,9 +206,14 @@ export const useUsersManagement = () => {
     setTempRoleFilter(role);
   };
 
+  const handleTerritoryFilterChange = (territory: string) => {
+    setTempTerritoryFilter(territory);
+  };
+
   const applyFilters = () => {
     setSearchQuery(tempSearchQuery);
     setRoleFilter(tempRoleFilter);
+    setTerritoryFilter(tempTerritoryFilter);
   };
 
   const handleSort = useCallback((field: UserSortConfig["field"]) => {
@@ -202,9 +234,12 @@ export const useUsersManagement = () => {
     tempSearchQuery,
     roleFilter,
     tempRoleFilter,
+    territoryFilter,
+    tempTerritoryFilter,
     sortConfig,
     handleSearchChange,
     handleRoleFilterChange,
+    handleTerritoryFilterChange,
     applyFilters,
     handleSort,
     handleClearFilters,
