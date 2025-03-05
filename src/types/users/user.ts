@@ -10,21 +10,21 @@ export interface DropdownUser {
 }
 
 /**
- * User type definition with all possible fields
+ * @type User
+ * @description User type definition for the application
  */
-export type User = {
+export interface User {
   id: string;
-  name: string | null;
-  email: string | null;
-  phone: string | null;
-  gender: "male" | "female" | null;
-  role: "user" | "admin";
-  territoryId?: string | null;
-  territory?: DropdownUser | null;
+  name: string;
+  email: string;
+  phone?: string;
+  role: "admin" | "user";
   functions?: DropdownUser[];
+  territory?: DropdownUser;
+  territoryId?: string;
+  gender?: string;
   createdAt: string;
-  updatedAt: string;
-};
+}
 
 /**
  * Data structure for creating a new user

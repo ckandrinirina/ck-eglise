@@ -89,7 +89,7 @@ export function UserDialog({
       name: user?.name || "",
       email: user?.email || "",
       phone: user?.phone || "",
-      gender: user?.gender || "male",
+      gender: (user?.gender || "male") as "male" | "female" | undefined,
       role: (user?.role as "user" | "admin") || "user",
       password: "",
       territoryId: user?.territoryId || "",
@@ -105,7 +105,7 @@ export function UserDialog({
         name: user?.name || "",
         email: user?.email || "",
         phone: user?.phone || "",
-        gender: user?.gender || "male",
+        gender: (user?.gender || "male") as "male" | "female" | undefined,
         role: (user?.role as "user" | "admin") || "user",
         password: "", // Always reset password field
         territoryId: user?.territoryId || "",

@@ -4,7 +4,6 @@
  */
 
 import { useTranslations } from "next-intl";
-import { useQuery } from "@tanstack/react-query";
 import {
   Dialog,
   DialogContent,
@@ -31,8 +30,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTransactionForm } from "@/hooks/finance/useTransactionForm";
-import axios from "axios";
-import { User } from "@/types/users/user";
+import UserSelect from "@/components/shared/common/user-select";
+
+interface TransactionFormData {
+  type: "credit" | "debit";
+  userId: string;
+  amount: number;
+  reason: string;
+}
 
 interface TransactionFormProps {
   isOpen: boolean;
@@ -45,15 +50,6 @@ interface TransactionFormProps {
 const TransactionForm = ({ isOpen, onClose }: TransactionFormProps) => {
   const t = useTranslations("finance");
   const { form, onSubmit, isPending } = useTransactionForm();
-
-  // Fetch users for the dropdown
-  const usersQuery = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const { data } = await axios.get("/api/users");
-      return data;
-    },
-  });
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -110,42 +106,12 @@ const TransactionForm = ({ isOpen, onClose }: TransactionFormProps) => {
               )}
             />
 
-            <FormField
-              control={form.control}
+            <UserSelect<TransactionFormData>
+              form={form}
               name="userId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("user")}</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder={t("selectUser")} />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {usersQuery.isLoading ? (
-                        <SelectItem value="" disabled>
-                          {t("loading")}
-                        </SelectItem>
-                      ) : usersQuery.isError ? (
-                        <SelectItem value="" disabled>
-                          {t("errorLoadingUsers")}
-                        </SelectItem>
-                      ) : (
-                        usersQuery.data?.map((user: User) => (
-                          <SelectItem key={user.id} value={user.id}>
-                            {user.name || user.email || t("unnamed")}
-                          </SelectItem>
-                        ))
-                      )}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label={t("user")}
+              placeholder={t("selectUser")}
+              required
             />
 
             <FormField

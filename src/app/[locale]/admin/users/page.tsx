@@ -46,8 +46,8 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { useLocalizedName } from "@/hooks/common/useLocalizedName";
-import { User } from "@/types/users/user";
 import { DropdownSelect } from "@/components/shared/common/dropdown-select";
+import { User } from "@/types/users/user";
 
 export default function UsersPage() {
   const t = useTranslations("admin.users");

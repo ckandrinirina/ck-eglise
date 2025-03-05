@@ -7,8 +7,22 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { transactionSchema, TransactionFormValues } from "@/types/transactions";
-import { useTransactions } from "./useTransactions";
+import { z } from "zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
+import { toast } from "sonner";
+import { TransactionService } from "@/lib/services/transaction.service";
+
+// Form validation schema
+const transactionSchema = z.object({
+  type: z.enum(["credit", "debit"]),
+  userId: z.string().min(1, "User is required"),
+  amount: z.number().min(0.01, "Amount must be greater than 0"),
+  reason: z.string().min(1, "Reason is required"),
+});
+
+// Infer the form data type from the schema
+export type TransactionFormData = z.infer<typeof transactionSchema>;
 
 /**
  * Hook for managing transaction form state and submission
@@ -17,44 +31,47 @@ import { useTransactions } from "./useTransactions";
  * @returns {Object} Form state and handlers
  */
 export const useTransactionForm = () => {
-  const { createTransaction, isPending } = useTransactions();
-  const [isOpen, setIsOpen] = useState(false);
+  const t = useTranslations("finance");
+  const queryClient = useQueryClient();
+  const [isPending, setIsPending] = useState(false);
 
-  // Initialize form with react-hook-form and zod validation
-  const form = useForm<TransactionFormValues>({
+  // Initialize form with proper typing
+  const form = useForm<TransactionFormData>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
-      amount: 0,
       type: "credit",
-      reason: "",
       userId: "",
+      amount: 0,
+      reason: "",
+    },
+  });
+
+  // Create transaction mutation
+  const createTransactionMutation = useMutation({
+    mutationFn: TransactionService.createTransaction,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      toast.success(t("success.transactionCreated"));
+      form.reset();
+    },
+    onError: (error) => {
+      console.error("Failed to create transaction:", error);
+      toast.error(t("error.transactionCreationFailed"));
     },
   });
 
   // Form submission handler
-  const onSubmit = (data: TransactionFormValues) => {
-    createTransaction(data, {
-      onSuccess: () => {
-        form.reset();
-        setIsOpen(false);
-      },
-    });
-  };
-
-  // Open form dialog
-  const openForm = () => setIsOpen(true);
-
-  // Close form dialog
-  const closeForm = () => {
-    form.reset();
-    setIsOpen(false);
+  const onSubmit = async (data: TransactionFormData) => {
+    try {
+      setIsPending(true);
+      await createTransactionMutation.mutateAsync(data);
+    } finally {
+      setIsPending(false);
+    }
   };
 
   return {
     form,
-    isOpen,
-    openForm,
-    closeForm,
     onSubmit,
     isPending,
   };
