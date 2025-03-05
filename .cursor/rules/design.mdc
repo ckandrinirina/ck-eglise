@@ -1,0 +1,6 @@
+---
+description: global design
+globs: 
+alwaysApply: false
+---
+[design.md](mdc:docs/design.md)
