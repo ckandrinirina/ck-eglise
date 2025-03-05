@@ -13,7 +13,7 @@ import {
 } from "recharts";
 import { useTranslations } from "next-intl";
 import { Users, Clock, Calendar } from "lucide-react";
-import { DropdownSelectExample } from "@/components/shared/common/dropdown-select-example";
+// import { DropdownSelectExample } from "@/components/shared/common/dropdown-select-example";
 
 const mockData = [
   { name: "Jan", users: 4 },
@@ -130,7 +130,7 @@ export default function AdminPage() {
           </div>
         </Card>
       </div>
-      <DropdownSelectExample />
+      {/* <DropdownSelectExample /> */}
     </div>
   );
 }

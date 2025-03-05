@@ -106,7 +106,8 @@
         "territory": "Faritra",
         "createdAt": "Noforonina",
         "sortAsc": "Laharana miakatra",
-        "sortDesc": "Laharana midina"
+        "sortDesc": "Laharana midina",
+        "functions": "Andraikitra"
       },
       "actions": {
         "more": "Bebe kokoa",
@@ -152,7 +153,13 @@
         "roleAdmin": "Mpitantana",
         "territory": "Faritra",
         "territoryDescription": "Faritra nampiandraiketana ny mpampiasa",
-        "selectTerritory": "Misafidiana faritra"
+        "selectTerritory": "Misafidiana faritra",
+        "functions": "Andraikitra",
+        "functionsDescription": "Safidio ny andraikitra iray na maromaro ho an'ity mpampiasa ity",
+        "functionsPlaceholder": "Safidio ny andraikitra..."
+      },
+      "common": {
+        "none": "Tsy misy"
       }
     },
     "dropdowns": {
@@ -289,5 +296,8 @@
     "more": "amboniny",
     "selectAll": "Hifidy rehetra",
     "close": "Hiala"
+  },
+  "common": {
+    "none": "Tsy misy"
   }
 }

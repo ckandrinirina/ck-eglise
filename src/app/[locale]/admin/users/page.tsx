@@ -86,6 +86,15 @@ export default function UsersPage() {
     return name;
   };
 
+  // Function to get localized function names
+  const getFunctionNames = (user: User) => {
+    if (!user.functions?.length) return [t("common.none")];
+    return user.functions.map((func) => {
+      const { name } = getLocalizedName(func);
+      return name;
+    });
+  };
+
   const showDeleteConfirmation = (userId: string) => {
     const { confirmDelete } = handleDelete(userId);
 
@@ -303,6 +312,11 @@ export default function UsersPage() {
                       />
                     </div>
                   </TableHead>
+                  <TableHead>
+                    <div className="flex items-center">
+                      {t("table.functions")}
+                    </div>
+                  </TableHead>
                   <TableHead
                     onClick={() => handleSort("territory")}
                     className="cursor-pointer"
@@ -354,6 +368,19 @@ export default function UsersPage() {
                       >
                         {user.role}
                       </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex flex-wrap gap-1">
+                        {getFunctionNames(user).map((funcName, index) => (
+                          <Badge
+                            key={index}
+                            variant="secondary"
+                            className="text-xs"
+                          >
+                            {funcName}
+                          </Badge>
+                        ))}
+                      </div>
                     </TableCell>
                     <TableCell>{getTerritoryName(user)}</TableCell>
                     <TableCell>

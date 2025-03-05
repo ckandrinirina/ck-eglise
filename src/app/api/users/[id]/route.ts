@@ -1,7 +1,17 @@
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
+import { Prisma } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
+
+export type UserBodyPut = {
+  name: string;
+  email: string;
+  role: string;
+  password?: string;
+  territoryId: string;
+  functionIds?: string[];
+};
 
 export async function PUT(
   req: NextRequest,
@@ -15,20 +25,41 @@ export async function PUT(
     }
 
     const body = await req.json();
-    const { name, email, role, territoryId } = body;
+    const { name, email, role, territoryId, functionIds }: UserBodyPut = body;
 
-    const data: {
-      name?: string;
-      email?: string;
-      role?: string;
-      territoryId?: string;
-    } = {
+    // Prepare update data
+    const data: Prisma.UserUpdateInput = {
       name,
       email,
       role,
-      territoryId,
+      territory: territoryId
+        ? {
+            connect: { id: territoryId },
+          }
+        : undefined,
     };
 
+    // Handle function updates if provided
+    if (functionIds !== undefined) {
+      // First disconnect all existing functions
+      await prisma.user.update({
+        where: { id },
+        data: {
+          functions: {
+            set: [], // Clear existing connections
+          },
+        },
+      });
+
+      // Then connect new functions if any
+      if (functionIds?.length) {
+        data.functions = {
+          connect: functionIds.map((fId) => ({ id: fId })),
+        };
+      }
+    }
+
+    // Update user
     const user = await prisma.user.update({
       where: { id },
       data,
@@ -38,6 +69,24 @@ export async function PUT(
         email: true,
         role: true,
         territoryId: true,
+        territory: {
+          select: {
+            id: true,
+            name: true,
+            nameFr: true,
+            nameMg: true,
+          },
+        },
+        functions: {
+          select: {
+            id: true,
+            name: true,
+            nameFr: true,
+            nameMg: true,
+          },
+        },
+        createdAt: true,
+        updatedAt: true,
       },
     });
 
@@ -59,7 +108,7 @@ export async function DELETE(
     }
 
     // Prevent deleting self
-    const { id } = await params; // Await the params to extract the id
+    const { id } = await params;
     if (session.user.id === id) {
       return new NextResponse("Cannot delete own account", { status: 400 });
     }

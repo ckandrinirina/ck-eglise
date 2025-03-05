@@ -120,7 +120,8 @@
         "territory": "Territory",
         "createdAt": "Created At",
         "sortAsc": "Sort ascending",
-        "sortDesc": "Sort descending"
+        "sortDesc": "Sort descending",
+        "functions": "Functions"
       },
       "actions": {
         "more": "More",
@@ -166,7 +167,13 @@
         "roleAdmin": "Administrator",
         "territory": "Territory",
         "territoryDescription": "User's assigned territory",
-        "selectTerritory": "Select a territory"
+        "selectTerritory": "Select a territory",
+        "functions": "Functions",
+        "functionsDescription": "Select one or more functions for this user",
+        "functionsPlaceholder": "Select functions..."
+      },
+      "common": {
+        "none": "None"
       }
     },
     "dropdowns": {
@@ -290,5 +297,8 @@
     "more": "more",
     "selectAll": "Select All",
     "close": "Close"
+  },
+  "common": {
+    "none": "None"
   }
 }

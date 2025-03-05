@@ -120,7 +120,8 @@
         "territory": "Territoire",
         "createdAt": "Créé le",
         "sortAsc": "Trier par ordre croissant",
-        "sortDesc": "Trier par ordre décroissant"
+        "sortDesc": "Trier par ordre décroissant",
+        "functions": "Fonctions"
       },
       "actions": {
         "more": "Plus",
@@ -166,7 +167,13 @@
         "roleAdmin": "Administrateur",
         "territory": "Territoire",
         "territoryDescription": "Territoire assigné à l'utilisateur",
-        "selectTerritory": "Sélectionner un territoire"
+        "selectTerritory": "Sélectionner un territoire",
+        "functions": "Fonctions",
+        "functionsDescription": "Sélectionnez une ou plusieurs fonctions pour cet utilisateur",
+        "functionsPlaceholder": "Sélectionner des fonctions..."
+      },
+      "common": {
+        "none": "Aucun"
       }
     },
     "dropdowns": {
@@ -290,5 +297,8 @@
   "profile": {
     "title": "Profil utilisateur",
     "updateInformation": "Mettre à jour les informations"
+  },
+  "common": {
+    "none": "Aucun"
   }
 }

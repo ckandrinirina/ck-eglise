@@ -29,7 +29,7 @@ import {
 // Service and type imports
 import { DropdownService } from "@/lib/services/dropdown.service";
 import { useLocalizedName } from "@/hooks/common/useLocalizedName";
-import { Territory } from "@/types/users/user";
+import { DropdownUser } from "@/types/users/user";
 import { Label } from "@/components/ui/label";
 
 /**
@@ -245,7 +245,7 @@ export const DropdownSelectMultiple = React.forwardRef<
       if (!Array.isArray(dropdownItems)) return [];
 
       return dropdownItems.map((item) => ({
-        label: getLocalizedName(item as Territory).name,
+        label: getLocalizedName(item as DropdownUser).name,
         value: item.id,
       }));
     }, [dropdownItems, getLocalizedName]);
@@ -256,7 +256,7 @@ export const DropdownSelectMultiple = React.forwardRef<
         if (!Array.isArray(dropdownItems)) return itemId;
 
         const item = dropdownItems.find((item) => item.id === itemId);
-        return item ? getLocalizedName(item as Territory).name : itemId;
+        return item ? getLocalizedName(item as DropdownUser).name : itemId;
       },
       [dropdownItems, getLocalizedName],
     );

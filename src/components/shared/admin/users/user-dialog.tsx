@@ -31,6 +31,7 @@ import * as z from "zod";
 import { useEffect } from "react";
 import { User } from "@/types/users/user";
 import { DropdownSelect } from "@/components/shared/common/dropdown-select";
+import { DropdownSelectMultiple } from "../../common/dropdown-select-multiple";
 
 // Schema definitions for user forms
 const baseUserSchema = z.object({
@@ -40,6 +41,7 @@ const baseUserSchema = z.object({
   email: z.string().email(),
   role: z.enum(["user", "admin"]),
   territoryId: z.string().optional(),
+  functionIds: z.array(z.string()).optional(),
 });
 
 const createUserSchema = baseUserSchema.extend({
@@ -87,6 +89,7 @@ export function UserDialog({
       role: (user?.role as "user" | "admin") || "user",
       password: "",
       territoryId: user?.territoryId || "",
+      functionIds: user?.functions?.map((f) => f.id) || [],
     },
     mode: "onChange", // Validate on change for better UX
   });
@@ -100,6 +103,7 @@ export function UserDialog({
         role: (user?.role as "user" | "admin") || "user",
         password: "", // Always reset password field
         territoryId: user?.territoryId || "",
+        functionIds: user?.functions?.map((f) => f.id) || [],
       });
     }
   }, [user, open, form]);
@@ -180,6 +184,24 @@ export function UserDialog({
                   <FormDescription>
                     {t("form.territoryDescription")}
                   </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="functionIds"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("form.functions")}</FormLabel>
+                  <FormControl>
+                    <DropdownSelectMultiple
+                      dropdownKey="function"
+                      value={field.value}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

@@ -44,7 +44,7 @@ export const useUsersManagement = () => {
       );
       return response.data;
     },
-    staleTime: 60000, // 1 minute before refetch
+    staleTime: 60000,
     retry: 2,
   });
 
@@ -58,7 +58,16 @@ export const useUsersManagement = () => {
       result = result.filter(
         (user) =>
           user.name?.toLowerCase().includes(query) ||
-          user.email?.toLowerCase().includes(query),
+          user.email?.toLowerCase().includes(query) ||
+          user.functions?.some(
+            (f) =>
+              f.name.toLowerCase().includes(query) ||
+              f.nameFr?.toLowerCase().includes(query) ||
+              f.nameMg?.toLowerCase().includes(query),
+          ) ||
+          user.territory?.name.toLowerCase().includes(query) ||
+          user.territory?.nameFr?.toLowerCase().includes(query) ||
+          user.territory?.nameMg?.toLowerCase().includes(query),
       );
     }
 
@@ -175,7 +184,7 @@ export const useUsersManagement = () => {
   }, []);
 
   const handleSaveUser = useCallback(
-    (userData: CreateUserData) => {
+    (userData: CreateUserData | UpdateUserData) => {
       if (selectedUser) {
         const { ...updateData } = userData;
         updateUser.mutate({
@@ -183,7 +192,7 @@ export const useUsersManagement = () => {
           data: updateData,
         });
       } else {
-        createUser.mutate(userData);
+        createUser.mutate(userData as CreateUserData);
       }
     },
     [selectedUser, createUser, updateUser],

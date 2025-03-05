@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import { DropdownService } from "@/lib/services/dropdown.service";
 import { cn } from "@/lib/utils";
 import { useLocalizedName } from "@/hooks/common/useLocalizedName";
-import { Territory } from "@/types/users/user";
+import { DropdownUser } from "@/types/users/user";
 
 /**
  * DropdownSelect component for single value selection from predefined dropdown lists
@@ -222,7 +222,7 @@ export const DropdownSelect = memo(
             ) : (
               dropdownItems.map((item) => (
                 <SelectItem key={item.id} value={item.id}>
-                  {getLocalizedName(item as Territory).name}
+                  {getLocalizedName(item as DropdownUser).name}
                 </SelectItem>
               ))
             )}

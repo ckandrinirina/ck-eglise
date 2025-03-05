@@ -60,6 +60,7 @@ export const useUserProfile = () => {
     },
     onSuccess: () => {
       toast.success(t("passwordUpdated"));
+      setIsEditing(false);
     },
     onError: (error) => {
       console.error("Error updating password:", error);
