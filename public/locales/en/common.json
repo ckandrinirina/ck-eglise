@@ -184,7 +184,14 @@
       },
       "common": {
         "none": "None"
-      }
+      },
+      "selectUser": "Select user...",
+      "searchUser": "Search user...",
+      "noUsersFound": "No users found",
+      "loading": "Loading...",
+      "errorLoadingUsers": "Error loading users",
+      "unnamed": "Unnamed",
+      "users": "Users"
     },
     "dropdowns": {
       "title": "Dropdowns",

@@ -171,7 +171,14 @@
       },
       "common": {
         "none": "Tsy misy"
-      }
+      },
+      "selectUser": "Misafidiana mpampiasa...",
+      "searchUser": "Hitady mpampiasa...",
+      "noUsersFound": "Tsy misy mpampiasa hita",
+      "loading": "Mahandrasa kely...",
+      "errorLoadingUsers": "Nisy olana tamin'ny fakana ny mpampiasa",
+      "unnamed": "Tsy misy anarana",
+      "users": "Mpampiasa"
     },
     "dropdowns": {
       "title": "Lisitra azo alahatra",

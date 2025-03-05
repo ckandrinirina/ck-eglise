@@ -64,7 +64,7 @@ const UserSelect = <TFieldValues extends FieldValues>({
   required,
   className,
 }: UserSelectProps<TFieldValues>) => {
-  const t = useTranslations("common");
+  const t = useTranslations("admin.users");
   const [open, setOpen] = React.useState(false);
   const [searchQuery, setSearchQuery] = React.useState("");
 

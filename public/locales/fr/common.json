@@ -184,7 +184,14 @@
       },
       "common": {
         "none": "Aucun"
-      }
+      },
+      "selectUser": "Sélectionner un utilisateur...",
+      "searchUser": "Rechercher un utilisateur...",
+      "noUsersFound": "Aucun utilisateur trouvé",
+      "loading": "Chargement...",
+      "errorLoadingUsers": "Erreur lors du chargement des utilisateurs",
+      "unnamed": "Sans nom",
+      "users": "Utilisateurs"
     },
     "dropdowns": {
       "title": "Listes déroulantes",
