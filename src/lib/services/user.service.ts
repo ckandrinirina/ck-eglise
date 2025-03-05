@@ -1,18 +1,27 @@
+/**
+ * @service UserService
+ * @description Service for handling user-related API calls
+ */
+
 import { api, AxiosResponse } from "@/lib/api";
 import { User, CreateUserData, UpdateUserData } from "@/types/users/user";
 
 export const UserService = {
   /**
-   * Get all users with optional filtering
+   * Get all users
    */
-  getUsers: (params?: { role?: string }): Promise<AxiosResponse<User[]>> =>
-    api.get("/users", { params }),
+  getUsers: async (params?: { role?: string }): Promise<User[]> => {
+    const { data } = await api.get("/users", { params });
+    return data;
+  },
 
   /**
-   * Get a specific user by ID
+   * Get a single user by ID
    */
-  getUser: (userId: string): Promise<AxiosResponse<User>> =>
-    api.get(`/users/${userId}`),
+  getUser: async (userId: string): Promise<User> => {
+    const { data } = await api.get(`/users/${userId}`);
+    return data;
+  },
 
   /**
    * Create a new user

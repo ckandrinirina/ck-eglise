@@ -1,0 +1,6 @@
+---
+description: coding style ref
+globs: 
+alwaysApply: false
+---
+[style-ref.md](mdc:docs/style-ref.md)

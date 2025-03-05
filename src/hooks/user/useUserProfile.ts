@@ -22,8 +22,7 @@ export const useUserProfile = () => {
     queryKey: ["userProfile", authUser?.id],
     queryFn: async () => {
       if (!authUser?.id) return null;
-      const response = await UserService.getUser(authUser.id);
-      return response.data;
+      return UserService.getUser(authUser.id);
     },
     enabled: !!authUser?.id,
     staleTime: 300000, // 5 minutes

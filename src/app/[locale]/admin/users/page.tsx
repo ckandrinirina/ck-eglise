@@ -46,8 +46,8 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { useLocalizedName } from "@/hooks/common/useLocalizedName";
-import { User } from "@/types/users/user";
 import { DropdownSelect } from "@/components/shared/common/dropdown-select";
+import { User } from "@/types/users/user";
 
 export default function UsersPage() {
   const t = useTranslations("admin.users");
@@ -298,6 +298,21 @@ export default function UsersPage() {
                     </div>
                   </TableHead>
                   <TableHead
+                    onClick={() => handleSort("phone")}
+                    className="cursor-pointer"
+                  >
+                    <div className="flex items-center">
+                      {t("table.phone")}
+                      <ArrowUpDown
+                        className={`ml-2 h-4 w-4 ${
+                          sortConfig.field === "phone"
+                            ? "opacity-100"
+                            : "opacity-40"
+                        }`}
+                      />
+                    </div>
+                  </TableHead>
+                  <TableHead
                     onClick={() => handleSort("role")}
                     className="cursor-pointer"
                   >
@@ -333,6 +348,21 @@ export default function UsersPage() {
                     </div>
                   </TableHead>
                   <TableHead
+                    onClick={() => handleSort("gender")}
+                    className="cursor-pointer"
+                  >
+                    <div className="flex items-center">
+                      {t("table.gender")}
+                      <ArrowUpDown
+                        className={`ml-2 h-4 w-4 ${
+                          sortConfig.field === "gender"
+                            ? "opacity-100"
+                            : "opacity-40"
+                        }`}
+                      />
+                    </div>
+                  </TableHead>
+                  <TableHead
                     onClick={() => handleSort("createdAt")}
                     className="cursor-pointer"
                   >
@@ -357,6 +387,7 @@ export default function UsersPage() {
                     <TableCell className="truncate max-w-[200px]">
                       {user.email}
                     </TableCell>
+                    <TableCell>{user.phone || "-"}</TableCell>
                     <TableCell>
                       <Badge
                         variant="outline"
@@ -383,6 +414,11 @@ export default function UsersPage() {
                       </div>
                     </TableCell>
                     <TableCell>{getTerritoryName(user)}</TableCell>
+                    <TableCell>
+                      <Badge variant="outline">
+                        {user.gender ? t(`form.${user.gender}`) : "-"}
+                      </Badge>
+                    </TableCell>
                     <TableCell>
                       {format(new Date(user.createdAt), "PPp")}
                     </TableCell>

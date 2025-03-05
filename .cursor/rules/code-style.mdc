@@ -1,0 +1,7 @@
+---
+description: code style
+globs: 
+alwaysApply: false
+---
+
+[code-style.md](mdc:docs/code-style.md)

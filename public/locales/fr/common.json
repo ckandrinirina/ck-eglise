@@ -81,6 +81,10 @@
       "userGrowth": "Croissance des Utilisateurs",
       "quickStats": "Statistiques Rapides"
     },
+    "transactions": {
+      "title": "Transactions",
+      "description": "Gestion des transactions financières"
+    },
     "users": {
       "title": "Utilisateurs",
       "subtitle": "Gérer les utilisateurs de l'application",
@@ -115,8 +119,10 @@
       "table": {
         "name": "Nom",
         "email": "Email",
+        "phone": "Téléphone",
         "role": "Rôle",
         "status": "Statut",
+        "gender": "Genre",
         "territory": "Territoire",
         "createdAt": "Créé le",
         "sortAsc": "Trier par ordre croissant",
@@ -170,11 +176,22 @@
         "selectTerritory": "Sélectionner un territoire",
         "functions": "Fonctions",
         "functionsDescription": "Sélectionnez une ou plusieurs fonctions pour cet utilisateur",
-        "functionsPlaceholder": "Sélectionner des fonctions..."
+        "functionsPlaceholder": "Sélectionner des fonctions...",
+        "gender": "Genre",
+        "selectGender": "Sélectionner le genre",
+        "male": "Homme",
+        "female": "Femme"
       },
       "common": {
         "none": "Aucun"
-      }
+      },
+      "selectUser": "Sélectionner un utilisateur...",
+      "searchUser": "Rechercher un utilisateur...",
+      "noUsersFound": "Aucun utilisateur trouvé",
+      "loading": "Chargement...",
+      "errorLoadingUsers": "Erreur lors du chargement des utilisateurs",
+      "unnamed": "Sans nom",
+      "users": "Utilisateurs"
     },
     "dropdowns": {
       "title": "Listes déroulantes",

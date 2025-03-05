@@ -39,6 +39,8 @@ const baseUserSchema = z.object({
     message: "Name must be at least 2 characters.",
   }),
   email: z.string().email(),
+  phone: z.string().optional(),
+  gender: z.enum(["male", "female"]).optional(),
   role: z.enum(["user", "admin"]),
   territoryId: z.string().optional(),
   functionIds: z.array(z.string()).optional(),
@@ -86,6 +88,8 @@ export function UserDialog({
     defaultValues: {
       name: user?.name || "",
       email: user?.email || "",
+      phone: user?.phone || "",
+      gender: (user?.gender || "male") as "male" | "female" | undefined,
       role: (user?.role as "user" | "admin") || "user",
       password: "",
       territoryId: user?.territoryId || "",
@@ -100,6 +104,8 @@ export function UserDialog({
       form.reset({
         name: user?.name || "",
         email: user?.email || "",
+        phone: user?.phone || "",
+        gender: (user?.gender || "male") as "male" | "female" | undefined,
         role: (user?.role as "user" | "admin") || "user",
         password: "", // Always reset password field
         territoryId: user?.territoryId || "",
@@ -168,6 +174,23 @@ export function UserDialog({
             />
             <FormField
               control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("form.phone")}</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="tel"
+                      placeholder={t("form.phonePlaceholder")}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="territoryId"
               render={({ field }) => (
                 <FormItem>
@@ -202,6 +225,30 @@ export function UserDialog({
                       onBlur={field.onBlur}
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="gender"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("form.gender")}</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder={t("form.selectGender")} />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="male">{t("form.male")}</SelectItem>
+                      <SelectItem value="female">{t("form.female")}</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

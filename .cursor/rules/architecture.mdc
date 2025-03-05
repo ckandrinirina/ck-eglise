@@ -1,0 +1,6 @@
+---
+description: Architecture of the project
+globs: 
+alwaysApply: false
+---
+[architecture.md](mdc:docs/architecture.md)

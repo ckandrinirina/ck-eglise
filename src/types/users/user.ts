@@ -10,19 +10,21 @@ export interface DropdownUser {
 }
 
 /**
- * User type definition with all possible fields
+ * @type User
+ * @description User type definition for the application
  */
-export type User = {
+export interface User {
   id: string;
-  name: string | null;
-  email: string | null;
-  role: "user" | "admin";
-  territoryId?: string | null;
-  territory?: DropdownUser | null;
+  name: string;
+  email: string;
+  phone?: string;
+  role: "admin" | "user";
   functions?: DropdownUser[];
+  territory?: DropdownUser;
+  territoryId?: string;
+  gender?: string;
   createdAt: string;
-  updatedAt: string;
-};
+}
 
 /**
  * Data structure for creating a new user
@@ -30,6 +32,8 @@ export type User = {
 export type CreateUserData = {
   name: string;
   email: string;
+  phone?: string;
+  gender?: "male" | "female";
   password: string;
   role: "user" | "admin";
   territoryId?: string;
@@ -42,6 +46,8 @@ export type CreateUserData = {
  */
 export type UpdateUserData = Partial<{
   name: string;
+  phone: string;
+  gender: "male" | "female";
   password: string;
   role: "user" | "admin";
   territoryId?: string;
@@ -52,6 +58,13 @@ export type UpdateUserData = Partial<{
  * Sort configuration for user list
  */
 export type UserSortConfig = {
-  field: "name" | "email" | "role" | "territory" | "createdAt";
+  field:
+    | "name"
+    | "email"
+    | "phone"
+    | "role"
+    | "territory"
+    | "createdAt"
+    | "gender";
   direction: "asc" | "desc";
 };

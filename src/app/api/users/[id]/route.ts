@@ -8,6 +8,8 @@ export type UserBodyPut = {
   name: string;
   email: string;
   role: string;
+  gender?: "male" | "female";
+  phone?: string;
   password?: string;
   territoryId: string;
   functionIds?: string[];
@@ -25,13 +27,23 @@ export async function PUT(
     }
 
     const body = await req.json();
-    const { name, email, role, territoryId, functionIds }: UserBodyPut = body;
+    const {
+      name,
+      email,
+      role,
+      phone,
+      gender,
+      territoryId,
+      functionIds,
+    }: UserBodyPut = body;
 
     // Prepare update data
     const data: Prisma.UserUpdateInput = {
       name,
       email,
       role,
+      phone,
+      gender,
       territory: territoryId
         ? {
             connect: { id: territoryId },
@@ -67,6 +79,8 @@ export async function PUT(
         id: true,
         name: true,
         email: true,
+        phone: true,
+        gender: true,
         role: true,
         territoryId: true,
         territory: {
@@ -121,5 +135,70 @@ export async function DELETE(
   } catch (error) {
     console.error(error);
     return new NextResponse("Internal error", { status: 500 });
+  }
+}
+
+/**
+ * GET handler for retrieving a specific user
+ *
+ * @route {GET} /api/users/:id
+ * @access authenticated
+ * @param {Request} request - The request object
+ * @param {Object} params - URL parameters
+ * @param {string} params.id - User ID
+ * @returns {Response} JSON response with user data
+ */
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  try {
+    // Verify authentication
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const { id } = await params;
+
+    // Fetch user by ID
+    const user = await prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        gender: true,
+        phone: true,
+        territory: {
+          select: {
+            id: true,
+            name: true,
+            nameFr: true,
+            nameMg: true,
+          },
+        },
+        functions: {
+          select: {
+            id: true,
+            name: true,
+            nameFr: true,
+            nameMg: true,
+          },
+        },
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    if (!user) {
+      return new NextResponse("User not found", { status: 404 });
+    }
+
+    return NextResponse.json(user);
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return new NextResponse("Internal Server Error", { status: 500 });
   }
 }

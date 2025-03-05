@@ -39,10 +39,9 @@ export const useUsersManagement = () => {
   } = useQuery<User[]>({
     queryKey: ["users", roleFilter],
     queryFn: async () => {
-      const response = await UserService.getUsers(
+      return UserService.getUsers(
         roleFilter !== "all" ? { role: roleFilter } : undefined,
       );
-      return response.data;
     },
     staleTime: 60000,
     retry: 2,
