@@ -10,6 +10,16 @@ import {
   UpdateDropdownData,
 } from "@/types/dropdowns/dropdown";
 
+// Define type for grouped dropdowns
+type GroupedDropdown = {
+  parent?: Dropdown;
+  children: Dropdown[];
+};
+
+type GroupedDropdowns = {
+  [key: string]: GroupedDropdown;
+};
+
 /**
  * Hook for managing dropdowns in the admin interface
  * Includes state management, CRUD operations, filtering, sorting
@@ -251,6 +261,39 @@ export const useDropdownsManagement = () => {
     }));
   }, []);
 
+  // Group dropdowns by parent
+  const groupedDropdowns = useMemo(() => {
+    const grouped: GroupedDropdowns = {};
+
+    filteredAndSortedDropdowns.forEach((dropdown) => {
+      if (dropdown.isParent) {
+        grouped[dropdown.id] = {
+          parent: dropdown,
+          children:
+            dropdown.children
+              ?.map((dc) =>
+                filteredAndSortedDropdowns.find((d) => d.id === dc.id),
+              )
+              .filter((d): d is Dropdown => d !== undefined) || [],
+        };
+      }
+    });
+
+    return grouped;
+  }, [filteredAndSortedDropdowns]);
+
+  // Extract only parent dropdowns for the accordion
+  const parentDropdownGroups = Object.entries(groupedDropdowns)
+    .filter(([, group]) => group.parent) // Only include groups with a parent
+    .map(([id, group]) => ({
+      id,
+      parent: group.parent as Dropdown,
+      children: group.children || [],
+    }));
+
+  // Get standalone dropdowns (those without parents)
+  const standaloneDropdowns = groupedDropdowns["standalone"]?.children || [];
+
   return {
     dropdowns: filteredAndSortedDropdowns,
     isLoading,
@@ -275,5 +318,7 @@ export const useDropdownsManagement = () => {
     handleAdd,
     handleDialogClose,
     handleSaveDropdown,
+    parentDropdownGroups,
+    standaloneDropdowns,
   };
 };

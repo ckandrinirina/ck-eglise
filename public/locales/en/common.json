@@ -197,6 +197,10 @@
     "dropdowns": {
       "title": "Dropdowns",
       "subtitle": "Manage dropdown menu values",
+      "items": "{count, plural, one {item} other {items}}",
+      "translation": {
+        "fallback": "Using default name (translation not available)"
+      },
       "buttons": {
         "add": "Add value",
         "edit": "Edit",
@@ -267,9 +271,6 @@
         "parentCategoryPlaceholder": "Select a parent category",
         "isEnabled": "Enabled",
         "isEnabledDescription": "This value is available for selection in forms"
-      },
-      "translation": {
-        "fallback": "Using default name (translation not available)"
       },
       "noData": "No values found. Create your first value by clicking 'Add value'.",
       "error": {

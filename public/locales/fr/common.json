@@ -197,6 +197,10 @@
     "dropdowns": {
       "title": "Listes déroulantes",
       "subtitle": "Gérer les valeurs disponibles dans les menus déroulants",
+      "items": "{count, plural, one {élément} other {éléments}}",
+      "translation": {
+        "fallback": "Utilisation du nom par défaut (traduction non disponible)"
+      },
       "buttons": {
         "add": "Ajouter une valeur",
         "edit": "Modifier",
@@ -267,9 +271,6 @@
         "parentCategoryPlaceholder": "Sélectionnez une catégorie parente",
         "isEnabled": "Activé",
         "isEnabledDescription": "Cette valeur est disponible pour la sélection dans les formulaires"
-      },
-      "translation": {
-        "fallback": "Utilisation du nom par défaut (traduction non disponible)"
       },
       "noData": "Aucune valeur trouvée. Créez votre première valeur en cliquant sur 'Ajouter une valeur'.",
       "error": {
