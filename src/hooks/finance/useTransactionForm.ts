@@ -18,7 +18,8 @@ const transactionSchema = z.object({
   type: z.enum(["credit", "debit"]),
   userId: z.string().min(1, "User is required"),
   amount: z.number().min(0.01, "Amount must be greater than 0"),
-  reason: z.string().min(1, "Reason is required"),
+  reason: z.string().nullable().optional(),
+  transactionTypeId: z.string().nullable().optional(),
 });
 
 // Infer the form data type from the schema
@@ -48,6 +49,7 @@ export const useTransactionForm = (
       userId: initialUserId || "",
       amount: 0,
       reason: "",
+      transactionTypeId: null,
     },
   });
 

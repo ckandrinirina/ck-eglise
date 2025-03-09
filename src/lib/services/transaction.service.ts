@@ -26,7 +26,10 @@ export const TransactionService = {
    * @param {Object} params - Optional params to filter transactions
    * @returns {Promise<Transaction[]>} List of transactions
    */
-  getTransactions: async (params?: { type?: "credit" | "debit" }) => {
+  getTransactions: async (params?: {
+    type?: "credit" | "debit";
+    transactionTypeId?: string;
+  }) => {
     const response = await api.get("/transactions", { params });
     return response.data;
   },

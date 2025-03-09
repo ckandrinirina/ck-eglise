@@ -21,12 +21,20 @@ export const useTransactions = () => {
   const t = useTranslations("finance");
   const queryClient = useQueryClient();
   const [filter, setFilter] = useState<"credit" | "debit" | null>(null);
+  const [transactionTypeFilter, setTransactionTypeFilter] = useState<
+    string | null
+  >(null);
 
   // Query to fetch transactions
   const transactionsQuery = useQuery<Transaction[]>({
-    queryKey: ["transactions", filter],
-    queryFn: () =>
-      TransactionService.getTransactions(filter ? { type: filter } : undefined),
+    queryKey: ["transactions", filter, transactionTypeFilter],
+    queryFn: () => {
+      const params: Record<string, string> = {};
+      if (filter) params.type = filter;
+      if (transactionTypeFilter)
+        params.transactionTypeId = transactionTypeFilter;
+      return TransactionService.getTransactions(params);
+    },
   });
 
   // Mutation to create a new transaction
@@ -44,8 +52,12 @@ export const useTransactions = () => {
   });
 
   // Filter transactions by type
-  const filterTransactions = (type: "credit" | "debit" | null) => {
+  const filterTransactions = (
+    type: "credit" | "debit" | null,
+    typeId: string | null = null,
+  ) => {
     setFilter(type);
+    setTransactionTypeFilter(typeId);
   };
 
   // Format currency amount
@@ -64,6 +76,7 @@ export const useTransactions = () => {
     createTransaction: createTransactionMutation.mutate,
     isPending: createTransactionMutation.isPending,
     filter,
+    transactionTypeFilter,
     formatAmount,
     refetch: transactionsQuery.refetch,
   };

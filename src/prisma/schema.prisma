@@ -86,6 +86,7 @@ model Dropdown {
   children      Dropdown[] @relation("DropdownHierarchy")
   users         User[]     @relation("UserTerritory") // Users who have this as territory
   userFunctions User[]     @relation("UserFunctions") // Users who have this as function
+  transactions  Transaction[] @relation("TransactionType") // Transactions with this type
   isEnabled     Boolean    @default(true) // Whether the dropdown is enabled
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
@@ -96,14 +97,17 @@ model Dropdown {
 
 // Transaction model for financial transactions
 model Transaction {
-  id          String   @id @default(cuid())
-  amount      Float    // Amount of the transaction
-  type        String   // "credit" or "debit" 
-  reason      String   // Reason for the transaction
-  userId      String   // ID of the user associated with the transaction
-  user        User     @relation(fields: [userId], references: [id], onDelete: Restrict)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id               String   @id @default(cuid())
+  amount           Float    // Amount of the transaction
+  type             String   // "credit" or "debit" 
+  reason           String   // Reason for the transaction
+  userId           String   // ID of the user associated with the transaction
+  user             User     @relation(fields: [userId], references: [id], onDelete: Restrict)
+  transactionTypeId String?  // ID of the transaction type (dropdown)
+  transactionType   Dropdown? @relation("TransactionType", fields: [transactionTypeId], references: [id], onDelete: SetNull)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   @@index([userId])
+  @@index([transactionTypeId])
 }

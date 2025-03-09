@@ -16,6 +16,7 @@
   "debit": "Débit",
   "selectType": "Sélectionner un type",
   "selectUser": "Sélectionner un utilisateur",
+  "selectTransactionType": "Sélectionner un type de transaction",
   "enterReason": "Entrez la raison de la transaction",
   "cancel": "Annuler",
   "create": "Créer",
@@ -29,11 +30,21 @@
   "noSearchResults": "Aucun résultat ne correspond à votre recherche",
   "loading": "Chargement...",
   "errorLoadingUsers": "Erreur lors du chargement des utilisateurs",
+  "transactionCreated": "Transaction créée avec succès",
+  "transactionCreateFailed": "Échec de la création de la transaction",
   "success": {
     "transactionCreated": "Transaction créée avec succès"
   },
   "error": {
     "transactionCreationFailed": "Échec de la création de la transaction"
   },
-  "unknown": "Inconnu"
+  "unknown": "Inconnu",
+  "notSpecified": "Non spécifié",
+  "transactionDirection": "Direction de transaction",
+  "filterByDirection": "Filtrer par direction",
+  "filterByType": "Filtrer par type",
+  "filterByUser": "Filtrer par utilisateur",
+  "allTypes": "Tous les types",
+  "allUsers": "Tous les utilisateurs",
+  "clearFilters": "Effacer les filtres"
 }

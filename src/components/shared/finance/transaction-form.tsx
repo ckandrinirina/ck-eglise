@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/select";
 import { useTransactionForm } from "@/hooks/finance/useTransactionForm";
 import UserSelect from "@/components/shared/common/user-select";
+import { DropdownSelect } from "@/components/shared/common/dropdown-select";
 
 interface TransactionFormData {
   type: "credit" | "debit";
@@ -120,6 +121,27 @@ const TransactionForm = ({
               label={t("user")}
               placeholder={t("selectUser")}
               required
+            />
+
+            <FormField
+              control={form.control}
+              name="transactionTypeId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("transactionType")}</FormLabel>
+                  <FormControl>
+                    <DropdownSelect
+                      dropdownKey="transaction-type"
+                      value={field.value}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                      name={field.name}
+                      placeholder={t("selectTransactionType")}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
 
             <FormField

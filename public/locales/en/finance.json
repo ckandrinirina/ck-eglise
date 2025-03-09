@@ -16,6 +16,7 @@
   "debit": "Debit",
   "selectType": "Select a type",
   "selectUser": "Select a user",
+  "selectTransactionType": "Select a transaction type",
   "enterReason": "Enter transaction reason",
   "cancel": "Cancel",
   "create": "Create",
@@ -29,11 +30,21 @@
   "noSearchResults": "No results match your search",
   "loading": "Loading...",
   "errorLoadingUsers": "Error loading users",
+  "transactionCreated": "Transaction created successfully",
+  "transactionCreateFailed": "Failed to create transaction",
   "success": {
     "transactionCreated": "Transaction created successfully"
   },
   "error": {
     "transactionCreationFailed": "Failed to create transaction"
   },
-  "unknown": "Unknown"
+  "unknown": "Unknown",
+  "notSpecified": "Not specified",
+  "transactionDirection": "Transaction direction",
+  "filterByDirection": "Filter by direction",
+  "filterByType": "Filter by type",
+  "filterByUser": "Filter by user",
+  "allTypes": "All types",
+  "allUsers": "All users",
+  "clearFilters": "Clear filters"
 }

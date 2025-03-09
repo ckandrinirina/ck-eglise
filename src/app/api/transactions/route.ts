@@ -18,6 +18,7 @@ import { Prisma } from "@prisma/client";
  * @route {GET} /api/transactions
  * @access authenticated
  * @query {string} type - Optional transaction type filter
+ * @query {string} transactionTypeId - Optional transaction type ID filter
  * @returns {Response} JSON response with transactions
  */
 export async function GET(request: Request) {
@@ -31,11 +32,15 @@ export async function GET(request: Request) {
     // Parse query parameters
     const { searchParams } = new URL(request.url);
     const type = searchParams.get("type");
+    const transactionTypeId = searchParams.get("transactionTypeId");
 
     // Build query with proper typing
     const where: Prisma.TransactionWhereInput = {};
     if (type === "credit" || type === "debit") {
       where.type = type;
+    }
+    if (transactionTypeId) {
+      where.transactionTypeId = transactionTypeId;
     }
 
     // Fetch transactions with user information
@@ -45,6 +50,13 @@ export async function GET(request: Request) {
         user: {
           select: {
             name: true,
+          },
+        },
+        transactionType: {
+          select: {
+            name: true,
+            nameFr: true,
+            nameMg: true,
           },
         },
       },
@@ -61,6 +73,11 @@ export async function GET(request: Request) {
       reason: transaction.reason,
       userId: transaction.userId,
       userName: transaction.user.name,
+      transactionTypeId: transaction.transactionTypeId,
+      transactionTypeName:
+        transaction.transactionType?.nameFr ||
+        transaction.transactionType?.name ||
+        null,
       createdAt: transaction.createdAt.toISOString(),
       updatedAt: transaction.updatedAt.toISOString(),
     }));
@@ -117,11 +134,19 @@ export async function POST(request: Request) {
           type: validatedData.type,
           reason: validatedData.reason,
           userId: validatedData.userId,
+          transactionTypeId: validatedData.transactionTypeId || null,
         },
         include: {
           user: {
             select: {
               name: true,
+            },
+          },
+          transactionType: {
+            select: {
+              name: true,
+              nameFr: true,
+              nameMg: true,
             },
           },
         },
@@ -135,6 +160,11 @@ export async function POST(request: Request) {
         reason: transaction.reason,
         userId: transaction.userId,
         userName: transaction.user.name,
+        transactionTypeId: transaction.transactionTypeId,
+        transactionTypeName:
+          transaction.transactionType?.nameFr ||
+          transaction.transactionType?.name ||
+          null,
         createdAt: transaction.createdAt.toISOString(),
         updatedAt: transaction.updatedAt.toISOString(),
       };

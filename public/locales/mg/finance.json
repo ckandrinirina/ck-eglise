@@ -16,6 +16,7 @@
   "debit": "Mivoaka",
   "selectType": "Misafidy karazana",
   "selectUser": "Misafidy mpampiasa",
+  "selectTransactionType": "Misafidy karazana fifampiasana",
   "enterReason": "Ampidiro ny antony",
   "cancel": "Aoka",
   "create": "Mamorona",
@@ -29,11 +30,21 @@
   "noSearchResults": "Tsy misy valiny mifanaraka amin'ny fikatsahana",
   "loading": "Andrasana...",
   "errorLoadingUsers": "Hadisoana teo am-pakana ny mpampiasa",
+  "transactionCreated": "Voaforona soa aman-tsara ny fifampiasana ara-bola",
+  "transactionCreateFailed": "Tsy voaforona ny fifampiasana ara-bola",
   "success": {
     "transactionCreated": "Voaforona soa aman-tsara ny fifampiasana ara-bola"
   },
   "error": {
     "transactionCreationFailed": "Tsy voaforona ny fifampiasana ara-bola"
   },
-  "unknown": "Tsy fantatra"
+  "unknown": "Tsy fantatra",
+  "notSpecified": "Tsy voafaritra",
+  "transactionDirection": "Fizotran'ny vola",
+  "filterByDirection": "Sivana araka ny fizotry",
+  "filterByType": "Sivana araka ny karazana",
+  "filterByUser": "Sivana araka ny mpampiasa",
+  "allTypes": "Karazana rehetra",
+  "allUsers": "Mpampiasa rehetra",
+  "clearFilters": "Fafao ny sivana"
 }

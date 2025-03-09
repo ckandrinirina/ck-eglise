@@ -16,6 +16,8 @@ import { z } from "zod";
  * @property {string} reason - Reason for the transaction
  * @property {string} userId - ID of the associated user
  * @property {string} userName - Name of the associated user
+ * @property {string|null} transactionTypeId - ID of the transaction type (optional)
+ * @property {string|null} transactionTypeName - Name of the transaction type (optional)
  * @property {Date} createdAt - Date when the transaction was created
  * @property {Date} updatedAt - Date when the transaction was last updated
  */
@@ -26,6 +28,8 @@ export interface Transaction {
   reason: string;
   userId: string;
   userName: string | null;
+  transactionTypeId: string | null;
+  transactionTypeName: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -38,12 +42,14 @@ export interface Transaction {
  * @property {string} type - Type of transaction (credit or debit)
  * @property {string} reason - Reason for the transaction
  * @property {string} userId - ID of the associated user
+ * @property {string|null} transactionTypeId - ID of the transaction type (optional)
  */
 export interface CreateTransactionData {
   amount: number;
   type: "credit" | "debit";
   reason: string;
   userId: string;
+  transactionTypeId?: string | null;
 }
 
 /**
@@ -59,6 +65,7 @@ export const transactionSchema = z.object({
     .string()
     .min(3, { message: "La raison doit contenir au moins 3 caractères" }),
   userId: z.string().min(1, { message: "L'utilisateur est requis" }),
+  transactionTypeId: z.string().nullable().optional(),
 });
 
 export type TransactionFormValues = z.infer<typeof transactionSchema>;
