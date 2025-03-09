@@ -16,6 +16,7 @@
   "debit": "Mivoaka",
   "selectType": "Misafidy karazana",
   "selectUser": "Misafidy mpampiasa",
+  "selectTransactionType": "Misafidy karazana fifampiasana",
   "enterReason": "Ampidiro ny antony",
   "cancel": "Aoka",
   "create": "Mamorona",
@@ -31,5 +32,31 @@
   "errorLoadingUsers": "Hadisoana teo am-pakana ny mpampiasa",
   "transactionCreated": "Voaforona soa aman-tsara ny fifampiasana ara-bola",
   "transactionCreateFailed": "Tsy voaforona ny fifampiasana ara-bola",
-  "unknown": "Tsy fantatra"
+  "success": {
+    "transactionCreated": "Voaforona soa aman-tsara ny fifampiasana ara-bola"
+  },
+  "error": {
+    "transactionCreationFailed": "Tsy voaforona ny fifampiasana ara-bola"
+  },
+  "unknown": "Tsy fantatra",
+  "notSpecified": "Tsy voafaritra",
+  "transactionDirection": "Fizotran'ny vola",
+  "filterByDirection": "Sivana araka ny fizotry",
+  "filterByType": "Sivana araka ny karazana",
+  "filterByUser": "Sivana araka ny mpampiasa",
+  "allTypes": "Karazana rehetra",
+  "allUsers": "Mpampiasa rehetra",
+  "clearFilters": "Fafao ny sivana",
+  "currentBalance": "Toe-bola Ankehitriny",
+  "balanceUpdated": "Fanavaozana farany",
+  "summary": "Famintinana",
+  "totalTransactions": "Total ny Fifampiasana",
+  "totalCredits": "Total ny Vola Miditra",
+  "totalDebits": "Total ny Vola Mivoaka",
+  "netAmount": "Tena Vola",
+  "filterByDate": "Sivana araka ny Daty",
+  "dateFrom": "Manomboka",
+  "dateTo": "Hatramin'",
+  "apply": "Ampiharo",
+  "reset": "Avereno"
 }

@@ -30,26 +30,44 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTransactionForm } from "@/hooks/finance/useTransactionForm";
+import { useFinanceRefresh } from "@/hooks/finance/useFinanceRefresh";
 import UserSelect from "@/components/shared/common/user-select";
+import { DropdownSelect } from "@/components/shared/common/dropdown-select";
 
 interface TransactionFormData {
   type: "credit" | "debit";
   userId: string;
   amount: number;
-  reason: string;
+  reason?: string | null;
+  transactionTypeId?: string | null;
 }
 
 interface TransactionFormProps {
   isOpen: boolean;
   onClose: () => void;
+  initialUserId?: string;
 }
 
 /**
  * Transaction form component for creating new transactions
  */
-const TransactionForm = ({ isOpen, onClose }: TransactionFormProps) => {
+const TransactionForm = ({
+  isOpen,
+  onClose,
+  initialUserId,
+}: TransactionFormProps) => {
   const t = useTranslations("finance");
-  const { form, onSubmit, isPending } = useTransactionForm(onClose);
+  const { refreshFinanceData } = useFinanceRefresh();
+
+  const handleSuccess = () => {
+    refreshFinanceData();
+    onClose();
+  };
+
+  const { form, onSubmit, isPending } = useTransactionForm(
+    handleSuccess,
+    initialUserId,
+  );
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -116,6 +134,27 @@ const TransactionForm = ({ isOpen, onClose }: TransactionFormProps) => {
 
             <FormField
               control={form.control}
+              name="transactionTypeId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("transactionType")}</FormLabel>
+                  <FormControl>
+                    <DropdownSelect
+                      dropdownKey="transaction-type"
+                      value={field.value}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                      name={field.name}
+                      placeholder={t("selectTransactionType")}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="reason"
               render={({ field }) => (
                 <FormItem>
@@ -123,6 +162,7 @@ const TransactionForm = ({ isOpen, onClose }: TransactionFormProps) => {
                   <FormControl>
                     <Textarea
                       {...field}
+                      value={field.value || ""}
                       rows={3}
                       placeholder={t("enterReason")}
                     />

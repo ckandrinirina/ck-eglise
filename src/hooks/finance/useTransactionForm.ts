@@ -18,7 +18,8 @@ const transactionSchema = z.object({
   type: z.enum(["credit", "debit"]),
   userId: z.string().min(1, "User is required"),
   amount: z.number().min(0.01, "Amount must be greater than 0"),
-  reason: z.string().min(1, "Reason is required"),
+  reason: z.string().nullable().optional(),
+  transactionTypeId: z.string().nullable().optional(),
 });
 
 // Infer the form data type from the schema
@@ -29,9 +30,13 @@ export type TransactionFormData = z.infer<typeof transactionSchema>;
  *
  * @hook
  * @param {Function} onSuccess - Callback to be called after successful submission
+ * @param {string} initialUserId - Optional initial user ID to prefill the user field
  * @returns {Object} Form state and handlers
  */
-export const useTransactionForm = (onSuccess?: () => void) => {
+export const useTransactionForm = (
+  onSuccess?: () => void,
+  initialUserId?: string,
+) => {
   const t = useTranslations("finance");
   const queryClient = useQueryClient();
   const [isPending, setIsPending] = useState(false);
@@ -41,9 +46,10 @@ export const useTransactionForm = (onSuccess?: () => void) => {
     resolver: zodResolver(transactionSchema),
     defaultValues: {
       type: "credit",
-      userId: "",
+      userId: initialUserId || "",
       amount: 0,
-      reason: "",
+      reason: null,
+      transactionTypeId: null,
     },
   });
 
@@ -52,6 +58,8 @@ export const useTransactionForm = (onSuccess?: () => void) => {
     mutationFn: TransactionService.createTransaction,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["siteBalance"] });
+      queryClient.invalidateQueries({ queryKey: ["transactionSummary"] });
       toast.success(t("success.transactionCreated"));
       form.reset();
       onSuccess?.(); // Call the onSuccess callback if provided

@@ -16,6 +16,10 @@ import { z } from "zod";
  * @property {string} reason - Reason for the transaction
  * @property {string} userId - ID of the associated user
  * @property {string} userName - Name of the associated user
+ * @property {string|null} transactionTypeId - ID of the transaction type (optional)
+ * @property {string|null} transactionTypeName - Name of the transaction type (optional)
+ * @property {string|null} siteBalanceId - ID of the associated site balance
+ * @property {number|null} siteBalanceAmount - Amount of the associated site balance
  * @property {Date} createdAt - Date when the transaction was created
  * @property {Date} updatedAt - Date when the transaction was last updated
  */
@@ -26,6 +30,10 @@ export interface Transaction {
   reason: string;
   userId: string;
   userName: string | null;
+  transactionTypeId: string | null;
+  transactionTypeName: string | null;
+  siteBalanceId: string | null;
+  siteBalanceAmount: number | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -38,12 +46,16 @@ export interface Transaction {
  * @property {string} type - Type of transaction (credit or debit)
  * @property {string} reason - Reason for the transaction
  * @property {string} userId - ID of the associated user
+ * @property {string|null} transactionTypeId - ID of the transaction type (optional)
+ * @property {string|null} siteBalanceId - ID of the associated site balance (optional)
  */
 export interface CreateTransactionData {
   amount: number;
   type: "credit" | "debit";
-  reason: string;
+  reason?: string | null | undefined;
   userId: string;
+  transactionTypeId?: string | null;
+  siteBalanceId?: string | null;
 }
 
 /**
@@ -55,10 +67,10 @@ export const transactionSchema = z.object({
     required_error: "Le type de transaction est requis",
     invalid_type_error: "Le type de transaction doit être crédit ou débit",
   }),
-  reason: z
-    .string()
-    .min(3, { message: "La raison doit contenir au moins 3 caractères" }),
+  reason: z.string().nullable(),
   userId: z.string().min(1, { message: "L'utilisateur est requis" }),
+  transactionTypeId: z.string().nullable().optional(),
+  siteBalanceId: z.string().nullable().optional(),
 });
 
 export type TransactionFormValues = z.infer<typeof transactionSchema>;

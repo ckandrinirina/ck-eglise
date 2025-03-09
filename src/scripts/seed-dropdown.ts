@@ -146,6 +146,96 @@ async function main() {
     }
 
     console.log("Function dropdowns seeded successfully");
+
+    // Check if parent transaction type exists
+    const existingTransactionTypeParent = await prisma.dropdown.findUnique({
+      where: {
+        key: "transaction-type",
+      },
+    });
+
+    // Create parent transaction type if it doesn't exist
+    const transactionTypeParent =
+      existingTransactionTypeParent ||
+      (await prisma.dropdown.create({
+        data: {
+          key: "transaction-type",
+          name: "Transaction Types",
+          nameFr: "Types de Transaction",
+          nameMg: "Karazana Famindram-bola",
+          isParent: true,
+          isEnabled: true,
+        },
+      }));
+
+    console.log(
+      "Parent transaction type created or found:",
+      transactionTypeParent.name,
+    );
+
+    // Create transaction type options
+    const transactionTypes = [
+      {
+        name: "Contribution",
+        nameFr: "Cotisation",
+        nameMg: "Anjara vola",
+        isEnabled: true,
+      },
+      {
+        name: "Fuel",
+        nameFr: "Carburant",
+        nameMg: "Solika",
+        isEnabled: true,
+      },
+      {
+        name: "Rent",
+        nameFr: "Loyer",
+        nameMg: "Hofan-trano",
+        isEnabled: true,
+      },
+      {
+        name: "Salary",
+        nameFr: "Salaire",
+        nameMg: "Karama",
+        isEnabled: true,
+      },
+      {
+        name: "Donation",
+        nameFr: "Don",
+        nameMg: "Fanomezana",
+        isEnabled: true,
+      },
+      {
+        name: "Other",
+        nameFr: "Autre",
+        nameMg: "Hafa",
+        isEnabled: true,
+      },
+    ];
+
+    // Create transaction type options if they don't exist
+    for (const type of transactionTypes) {
+      const existingType = await prisma.dropdown.findFirst({
+        where: {
+          name: type.name,
+          parentId: transactionTypeParent.id,
+        },
+      });
+
+      if (!existingType) {
+        const newType = await prisma.dropdown.create({
+          data: {
+            ...type,
+            parentId: transactionTypeParent.id,
+          },
+        });
+        console.log(`Created transaction type: ${newType.name}`);
+      } else {
+        console.log(`Transaction type ${type.name} already exists`);
+      }
+    }
+
+    console.log("Transaction type dropdowns seeded successfully");
   } catch (error) {
     console.error("Error seeding dropdowns:", error);
   } finally {

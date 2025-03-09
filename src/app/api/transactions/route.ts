@@ -18,6 +18,9 @@ import { Prisma } from "@prisma/client";
  * @route {GET} /api/transactions
  * @access authenticated
  * @query {string} type - Optional transaction type filter
+ * @query {string} transactionTypeId - Optional transaction type ID filter
+ * @query {string} startDate - Optional start date filter
+ * @query {string} endDate - Optional end date filter
  * @returns {Response} JSON response with transactions
  */
 export async function GET(request: Request) {
@@ -31,11 +34,30 @@ export async function GET(request: Request) {
     // Parse query parameters
     const { searchParams } = new URL(request.url);
     const type = searchParams.get("type");
+    const transactionTypeId = searchParams.get("transactionTypeId");
+    const startDate = searchParams.get("startDate");
+    const endDate = searchParams.get("endDate");
 
     // Build query with proper typing
     const where: Prisma.TransactionWhereInput = {};
     if (type === "credit" || type === "debit") {
       where.type = type;
+    }
+    if (transactionTypeId) {
+      where.transactionTypeId = transactionTypeId;
+    }
+
+    // Add date range filters if provided
+    if (startDate || endDate) {
+      where.createdAt = {};
+
+      if (startDate) {
+        where.createdAt.gte = new Date(startDate);
+      }
+
+      if (endDate) {
+        where.createdAt.lte = new Date(endDate);
+      }
     }
 
     // Fetch transactions with user information
@@ -45,6 +67,18 @@ export async function GET(request: Request) {
         user: {
           select: {
             name: true,
+          },
+        },
+        transactionType: {
+          select: {
+            name: true,
+            nameFr: true,
+            nameMg: true,
+          },
+        },
+        siteBalance: {
+          select: {
+            amount: true,
           },
         },
       },
@@ -61,6 +95,13 @@ export async function GET(request: Request) {
       reason: transaction.reason,
       userId: transaction.userId,
       userName: transaction.user.name,
+      transactionTypeId: transaction.transactionTypeId,
+      transactionTypeName:
+        transaction.transactionType?.nameFr ||
+        transaction.transactionType?.name ||
+        null,
+      siteBalanceId: transaction.siteBalanceId,
+      siteBalanceAmount: transaction.siteBalance?.amount,
       createdAt: transaction.createdAt.toISOString(),
       updatedAt: transaction.updatedAt.toISOString(),
     }));
@@ -111,20 +152,63 @@ export async function POST(request: Request) {
       }
 
       // Create transaction
-      const transaction = await prisma.transaction.create({
-        data: {
-          amount: validatedData.amount,
-          type: validatedData.type,
-          reason: validatedData.reason,
-          userId: validatedData.userId,
-        },
-        include: {
-          user: {
-            select: {
-              name: true,
+      const transaction = await prisma.$transaction(async (tx) => {
+        // Get current balance or create it if it doesn't exist
+        const currentBalance = await tx.siteBalance.findFirst({
+          orderBy: {
+            updatedAt: "desc",
+          },
+        });
+
+        // Calculate the new balance
+        const balanceChange =
+          validatedData.type === "credit"
+            ? validatedData.amount
+            : -validatedData.amount;
+
+        const newBalanceAmount = currentBalance
+          ? currentBalance.amount + balanceChange
+          : balanceChange;
+
+        // Create the new site balance
+        const newSiteBalance = await tx.siteBalance.create({
+          data: {
+            amount: newBalanceAmount,
+          },
+        });
+
+        // Create the transaction with reference to the new site balance
+        const newTransaction = await tx.transaction.create({
+          data: {
+            amount: validatedData.amount,
+            type: validatedData.type,
+            reason: validatedData.reason,
+            userId: validatedData.userId,
+            transactionTypeId: validatedData.transactionTypeId || null,
+            siteBalanceId: newSiteBalance.id, // Link to the new site balance
+          },
+          include: {
+            user: {
+              select: {
+                name: true,
+              },
+            },
+            transactionType: {
+              select: {
+                name: true,
+                nameFr: true,
+                nameMg: true,
+              },
+            },
+            siteBalance: {
+              select: {
+                amount: true,
+              },
             },
           },
-        },
+        });
+
+        return newTransaction;
       });
 
       // Format response
@@ -134,7 +218,14 @@ export async function POST(request: Request) {
         type: transaction.type,
         reason: transaction.reason,
         userId: transaction.userId,
-        userName: transaction.user.name,
+        userName: transaction.user?.name,
+        transactionTypeId: transaction.transactionTypeId,
+        transactionTypeName:
+          transaction.transactionType?.nameFr ||
+          transaction.transactionType?.name ||
+          null,
+        siteBalanceId: transaction.siteBalanceId,
+        siteBalanceAmount: transaction.siteBalance?.amount,
         createdAt: transaction.createdAt.toISOString(),
         updatedAt: transaction.updatedAt.toISOString(),
       };

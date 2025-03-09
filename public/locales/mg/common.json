@@ -119,7 +119,8 @@
       "actions": {
         "more": "Bebe kokoa",
         "edit": "Ahitsy",
-        "delete": "Fafao"
+        "delete": "Fafao",
+        "makeTransaction": "Hamorona fifampizarana"
       },
       "dialog": {
         "createUser": "Hamorona mpampiasa vaovao",
@@ -183,6 +184,10 @@
     "dropdowns": {
       "title": "Lisitra azo alahatra",
       "subtitle": "Tantano ny sanda misy ao anatin'ny lisitra azo alahatra",
+      "items": "{count, plural, one {zavatra} other {zavatra}}",
+      "translation": {
+        "fallback": "Mampiasa anarana默认 (tsy misy fandikan-teny)"
+      },
       "buttons": {
         "add": "Hanampy sanda",
         "edit": "Ahitsy",
@@ -253,9 +258,6 @@
         "parentCategoryPlaceholder": "Safidio ny sokajy fiaviana",
         "isEnabled": "Mandeha",
         "isEnabledDescription": "Ity sanda ity dia azo fidiana ao anaty taratasy"
-      },
-      "translation": {
-        "fallback": "Mampiasa anarana默认 (tsy misy fandikan-teny)"
       },
       "noData": "Tsy misy sanda hita. Hamorona ny sanda voalohany amin'ny fanarahana 'Hanampy sanda'.",
       "error": {
