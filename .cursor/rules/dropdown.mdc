@@ -1,7 +1,7 @@
 ---
 description: Custom dropdown usage style
-globs: 
-alwaysApply: true
+globs: *.tsx,*.ts
+alwaysApply: false
 ---
  # Dropdown Select Components
 

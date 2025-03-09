@@ -46,5 +46,17 @@
   "filterByUser": "Filter by user",
   "allTypes": "All types",
   "allUsers": "All users",
-  "clearFilters": "Clear filters"
+  "clearFilters": "Clear filters",
+  "currentBalance": "Current Balance",
+  "balanceUpdated": "Last updated",
+  "summary": "Summary",
+  "totalTransactions": "Total Transactions",
+  "totalCredits": "Total Credits",
+  "totalDebits": "Total Debits",
+  "netAmount": "Net Amount",
+  "filterByDate": "Filter by Date",
+  "dateFrom": "From",
+  "dateTo": "To",
+  "apply": "Apply",
+  "reset": "Reset"
 }

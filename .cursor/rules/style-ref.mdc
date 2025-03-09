@@ -1,6 +1,6 @@
 ---
-description: coding style guide
-globs: 
+description: Coding style reference for new feautures implementations
+globs: *.ts, *.tsx,*.prisma
 alwaysApply: true
 ---
 # User Management Style Reference

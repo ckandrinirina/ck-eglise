@@ -48,7 +48,7 @@ export const useTransactionForm = (
       type: "credit",
       userId: initialUserId || "",
       amount: 0,
-      reason: "",
+      reason: null,
       transactionTypeId: null,
     },
   });
@@ -58,6 +58,8 @@ export const useTransactionForm = (
     mutationFn: TransactionService.createTransaction,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["siteBalance"] });
+      queryClient.invalidateQueries({ queryKey: ["transactionSummary"] });
       toast.success(t("success.transactionCreated"));
       form.reset();
       onSuccess?.(); // Call the onSuccess callback if provided

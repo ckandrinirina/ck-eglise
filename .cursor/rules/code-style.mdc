@@ -1,6 +1,6 @@
 ---
-description: code style
-globs: 
+description: Coding style convention
+globs: *.tsx,*.ts
 alwaysApply: true
 ---
 # Code Style Guidelines

@@ -30,6 +30,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTransactionForm } from "@/hooks/finance/useTransactionForm";
+import { useFinanceRefresh } from "@/hooks/finance/useFinanceRefresh";
 import UserSelect from "@/components/shared/common/user-select";
 import { DropdownSelect } from "@/components/shared/common/dropdown-select";
 
@@ -56,8 +57,15 @@ const TransactionForm = ({
   initialUserId,
 }: TransactionFormProps) => {
   const t = useTranslations("finance");
+  const { refreshFinanceData } = useFinanceRefresh();
+
+  const handleSuccess = () => {
+    refreshFinanceData();
+    onClose();
+  };
+
   const { form, onSubmit, isPending } = useTransactionForm(
-    onClose,
+    handleSuccess,
     initialUserId,
   );
 

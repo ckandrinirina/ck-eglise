@@ -1,6 +1,6 @@
 ---
-description: Authentification 
-globs: 
+description: Guide for authentification
+globs: *.tsx,*.ts
 alwaysApply: false
 ---
  <!-- Note: All markdown files in docs are always short. -->

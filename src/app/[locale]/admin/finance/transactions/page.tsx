@@ -29,7 +29,7 @@ const TransactionsPage = () => {
         </div>
 
         <Suspense fallback={<TransactionsListSkeleton />}>
-          <TransactionsList />
+          <TransactionsList key={`transactions-${Date.now()}`} />
         </Suspense>
       </div>
     </div>

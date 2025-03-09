@@ -1,0 +1,7 @@
+-- CreateTable
+CREATE TABLE "SiteBalance" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "amount" REAL NOT NULL DEFAULT 0,
+    "updatedAt" DATETIME NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

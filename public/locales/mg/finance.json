@@ -46,5 +46,17 @@
   "filterByUser": "Sivana araka ny mpampiasa",
   "allTypes": "Karazana rehetra",
   "allUsers": "Mpampiasa rehetra",
-  "clearFilters": "Fafao ny sivana"
+  "clearFilters": "Fafao ny sivana",
+  "currentBalance": "Toe-bola Ankehitriny",
+  "balanceUpdated": "Fanavaozana farany",
+  "summary": "Famintinana",
+  "totalTransactions": "Total ny Fifampiasana",
+  "totalCredits": "Total ny Vola Miditra",
+  "totalDebits": "Total ny Vola Mivoaka",
+  "netAmount": "Tena Vola",
+  "filterByDate": "Sivana araka ny Daty",
+  "dateFrom": "Manomboka",
+  "dateTo": "Hatramin'",
+  "apply": "Ampiharo",
+  "reset": "Avereno"
 }

@@ -29,6 +29,8 @@ export const TransactionService = {
   getTransactions: async (params?: {
     type?: "credit" | "debit";
     transactionTypeId?: string;
+    startDate?: string;
+    endDate?: string;
   }) => {
     const response = await api.get("/transactions", { params });
     return response.data;
@@ -55,6 +57,32 @@ export const TransactionService = {
    */
   createTransaction: async (data: CreateTransactionData) => {
     const response = await api.post("/transactions", data);
+    return response.data;
+  },
+
+  /**
+   * Get the current site balance
+   *
+   * @async
+   * @returns {Promise<{ amount: number }>} Current balance
+   */
+  getBalance: async () => {
+    const response = await api.get("/site-balance");
+    return response.data;
+  },
+
+  /**
+   * Get transaction summary stats
+   *
+   * @async
+   * @param {Object} params - Optional params to filter transactions
+   * @returns {Promise<{total: number, credit: number, debit: number, count: number}>} Summary stats
+   */
+  getTransactionSummary: async (params?: {
+    startDate?: string;
+    endDate?: string;
+  }) => {
+    const response = await api.get("/transactions/summary", { params });
     return response.data;
   },
 };

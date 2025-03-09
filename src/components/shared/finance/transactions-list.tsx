@@ -7,39 +7,32 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import { Plus, FileDown, Search, Filter, X } from "lucide-react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHead,
-  TableCell,
-} from "@/components/ui/table";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import TransactionForm from "./transaction-form";
+import { Plus, Search, Filter, X, FileDown } from "lucide-react";
 import { useTransactions } from "@/hooks/finance/useTransactions";
-import { DropdownSelect } from "@/components/shared/common/dropdown-select";
+import TransactionForm from "@/components/shared/finance/transaction-form";
 import UserSelect from "@/components/shared/common/user-select";
+import { DropdownSelect } from "@/components/shared/common/dropdown-select";
+import { SiteBalance } from "@/components/shared/finance/site-balance";
+import { TransactionSummary } from "@/components/shared/finance/transaction-summary";
+import { DateRangeFilter } from "@/components/shared/finance/date-range-filter";
 
 /**
  * TransactionsList component for displaying and managing transactions
@@ -50,9 +43,11 @@ const TransactionsList = () => {
     transactions,
     isLoading,
     filterTransactions,
+    filterByDateRange,
+    clearFilters,
     filter,
     transactionTypeFilter,
-    formatAmount,
+    dateRange,
   } = useTransactions();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -68,7 +63,7 @@ const TransactionsList = () => {
         transaction.reason.toLowerCase().includes(searchLower) ||
         (transaction.userName &&
           transaction.userName.toLowerCase().includes(searchLower)) ||
-        formatAmount(transaction.amount).includes(searchTerm) ||
+        transaction.amount.toString().includes(searchTerm) ||
         (transaction.transactionTypeName &&
           transaction.transactionTypeName.toLowerCase().includes(searchLower));
 
@@ -83,9 +78,18 @@ const TransactionsList = () => {
     return true;
   });
 
+  // Count active filters
+  const activeFiltersCount = [
+    filter,
+    transactionTypeFilter,
+    userFilter,
+    dateRange.startDate,
+    dateRange.endDate,
+  ].filter(Boolean).length;
+
   // Clear all filters
-  const clearFilters = () => {
-    filterTransactions(null, null);
+  const handleClearFilters = () => {
+    clearFilters();
     setUserFilter(null);
     setSearchTerm("");
   };
@@ -95,62 +99,44 @@ const TransactionsList = () => {
     return format(new Date(dateString), "PPP", { locale: fr });
   };
 
-  // Handle export to CSV
+  // Handle export function
   const handleExport = () => {
-    const headers = [
-      "Date",
-      "Crédit",
-      "Débit",
-      "Utilisateur",
-      "Type",
-      "Raison",
-    ];
-
-    const csvContent = [
-      headers.join(","),
-      ...filteredTransactions.map((transaction) =>
-        [
-          formatDate(transaction.createdAt),
-          transaction.type === "credit" ? transaction.amount : "",
-          transaction.type === "debit" ? transaction.amount : "",
-          transaction.userName || t("unknown"),
-          transaction.transactionTypeName || t("notSpecified"),
-          `"${transaction.reason.replace(/"/g, '""')}"`,
-        ].join(","),
-      ),
-    ].join("\n");
-
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    const link = document.createElement("a");
-    const url = URL.createObjectURL(blob);
-
-    link.setAttribute("href", url);
-    link.setAttribute(
-      "download",
-      `transactions-${new Date().toISOString().split("T")[0]}.csv`,
-    );
-    document.body.appendChild(link);
-
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  // Handle transaction type filter change
-  const handleTransactionTypeChange = (typeId: string) => {
-    filterTransactions(filter, typeId === "none" ? null : typeId);
+    console.log("Export functionality to be implemented");
+    // Implementation would go here
   };
 
   // Handle user filter change
-  const handleUserFilterChange = (userId: string) => {
-    setUserFilter(userId === "none" ? null : userId);
+  const handleUserFilterChange = (value: string | null) => {
+    setUserFilter(value);
   };
 
-  // Calculate active filters count
-  const activeFiltersCount =
-    (filter ? 1 : 0) + (transactionTypeFilter ? 1 : 0) + (userFilter ? 1 : 0);
+  // Handle transaction type filter change
+  const handleTransactionTypeChange = (value: string | null) => {
+    filterTransactions(filter, value);
+  };
+
+  // Format amount with currency
+  const formatAmount = (amount: number) => {
+    return new Intl.NumberFormat("fr-FR", {
+      style: "currency",
+      currency: "EUR",
+    }).format(amount);
+  };
 
   return (
     <>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="md:col-span-2">
+          <SiteBalance />
+        </div>
+        <div>
+          <TransactionSummary
+            startDate={dateRange.startDate || undefined}
+            endDate={dateRange.endDate || undefined}
+          />
+        </div>
+      </div>
+
       <Card className="w-full">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <div className="space-y-1">
@@ -198,82 +184,49 @@ const TransactionsList = () => {
                 </Button>
 
                 {activeFiltersCount > 0 && (
-                  <Button variant="ghost" size="sm" onClick={clearFilters}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleClearFilters}
+                  >
                     <X className="mr-2 h-4 w-4" />
                     {t("clearFilters")}
                   </Button>
                 )}
-
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm">
-                      {filter ? (
-                        filter === "credit" ? (
-                          t("credit")
-                        ) : (
-                          t("debit")
-                        )
-                      ) : (
-                        <>{t("transactionDirection")}</>
-                      )}
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-40" align="end">
-                    <DropdownMenuLabel>
-                      {t("filterByDirection")}
-                    </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuGroup>
-                      <DropdownMenuItem
-                        onClick={() =>
-                          filterTransactions(null, transactionTypeFilter)
-                        }
-                      >
-                        {t("all")}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() =>
-                          filterTransactions("credit", transactionTypeFilter)
-                        }
-                      >
-                        {t("credit")}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() =>
-                          filterTransactions("debit", transactionTypeFilter)
-                        }
-                      >
-                        {t("debit")}
-                      </DropdownMenuItem>
-                    </DropdownMenuGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
               </div>
             </div>
 
             {showFilters && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 p-4 border rounded-md">
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    {t("filterByType")}
-                  </label>
-                  <DropdownSelect
-                    dropdownKey="transaction-type"
-                    value={transactionTypeFilter || ""}
-                    onChange={handleTransactionTypeChange}
-                    placeholder={t("allTypes")}
-                  />
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border rounded-md">
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      {t("filterByType")}
+                    </label>
+                    <DropdownSelect
+                      dropdownKey="transaction-type"
+                      value={transactionTypeFilter || ""}
+                      onChange={handleTransactionTypeChange}
+                      placeholder={t("allTypes")}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      {t("filterByUser")}
+                    </label>
+                    <UserSelect
+                      value={userFilter || ""}
+                      onChange={handleUserFilterChange}
+                      placeholder={t("allUsers")}
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    {t("filterByUser")}
-                  </label>
-                  <UserSelect
-                    value={userFilter || ""}
-                    onChange={handleUserFilterChange}
-                    placeholder={t("allUsers")}
-                  />
-                </div>
+
+                <DateRangeFilter
+                  onFilterChange={filterByDateRange}
+                  initialStartDate={dateRange.startDate}
+                  initialEndDate={dateRange.endDate}
+                />
               </div>
             )}
           </div>
@@ -297,7 +250,7 @@ const TransactionsList = () => {
                     <TableRow key={i}>
                       {Array.from({ length: 6 }).map((_, j) => (
                         <TableCell key={j}>
-                          <Skeleton className="h-6 w-full" />
+                          <div className="h-6 w-full bg-gray-200 animate-pulse rounded" />
                         </TableCell>
                       ))}
                     </TableRow>
@@ -309,7 +262,9 @@ const TransactionsList = () => {
                       {searchTerm ||
                       filter ||
                       transactionTypeFilter ||
-                      userFilter
+                      userFilter ||
+                      dateRange.startDate ||
+                      dateRange.endDate
                         ? t("noSearchResults")
                         : t("noTransactions")}
                     </TableCell>

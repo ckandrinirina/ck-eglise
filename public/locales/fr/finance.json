@@ -46,5 +46,17 @@
   "filterByUser": "Filtrer par utilisateur",
   "allTypes": "Tous les types",
   "allUsers": "Tous les utilisateurs",
-  "clearFilters": "Effacer les filtres"
+  "clearFilters": "Effacer les filtres",
+  "currentBalance": "Solde Actuel",
+  "balanceUpdated": "Dernière mise à jour",
+  "summary": "Résumé",
+  "totalTransactions": "Total des Transactions",
+  "totalCredits": "Total des Crédits",
+  "totalDebits": "Total des Débits",
+  "netAmount": "Montant Net",
+  "filterByDate": "Filtrer par Date",
+  "dateFrom": "De",
+  "dateTo": "À",
+  "apply": "Appliquer",
+  "reset": "Réinitialiser"
 }
