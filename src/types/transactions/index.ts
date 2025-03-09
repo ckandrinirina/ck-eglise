@@ -47,7 +47,7 @@ export interface Transaction {
 export interface CreateTransactionData {
   amount: number;
   type: "credit" | "debit";
-  reason: string;
+  reason?: string | null | undefined;
   userId: string;
   transactionTypeId?: string | null;
 }

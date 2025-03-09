@@ -37,7 +37,8 @@ interface TransactionFormData {
   type: "credit" | "debit";
   userId: string;
   amount: number;
-  reason: string;
+  reason?: string | null;
+  transactionTypeId?: string | null;
 }
 
 interface TransactionFormProps {
@@ -153,6 +154,7 @@ const TransactionForm = ({
                   <FormControl>
                     <Textarea
                       {...field}
+                      value={field.value || ""}
                       rows={3}
                       placeholder={t("enterReason")}
                     />
