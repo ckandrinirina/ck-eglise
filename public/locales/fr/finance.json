@@ -29,7 +29,11 @@
   "noSearchResults": "Aucun résultat ne correspond à votre recherche",
   "loading": "Chargement...",
   "errorLoadingUsers": "Erreur lors du chargement des utilisateurs",
-  "transactionCreated": "Transaction créée avec succès",
-  "transactionCreateFailed": "Échec de la création de la transaction",
+  "success": {
+    "transactionCreated": "Transaction créée avec succès"
+  },
+  "error": {
+    "transactionCreationFailed": "Échec de la création de la transaction"
+  },
   "unknown": "Inconnu"
 }

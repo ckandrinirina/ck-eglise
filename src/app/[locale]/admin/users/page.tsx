@@ -29,6 +29,9 @@ import {
   Search,
   X,
   ArrowUpDown,
+  CreditCard,
+  Pencil,
+  Trash,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { UserDialog } from "@/components/shared/admin/users/user-dialog";
@@ -48,10 +51,16 @@ import { Badge } from "@/components/ui/badge";
 import { useLocalizedName } from "@/hooks/common/useLocalizedName";
 import { DropdownSelect } from "@/components/shared/common/dropdown-select";
 import { User } from "@/types/users/user";
+import { useState } from "react";
+import TransactionForm from "@/components/shared/finance/transaction-form";
 
 export default function UsersPage() {
   const t = useTranslations("admin.users");
   const { getLocalizedName } = useLocalizedName();
+  const [transactionDialogOpen, setTransactionDialogOpen] = useState(false);
+  const [selectedUserForTransaction, setSelectedUserForTransaction] = useState<
+    string | null
+  >(null);
 
   const {
     users,
@@ -121,6 +130,16 @@ export default function UsersPage() {
       ),
       { duration: Infinity },
     );
+  };
+
+  const handleMakeTransaction = (user: User) => {
+    setSelectedUserForTransaction(user.id);
+    setTransactionDialogOpen(true);
+  };
+
+  const handleTransactionDialogClose = () => {
+    setTransactionDialogOpen(false);
+    setSelectedUserForTransaction(null);
   };
 
   // Render loading state
@@ -446,12 +465,20 @@ export default function UsersPage() {
                             className="w-[160px]"
                           >
                             <DropdownMenuItem onClick={() => handleEdit(user)}>
+                              <Pencil className="mr-2 h-4 w-4" />
                               {t("actions.edit")}
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => handleMakeTransaction(user)}
+                            >
+                              <CreditCard className="mr-2 h-4 w-4" />
+                              {t("actions.makeTransaction")}
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="text-red-600"
                               onClick={() => showDeleteConfirmation(user.id)}
                             >
+                              <Trash className="mr-2 h-4 w-4" />
                               {t("actions.delete")}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
@@ -472,6 +499,15 @@ export default function UsersPage() {
         user={selectedUser || undefined}
         onSave={handleSaveUser}
       />
+
+      {/* Transaction Dialog */}
+      {transactionDialogOpen && (
+        <TransactionForm
+          isOpen={transactionDialogOpen}
+          onClose={handleTransactionDialogClose}
+          initialUserId={selectedUserForTransaction || undefined}
+        />
+      )}
     </div>
   );
 }

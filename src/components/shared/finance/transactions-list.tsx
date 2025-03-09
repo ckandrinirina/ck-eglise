@@ -69,15 +69,15 @@ const TransactionsList = () => {
 
   // Handle export to CSV
   const handleExport = () => {
-    const headers = ["Date", "Montant", "Type", "Utilisateur", "Raison"];
+    const headers = ["Date", "Crédit", "Débit", "Utilisateur", "Raison"];
 
     const csvContent = [
       headers.join(","),
       ...filteredTransactions.map((transaction) =>
         [
           formatDate(transaction.createdAt),
-          transaction.amount,
-          transaction.type === "credit" ? t("credit") : t("debit"),
+          transaction.type === "credit" ? transaction.amount : "",
+          transaction.type === "debit" ? transaction.amount : "",
           transaction.userName || t("unknown"),
           `"${transaction.reason.replace(/"/g, '""')}"`,
         ].join(","),
@@ -167,8 +167,8 @@ const TransactionsList = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead>{t("date")}</TableHead>
-                  <TableHead>{t("amount")}</TableHead>
-                  <TableHead>{t("type")}</TableHead>
+                  <TableHead className="text-right">{t("credit")}</TableHead>
+                  <TableHead className="text-right">{t("debit")}</TableHead>
                   <TableHead>{t("user")}</TableHead>
                   <TableHead className="w-[300px]">{t("reason")}</TableHead>
                 </TableRow>
@@ -197,21 +197,19 @@ const TransactionsList = () => {
                   filteredTransactions.map((transaction) => (
                     <TableRow key={transaction.id}>
                       <TableCell>{formatDate(transaction.createdAt)}</TableCell>
-                      <TableCell className="font-medium">
-                        {formatAmount(transaction.amount)}
+                      <TableCell className="font-medium text-right">
+                        {transaction.type === "credit" ? (
+                          <span className="text-green-600">
+                            {formatAmount(transaction.amount)}
+                          </span>
+                        ) : null}
                       </TableCell>
-                      <TableCell>
-                        <Badge
-                          variant={
-                            transaction.type === "credit"
-                              ? "default"
-                              : "destructive"
-                          }
-                        >
-                          {transaction.type === "credit"
-                            ? t("credit")
-                            : t("debit")}
-                        </Badge>
+                      <TableCell className="font-medium text-right">
+                        {transaction.type === "debit" ? (
+                          <span className="text-red-600">
+                            {formatAmount(transaction.amount)}
+                          </span>
+                        ) : null}
                       </TableCell>
                       <TableCell>
                         {transaction.userName || t("unknown")}

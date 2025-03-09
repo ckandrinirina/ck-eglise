@@ -29,7 +29,11 @@
   "noSearchResults": "No results match your search",
   "loading": "Loading...",
   "errorLoadingUsers": "Error loading users",
-  "transactionCreated": "Transaction created successfully",
-  "transactionCreateFailed": "Failed to create transaction",
+  "success": {
+    "transactionCreated": "Transaction created successfully"
+  },
+  "error": {
+    "transactionCreationFailed": "Failed to create transaction"
+  },
   "unknown": "Unknown"
 }

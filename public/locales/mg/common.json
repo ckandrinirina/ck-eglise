@@ -119,7 +119,8 @@
       "actions": {
         "more": "Bebe kokoa",
         "edit": "Ahitsy",
-        "delete": "Fafao"
+        "delete": "Fafao",
+        "makeTransaction": "Hamorona fifampizarana"
       },
       "dialog": {
         "createUser": "Hamorona mpampiasa vaovao",

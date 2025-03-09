@@ -29,7 +29,11 @@
   "noSearchResults": "Tsy misy valiny mifanaraka amin'ny fikatsahana",
   "loading": "Andrasana...",
   "errorLoadingUsers": "Hadisoana teo am-pakana ny mpampiasa",
-  "transactionCreated": "Voaforona soa aman-tsara ny fifampiasana ara-bola",
-  "transactionCreateFailed": "Tsy voaforona ny fifampiasana ara-bola",
+  "success": {
+    "transactionCreated": "Voaforona soa aman-tsara ny fifampiasana ara-bola"
+  },
+  "error": {
+    "transactionCreationFailed": "Tsy voaforona ny fifampiasana ara-bola"
+  },
   "unknown": "Tsy fantatra"
 }

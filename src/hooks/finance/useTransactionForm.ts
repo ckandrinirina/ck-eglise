@@ -29,9 +29,13 @@ export type TransactionFormData = z.infer<typeof transactionSchema>;
  *
  * @hook
  * @param {Function} onSuccess - Callback to be called after successful submission
+ * @param {string} initialUserId - Optional initial user ID to prefill the user field
  * @returns {Object} Form state and handlers
  */
-export const useTransactionForm = (onSuccess?: () => void) => {
+export const useTransactionForm = (
+  onSuccess?: () => void,
+  initialUserId?: string,
+) => {
   const t = useTranslations("finance");
   const queryClient = useQueryClient();
   const [isPending, setIsPending] = useState(false);
@@ -41,7 +45,7 @@ export const useTransactionForm = (onSuccess?: () => void) => {
     resolver: zodResolver(transactionSchema),
     defaultValues: {
       type: "credit",
-      userId: "",
+      userId: initialUserId || "",
       amount: 0,
       reason: "",
     },

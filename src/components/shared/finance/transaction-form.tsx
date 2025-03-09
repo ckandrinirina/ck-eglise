@@ -42,14 +42,22 @@ interface TransactionFormData {
 interface TransactionFormProps {
   isOpen: boolean;
   onClose: () => void;
+  initialUserId?: string;
 }
 
 /**
  * Transaction form component for creating new transactions
  */
-const TransactionForm = ({ isOpen, onClose }: TransactionFormProps) => {
+const TransactionForm = ({
+  isOpen,
+  onClose,
+  initialUserId,
+}: TransactionFormProps) => {
   const t = useTranslations("finance");
-  const { form, onSubmit, isPending } = useTransactionForm(onClose);
+  const { form, onSubmit, isPending } = useTransactionForm(
+    onClose,
+    initialUserId,
+  );
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

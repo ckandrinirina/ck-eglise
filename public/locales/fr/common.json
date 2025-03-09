@@ -132,7 +132,8 @@
       "actions": {
         "more": "Plus",
         "edit": "Modifier",
-        "delete": "Supprimer"
+        "delete": "Supprimer",
+        "makeTransaction": "Faire une transaction"
       },
       "dialog": {
         "createUser": "Créer un utilisateur",
