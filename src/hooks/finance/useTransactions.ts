@@ -60,6 +60,7 @@ export const useTransactions = () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["siteBalance"] });
       queryClient.invalidateQueries({ queryKey: ["transactionSummary"] });
+      queryClient.invalidateQueries({ queryKey: ["balanceHistory"] });
       toast.success(t("transactionCreated"));
     },
     onError: (error) => {
@@ -94,9 +95,9 @@ export const useTransactions = () => {
 
   // Format currency amount
   const formatAmount = (amount: number) => {
-    return new Intl.NumberFormat("fr-FR", {
+    return new Intl.NumberFormat(t("locale"), {
       style: "currency",
-      currency: "MGA",
+      currency: t("currency"),
     }).format(amount);
   };
 

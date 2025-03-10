@@ -94,12 +94,13 @@ const TransactionsList = () => {
     setSearchTerm("");
   };
 
-  // Format date to readable format
+  // Format date
   const formatDate = (dateString: string) => {
-    return format(new Date(dateString), "PPP", { locale: fr });
+    const date = new Date(dateString);
+    return format(date, t("dateFormat"), { locale: fr });
   };
 
-  // Handle export function
+  // Handle export
   const handleExport = () => {
     console.log("Export functionality to be implemented");
     // Implementation would go here
@@ -117,16 +118,16 @@ const TransactionsList = () => {
 
   // Format amount with currency
   const formatAmount = (amount: number) => {
-    return new Intl.NumberFormat("fr-FR", {
+    return new Intl.NumberFormat(t("locale"), {
       style: "currency",
-      currency: "EUR",
+      currency: t("currency"),
     }).format(amount);
   };
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="md:col-span-2">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div className="lg:col-span-2">
           <SiteBalance />
         </div>
         <div>

@@ -58,5 +58,14 @@
   "dateFrom": "From",
   "dateTo": "To",
   "apply": "Apply",
-  "reset": "Reset"
+  "reset": "Reset",
+  "balanceEvolution": "Balance Evolution",
+  "balance": "Balance",
+  "error": "Error",
+  "errorLoadingHistory": "Error loading balance history",
+  "dateTimeFormat": "PPP HH:mm",
+  "dateFormat": "PPP",
+  "locale": "en-US",
+  "currency": "EUR",
+  "currencySymbol": "€"
 }

@@ -6,6 +6,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { TransactionService } from "@/lib/services/transaction.service";
+import { useTranslations } from "next-intl";
 
 /**
  * Hook for fetching site balance
@@ -14,6 +15,7 @@ import { TransactionService } from "@/lib/services/transaction.service";
  * @returns {Object} Site balance data and query status
  */
 export const useSiteBalance = () => {
+  const t = useTranslations("finance");
   const {
     data: balance,
     isLoading,
@@ -31,7 +33,7 @@ export const useSiteBalance = () => {
   const formatAmount = (amount: number) => {
     return new Intl.NumberFormat("fr-FR", {
       style: "currency",
-      currency: "EUR",
+      currency: t("currency"),
     }).format(amount);
   };
 
