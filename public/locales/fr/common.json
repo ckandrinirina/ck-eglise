@@ -181,7 +181,9 @@
         "gender": "Genre",
         "selectGender": "Sélectionner le genre",
         "male": "Homme",
-        "female": "Femme"
+        "female": "Femme",
+        "phone": "Téléphone",
+        "phonePlaceholder": "Entrez le numéro de téléphone"
       },
       "common": {
         "none": "Aucun"

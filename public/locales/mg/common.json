@@ -168,7 +168,9 @@
         "gender": "Lahy/Vavy",
         "selectGender": "Fidio ny lahy/vavy",
         "male": "Lahy",
-        "female": "Vavy"
+        "female": "Vavy",
+        "phone": "Finday",
+        "phonePlaceholder": "Ampidiro ny finday"
       },
       "common": {
         "none": "Tsy misy"
