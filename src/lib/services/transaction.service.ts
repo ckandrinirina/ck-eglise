@@ -85,4 +85,17 @@ export const TransactionService = {
     const response = await api.get("/transactions/summary", { params });
     return response.data;
   },
+
+  /**
+   * Get balance history for chart
+   *
+   * @async
+   * @param {Object} params - Optional params
+   * @param {number} params.limit - Number of history entries to fetch
+   * @returns {Promise<Array<{amount: number, date: string}>>} Balance history
+   */
+  getBalanceHistory: async (params?: { limit?: number }) => {
+    const response = await api.get("/site-balance/history", { params });
+    return response.data;
+  },
 };

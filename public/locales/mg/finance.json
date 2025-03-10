@@ -58,5 +58,14 @@
   "dateFrom": "Manomboka",
   "dateTo": "Hatramin'",
   "apply": "Ampiharo",
-  "reset": "Avereno"
+  "reset": "Avereno",
+  "balanceEvolution": "Fivoaran'ny Toe-bola",
+  "balance": "Toe-bola",
+  "error": "Hadisoana",
+  "errorLoadingHistory": "Hadisoana teo am-pakana ny tantaran'ny toe-bola",
+  "dateTimeFormat": "PPP HH:mm",
+  "dateFormat": "PPP",
+  "locale": "fr-MG",
+  "currency": "EUR",
+  "currencySymbol": "€"
 }

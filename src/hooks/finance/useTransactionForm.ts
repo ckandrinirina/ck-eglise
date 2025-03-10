@@ -60,6 +60,7 @@ export const useTransactionForm = (
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["siteBalance"] });
       queryClient.invalidateQueries({ queryKey: ["transactionSummary"] });
+      queryClient.invalidateQueries({ queryKey: ["balanceHistory"] });
       toast.success(t("success.transactionCreated"));
       form.reset();
       onSuccess?.(); // Call the onSuccess callback if provided

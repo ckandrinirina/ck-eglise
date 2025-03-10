@@ -1,6 +1,6 @@
 ---
 description: Guide for the project ui style, always implement on doing page design
-globs: *.tsx, *.ts
+globs: **/*.tsx,**/*.ts
 alwaysApply: true
 ---
 # Design Guidelines

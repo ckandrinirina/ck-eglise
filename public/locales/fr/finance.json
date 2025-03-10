@@ -58,5 +58,14 @@
   "dateFrom": "De",
   "dateTo": "À",
   "apply": "Appliquer",
-  "reset": "Réinitialiser"
+  "reset": "Réinitialiser",
+  "balanceEvolution": "Évolution du Solde",
+  "balance": "Solde",
+  "error": "Erreur",
+  "errorLoadingHistory": "Erreur lors du chargement de l'historique du solde",
+  "dateTimeFormat": "PPP HH:mm",
+  "dateFormat": "PPP",
+  "locale": "fr-FR",
+  "currency": "EUR",
+  "currencySymbol": "€"
 }

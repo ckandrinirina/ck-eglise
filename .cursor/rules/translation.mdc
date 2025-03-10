@@ -1,6 +1,6 @@
 ---
 description: Translation and internationalization implementation description
-globs: *.tsx, *.ts
+globs: **.*.tsx,**/*.ts
 alwaysApply: true
 ---
 # Translation Feature

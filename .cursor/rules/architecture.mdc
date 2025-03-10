@@ -1,6 +1,6 @@
 ---
 description: Architecture of the project and coding style and organisation
-globs: 
+globs: **/*.*
 alwaysApply: true
 ---
 # Next.js Project Architecture
