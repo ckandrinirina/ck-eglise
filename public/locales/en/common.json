@@ -145,6 +145,7 @@
         "all": "All roles",
         "byRole": "Filter by role",
         "byTerritory": "Filter by territory",
+        "byFunction": "Filter by function",
         "admin": "Administrator",
         "user": "User",
         "apply": "Apply"
@@ -169,10 +170,11 @@
         "status": "Status",
         "gender": "Gender",
         "territory": "Territory",
-        "createdAt": "Created at",
+        "createdAt": "Created At",
         "sortAsc": "Sort ascending",
         "sortDesc": "Sort descending",
-        "functions": "Functions"
+        "functions": "Functions",
+        "more": "more"
       },
       "actions": {
         "more": "More",

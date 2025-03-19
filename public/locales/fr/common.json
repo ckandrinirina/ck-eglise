@@ -145,6 +145,7 @@
         "all": "Tous les rôles",
         "byRole": "Filtrer par rôle",
         "byTerritory": "Filtrer par territoire",
+        "byFunction": "Filtrer par fonction",
         "admin": "Administrateur",
         "user": "Utilisateur",
         "apply": "Appliquer"
@@ -172,7 +173,8 @@
         "createdAt": "Créé le",
         "sortAsc": "Trier par ordre croissant",
         "sortDesc": "Trier par ordre décroissant",
-        "functions": "Fonctions"
+        "functions": "Fonctions",
+        "more": "autres"
       },
       "actions": {
         "more": "Plus",

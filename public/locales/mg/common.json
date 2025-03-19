@@ -130,9 +130,10 @@
       },
       "filter": {
         "all": "Anjara asa rehetra",
-        "byRole": "Sivana araka ny anjara asa",
+        "byRole": "Sivana araka ny andraikitra",
         "byTerritory": "Sivana araka ny faritra",
-        "admin": "Mpitantana",
+        "byFunction": "Sivana araka ny asa",
+        "admin": "Mpandrindra",
         "user": "Mpampiasa",
         "apply": "Ampiharo"
       },
@@ -159,7 +160,8 @@
         "createdAt": "Noforonina tamin'ny",
         "sortAsc": "Laharo miakatra",
         "sortDesc": "Laharo midina",
-        "functions": "Andraikitra"
+        "functions": "Andraikitra",
+        "more": "bebe kokoa"
       },
       "actions": {
         "more": "Bebe kokoa",
