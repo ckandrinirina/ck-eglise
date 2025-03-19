@@ -70,3 +70,115 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom Animations */
+@layer utilities {
+  /* Fade in animations */
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease forwards;
+  }
+  
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease forwards;
+  }
+  
+  /* Slow pulse animation */
+  .animate-pulse-slow {
+    animation: pulseSlow 6s infinite ease-in-out;
+  }
+  
+  /* Float animation */
+  .animate-float {
+    animation: float 8s infinite ease-in-out;
+  }
+  
+  /* Slow spin */
+  .animate-spin-slow {
+    animation: spin 12s linear infinite;
+  }
+  
+  /* Slow bounce */
+  .animate-bounce-slow {
+    animation: bounce 5s infinite ease-in-out;
+  }
+  
+  /* Animation delays */
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+  
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+  
+  .animation-delay-600 {
+    animation-delay: 600ms;
+  }
+  
+  .animation-delay-800 {
+    animation-delay: 800ms;
+  }
+  
+  .animation-delay-1000 {
+    animation-delay: 1000ms;
+  }
+}
+
+/* Animation keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseSlow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
