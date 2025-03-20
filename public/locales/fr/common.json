@@ -29,7 +29,52 @@
   },
   "home": {
     "welcome": "Bienvenue",
-    "description": "Application de gestion d'église"
+    "description": "Application de gestion d'église",
+    "hero": {
+      "label": "Gestion d'Organisation",
+      "title": "Gestion d'Organisation Moderne",
+      "subtitle": "Une plateforme complète pour gérer et développer votre organisation avec efficacité.",
+      "loginButton": "Se connecter",
+      "registerButton": "S'inscrire"
+    },
+    "featuresLabel": "Fonctionnalités",
+    "featuresTitle": "Fonctionnalités Clés",
+    "featuresSubtitle": "Découvrez comment notre plateforme peut transformer votre gestion organisationnelle.",
+    "features": {
+      "members": "Gestion des Membres",
+      "membersDesc": "Gérez efficacement les profils, les rôles et les informations de tous vos membres.",
+      "branches": "Gestion des Branches",
+      "branchesDesc": "Administrez facilement plusieurs branches ou emplacements à partir d'une interface centralisée.",
+      "events": "Planification d'Événements",
+      "eventsDesc": "Planifiez, organisez et gérez tous vos événements et activités en un seul endroit.",
+      "reports": "Rapports & Statistiques",
+      "reportsDesc": "Accédez à des analyses détaillées et des rapports pour prendre des décisions éclairées.",
+      "roles": "Gestion des Rôles",
+      "rolesDesc": "Définissez et attribuez des rôles personnalisés avec des permissions spécifiques."
+    },
+    "benefitsLabel": "Avantages",
+    "benefits": {
+      "title": "Pourquoi Choisir Notre Solution",
+      "itemTitle1": "Centralisation des données",
+      "itemTitle2": "Automatisation des tâches",
+      "itemTitle3": "Communication améliorée",
+      "itemTitle4": "Décisions basées sur les données",
+      "item1": "Centralisation de toutes vos données organisationnelles en un seul endroit sécurisé",
+      "item2": "Réduction du temps consacré aux tâches administratives grâce à l'automatisation",
+      "item3": "Amélioration de la communication et de la coordination entre les membres",
+      "item4": "Prise de décisions basées sur des données grâce aux rapports détaillés",
+      "cta": "Commencer maintenant"
+    },
+    "testimonial": {
+      "quote": "Cette plateforme a révolutionné notre façon de gérer notre organisation. Nous avons gagné un temps précieux et amélioré notre efficacité globale.",
+      "author": "Jean Dupont",
+      "role": "Directeur d'Organisation"
+    },
+    "cta": {
+      "title": "Prêt à transformer votre organisation ?",
+      "subtitle": "Rejoignez des milliers d'organisations qui utilisent notre plateforme pour optimiser leur gestion.",
+      "button": "Créer un compte gratuitement"
+    }
   },
   "auth": {
     "login": {
@@ -100,6 +145,7 @@
         "all": "Tous les rôles",
         "byRole": "Filtrer par rôle",
         "byTerritory": "Filtrer par territoire",
+        "byFunction": "Filtrer par fonction",
         "admin": "Administrateur",
         "user": "Utilisateur",
         "apply": "Appliquer"
@@ -127,7 +173,8 @@
         "createdAt": "Créé le",
         "sortAsc": "Trier par ordre croissant",
         "sortDesc": "Trier par ordre décroissant",
-        "functions": "Fonctions"
+        "functions": "Fonctions",
+        "more": "autres"
       },
       "actions": {
         "more": "Plus",

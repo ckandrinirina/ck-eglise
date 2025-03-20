@@ -77,10 +77,13 @@ const UsersList = () => {
     tempRoleFilter,
     territoryFilter,
     tempTerritoryFilter,
+    functionFilter,
+    tempFunctionFilter,
     sortConfig,
     handleSearchChange,
     handleRoleFilterChange,
     handleTerritoryFilterChange,
+    handleFunctionFilterChange,
     applyFilters,
     handleSort,
     handleClearFilters,
@@ -222,6 +225,16 @@ const UsersList = () => {
           />
         </div>
 
+        {/* Function filter */}
+        <div className="w-[200px]">
+          <DropdownSelect
+            dropdownKey="function"
+            value={tempFunctionFilter}
+            onChange={(value) => handleFunctionFilterChange(value as string)}
+            placeholder={t("filter.byFunction")}
+          />
+        </div>
+
         {/* Apply/Clear filters */}
         <div className="flex gap-2 ml-auto">
           <Button variant="secondary" onClick={applyFilters} size="sm">
@@ -239,6 +252,7 @@ const UsersList = () => {
                   !searchQuery &&
                   roleFilter === "all" &&
                   !territoryFilter &&
+                  !functionFilter &&
                   sortConfig.field === "name" &&
                   sortConfig.direction === "asc"
                 }
@@ -407,15 +421,55 @@ const UsersList = () => {
                   </TableCell>
                   <TableCell>
                     <div className="flex flex-wrap gap-1">
-                      {getFunctionNames(user).map((funcName, index) => (
-                        <Badge
-                          key={index}
-                          variant="secondary"
-                          className="text-xs"
-                        >
-                          {funcName}
-                        </Badge>
-                      ))}
+                      {getFunctionNames(user).length <= 2 ? (
+                        // If 2 or fewer functions, display all of them
+                        getFunctionNames(user).map((funcName, index) => (
+                          <Badge
+                            key={index}
+                            variant="secondary"
+                            className="text-xs"
+                          >
+                            {funcName}
+                          </Badge>
+                        ))
+                      ) : (
+                        // If more than 2 functions, display first 2 + "more" badge with tooltip
+                        <>
+                          {getFunctionNames(user)
+                            .slice(0, 2)
+                            .map((funcName, index) => (
+                              <Badge
+                                key={index}
+                                variant="secondary"
+                                className="text-xs"
+                              >
+                                {funcName}
+                              </Badge>
+                            ))}
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Badge
+                                variant="outline"
+                                className="text-xs cursor-pointer"
+                              >
+                                +{getFunctionNames(user).length - 2}{" "}
+                                {t("table.more")}
+                              </Badge>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <div className="flex flex-col gap-1 p-1">
+                                {getFunctionNames(user).map(
+                                  (funcName, index) => (
+                                    <span key={index} className="text-xs">
+                                      {funcName}
+                                    </span>
+                                  ),
+                                )}
+                              </div>
+                            </TooltipContent>
+                          </Tooltip>
+                        </>
+                      )}
                     </div>
                   </TableCell>
                   <TableCell>{getTerritoryName(user)}</TableCell>

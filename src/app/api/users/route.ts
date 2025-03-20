@@ -66,6 +66,14 @@ export async function GET(request: Request) {
             nameMg: true,
           },
         },
+        functions: {
+          select: {
+            id: true,
+            name: true,
+            nameFr: true,
+            nameMg: true,
+          },
+        },
         createdAt: true,
         updatedAt: true,
       },
@@ -112,6 +120,8 @@ export async function POST(req: Request) {
 
     // Hash password
     const hashedPassword = await hash(password, 10);
+
+    console.log("functionIds", functionIds);
 
     // Create user with functions
     const user = await prisma.user.create({

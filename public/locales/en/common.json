@@ -16,7 +16,52 @@
   },
   "home": {
     "welcome": "Welcome",
-    "description": "Church management application"
+    "description": "Church management application",
+    "hero": {
+      "label": "Organization Management",
+      "title": "Modern Organization Management",
+      "subtitle": "A comprehensive platform to efficiently manage and grow your organization.",
+      "loginButton": "Log In",
+      "registerButton": "Sign Up"
+    },
+    "featuresLabel": "Features",
+    "featuresTitle": "Key Features",
+    "featuresSubtitle": "Discover how our platform can transform your organizational management.",
+    "features": {
+      "members": "Member Management",
+      "membersDesc": "Efficiently manage profiles, roles, and information for all your members.",
+      "branches": "Branch Management",
+      "branchesDesc": "Easily administer multiple branches or locations from a centralized interface.",
+      "events": "Event Planning",
+      "eventsDesc": "Plan, organize, and manage all your events and activities in one place.",
+      "reports": "Reports & Analytics",
+      "reportsDesc": "Access detailed analytics and reports to make informed decisions.",
+      "roles": "Role Management",
+      "rolesDesc": "Define and assign custom roles with specific permissions."
+    },
+    "benefitsLabel": "Benefits",
+    "benefits": {
+      "title": "Why Choose Our Solution",
+      "itemTitle1": "Data Centralization",
+      "itemTitle2": "Task Automation",
+      "itemTitle3": "Improved Communication",
+      "itemTitle4": "Data-Driven Decisions",
+      "item1": "Centralize all your organizational data in one secure place",
+      "item2": "Reduce time spent on administrative tasks through automation",
+      "item3": "Improve communication and coordination between members",
+      "item4": "Make data-driven decisions with detailed reporting",
+      "cta": "Get Started"
+    },
+    "testimonial": {
+      "quote": "This platform has revolutionized how we manage our organization. We've saved valuable time and improved our overall efficiency.",
+      "author": "John Smith",
+      "role": "Organization Director"
+    },
+    "cta": {
+      "title": "Ready to transform your organization?",
+      "subtitle": "Join thousands of organizations using our platform to optimize their management.",
+      "button": "Create Free Account"
+    }
   },
   "actions": {
     "submit": "Submit",
@@ -100,6 +145,7 @@
         "all": "All roles",
         "byRole": "Filter by role",
         "byTerritory": "Filter by territory",
+        "byFunction": "Filter by function",
         "admin": "Administrator",
         "user": "User",
         "apply": "Apply"
@@ -124,10 +170,11 @@
         "status": "Status",
         "gender": "Gender",
         "territory": "Territory",
-        "createdAt": "Created at",
+        "createdAt": "Created At",
         "sortAsc": "Sort ascending",
         "sortDesc": "Sort descending",
-        "functions": "Functions"
+        "functions": "Functions",
+        "more": "more"
       },
       "actions": {
         "more": "More",

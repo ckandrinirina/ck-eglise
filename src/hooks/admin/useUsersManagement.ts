@@ -27,6 +27,8 @@ export const useUsersManagement = () => {
   const [roleFilter, setRoleFilter] = useState<"all" | "admin" | "user">("all");
   const [tempTerritoryFilter, setTempTerritoryFilter] = useState<string>("");
   const [territoryFilter, setTerritoryFilter] = useState<string>("");
+  const [tempFunctionFilter, setTempFunctionFilter] = useState<string>("");
+  const [functionFilter, setFunctionFilter] = useState<string>("");
   const [sortConfig, setSortConfig] = useState<UserSortConfig>({
     field: "name",
     direction: "asc",
@@ -80,6 +82,13 @@ export const useUsersManagement = () => {
       result = result.filter((user) => user.territoryId === territoryFilter);
     }
 
+    // Apply function filter
+    if (functionFilter) {
+      result = result.filter((user) =>
+        user.functions?.some((func) => func.id === functionFilter),
+      );
+    }
+
     // Apply sorting
     return result.sort((a, b) => {
       let aValue, bValue;
@@ -99,7 +108,14 @@ export const useUsersManagement = () => {
       const comparison = String(aValue).localeCompare(String(bValue));
       return sortConfig.direction === "asc" ? comparison : -comparison;
     });
-  }, [users, searchQuery, roleFilter, territoryFilter, sortConfig]);
+  }, [
+    users,
+    searchQuery,
+    roleFilter,
+    territoryFilter,
+    functionFilter,
+    sortConfig,
+  ]);
 
   // Clear filters
   const handleClearFilters = useCallback(() => {
@@ -109,6 +125,8 @@ export const useUsersManagement = () => {
     setRoleFilter("all");
     setTempTerritoryFilter("");
     setTerritoryFilter("");
+    setTempFunctionFilter("");
+    setFunctionFilter("");
     setSortConfig({ field: "name", direction: "asc" });
   }, []);
 
@@ -209,10 +227,15 @@ export const useUsersManagement = () => {
     setTempTerritoryFilter(territory);
   };
 
+  const handleFunctionFilterChange = (functionId: string) => {
+    setTempFunctionFilter(functionId);
+  };
+
   const applyFilters = () => {
     setSearchQuery(tempSearchQuery);
     setRoleFilter(tempRoleFilter);
     setTerritoryFilter(tempTerritoryFilter);
+    setFunctionFilter(tempFunctionFilter);
   };
 
   const handleSort = useCallback((field: UserSortConfig["field"]) => {
@@ -235,10 +258,13 @@ export const useUsersManagement = () => {
     tempRoleFilter,
     territoryFilter,
     tempTerritoryFilter,
+    functionFilter,
+    tempFunctionFilter,
     sortConfig,
     handleSearchChange,
     handleRoleFilterChange,
     handleTerritoryFilterChange,
+    handleFunctionFilterChange,
     applyFilters,
     handleSort,
     handleClearFilters,

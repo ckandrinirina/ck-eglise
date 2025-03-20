@@ -16,7 +16,52 @@
   },
   "home": {
     "welcome": "Tongasoa",
-    "description": "Rindran-drafitra fitantanana fiangonana"
+    "description": "Rindran-drafitra fitantanana fiangonana",
+    "hero": {
+      "label": "Fitantanana Rafitra",
+      "title": "Fitantanana Rafitra Maoderina",
+      "subtitle": "Sehatra feno hanampy anao hitantana sy hampitombo ny rafitrao amim-pahombiazana.",
+      "loginButton": "Hiditra",
+      "registerButton": "Hisoratra anarana"
+    },
+    "featuresLabel": "Tolotra",
+    "featuresTitle": "Tolotra Lehibe",
+    "featuresSubtitle": "Jereo ny fomba hanovàn'ny sehatray ny fitantanana ny rafitrao.",
+    "features": {
+      "members": "Fitantanana Mpikambana",
+      "membersDesc": "Tantano am-pahombiazana ny mombamomba, anjara asa ary fampahalalana ny mpikambanao rehetra.",
+      "branches": "Fitantanana Sampana",
+      "branchesDesc": "Mora tantanina ny sampana maromaro na toerana avy amin'ny sehatra ivantanana.",
+      "events": "Fandrindrana Hetsika",
+      "eventsDesc": "Drindrao, karakarao ary tantano ny hetsika sy fiaraha-mientana rehetra amin'ny toerana iray.",
+      "reports": "Tatitra & Famakafakana",
+      "reportsDesc": "Mahazoa tatitra sy famakafakana feno mba hahafahana manapa-kevitra amim-pahalalana.",
+      "roles": "Fitantanana Andraikitra",
+      "rolesDesc": "Afaka mamolavola sy manome andraikitra amin'ny alalan'ny fahazoan-dàlana manokana."
+    },
+    "benefitsLabel": "Tombotsoa",
+    "benefits": {
+      "title": "Nahoana no Misafidy ny Sehatray",
+      "itemTitle1": "Fanasehoan'ny Angona",
+      "itemTitle2": "Fiasan'ny Automatique",
+      "itemTitle3": "Fifandraisana Tsaratsara Kokoa",
+      "itemTitle4": "Fanampahan-kevitra avy amin'ny Data",
+      "item1": "Ivoy ny angona rehetra momba ny rafitrao amin'ny toerana azo antoka iray",
+      "item2": "Ahena ny fotoana lany amin'ny asa fitantanana amin'ny alalan'ny fanaovana azy ho automatika",
+      "item3": "Amboary ny fifandraisana sy fiaraha-miasa eo amin'ny mpikambana",
+      "item4": "Manapaha hevitra araka ny angona amin'ny alalan'ny tatitra feno",
+      "cta": "Atombohy izao"
+    },
+    "testimonial": {
+      "quote": "Ity sehatra ity dia nanova tanteraka ny fomba itantananay ny rafitra. Nandresy lahatra fotoana sarobidy izahay ary nampitombo ny fahombiazan' ny fitantanana.",
+      "author": "Andrianomenjatovo Rabe",
+      "role": "Mpitantana Rafitra"
+    },
+    "cta": {
+      "title": "Vonona ny hanova ny rafitrao?",
+      "subtitle": "Midira amin'ireo rafitra an'arivony mampiasa ny sehatray mba hanatsarana ny fitantanana.",
+      "button": "Mamorona kaonty maimaim-poana"
+    }
   },
   "auth": {
     "login": {
@@ -85,9 +130,10 @@
       },
       "filter": {
         "all": "Anjara asa rehetra",
-        "byRole": "Sivana araka ny anjara asa",
+        "byRole": "Sivana araka ny andraikitra",
         "byTerritory": "Sivana araka ny faritra",
-        "admin": "Mpitantana",
+        "byFunction": "Sivana araka ny asa",
+        "admin": "Mpandrindra",
         "user": "Mpampiasa",
         "apply": "Ampiharo"
       },
@@ -114,7 +160,8 @@
         "createdAt": "Noforonina tamin'ny",
         "sortAsc": "Laharo miakatra",
         "sortDesc": "Laharo midina",
-        "functions": "Andraikitra"
+        "functions": "Andraikitra",
+        "more": "bebe kokoa"
       },
       "actions": {
         "more": "Bebe kokoa",
