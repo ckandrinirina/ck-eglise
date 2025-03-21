@@ -64,44 +64,36 @@ export async function GET(request: Request) {
     const transactions = await prisma.transaction.findMany({
       where,
       include: {
-        user: {
-          select: {
-            name: true,
-          },
-        },
-        transactionType: {
-          select: {
-            name: true,
-            nameFr: true,
-            nameMg: true,
-          },
-        },
-        siteBalance: {
-          select: {
-            amount: true,
-          },
-        },
+        user: true,
+        sender: true,
+        receiver: true,
+        transactionType: true,
+        siteBalance: true,
       },
       orderBy: {
         createdAt: "desc",
       },
     });
 
-    // Transform data to include userName
+    // Transform data to include userName, senderName, and receiverName
     const formattedTransactions = transactions.map((transaction) => ({
       id: transaction.id,
       amount: transaction.amount,
       type: transaction.type,
-      reason: transaction.reason,
+      reason: transaction.reason || "",
       userId: transaction.userId,
-      userName: transaction.user.name,
+      userName: transaction.user?.name || null,
+      senderId: transaction.senderId,
+      senderName: transaction.sender?.name || null,
+      receiverId: transaction.receiverId,
+      receiverName: transaction.receiver?.name || null,
       transactionTypeId: transaction.transactionTypeId,
       transactionTypeName:
         transaction.transactionType?.nameFr ||
         transaction.transactionType?.name ||
         null,
       siteBalanceId: transaction.siteBalanceId,
-      siteBalanceAmount: transaction.siteBalance?.amount,
+      siteBalanceAmount: transaction.siteBalance?.amount || null,
       createdAt: transaction.createdAt.toISOString(),
       updatedAt: transaction.updatedAt.toISOString(),
     }));
@@ -142,14 +134,15 @@ export async function POST(request: Request) {
     try {
       const validatedData = transactionSchema.parse(body);
 
-      // Verify user exists
-      const userExists = await prisma.user.findUnique({
-        where: { id: validatedData.userId },
-      });
-
-      if (!userExists) {
-        return new NextResponse("User not found", { status: 404 });
+      // Ensure we have the current user's ID
+      if (!session.user.id) {
+        return new NextResponse("User ID not found in session", {
+          status: 400,
+        });
       }
+
+      // Use the current user's ID as the userId
+      const userId = session.user.id;
 
       // Create transaction
       const transaction = await prisma.$transaction(async (tx) => {
@@ -182,29 +175,19 @@ export async function POST(request: Request) {
           data: {
             amount: validatedData.amount,
             type: validatedData.type,
-            reason: validatedData.reason,
-            userId: validatedData.userId,
+            reason: validatedData.reason || null,
+            userId: userId,
+            senderId: validatedData.senderId || null,
+            receiverId: validatedData.receiverId || null,
             transactionTypeId: validatedData.transactionTypeId || null,
-            siteBalanceId: newSiteBalance.id, // Link to the new site balance
+            siteBalanceId: newSiteBalance.id,
           },
           include: {
-            user: {
-              select: {
-                name: true,
-              },
-            },
-            transactionType: {
-              select: {
-                name: true,
-                nameFr: true,
-                nameMg: true,
-              },
-            },
-            siteBalance: {
-              select: {
-                amount: true,
-              },
-            },
+            user: true,
+            sender: true,
+            receiver: true,
+            transactionType: true,
+            siteBalance: true,
           },
         });
 
@@ -216,16 +199,20 @@ export async function POST(request: Request) {
         id: transaction.id,
         amount: transaction.amount,
         type: transaction.type,
-        reason: transaction.reason,
+        reason: transaction.reason || "",
         userId: transaction.userId,
-        userName: transaction.user?.name,
+        userName: transaction.user?.name || null,
+        senderId: transaction.senderId,
+        senderName: transaction.sender?.name || null,
+        receiverId: transaction.receiverId,
+        receiverName: transaction.receiver?.name || null,
         transactionTypeId: transaction.transactionTypeId,
         transactionTypeName:
           transaction.transactionType?.nameFr ||
           transaction.transactionType?.name ||
           null,
         siteBalanceId: transaction.siteBalanceId,
-        siteBalanceAmount: transaction.siteBalance?.amount,
+        siteBalanceAmount: transaction.siteBalance?.amount || null,
         createdAt: transaction.createdAt.toISOString(),
         updatedAt: transaction.updatedAt.toISOString(),
       };

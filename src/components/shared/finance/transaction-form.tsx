@@ -36,7 +36,8 @@ import { DropdownSelect } from "@/components/shared/common/dropdown-select";
 
 interface TransactionFormData {
   type: "credit" | "debit";
-  userId: string;
+  senderId?: string | null;
+  receiverId?: string | null;
   amount: number;
   reason?: string | null;
   transactionTypeId?: string | null;
@@ -46,6 +47,7 @@ interface TransactionFormProps {
   isOpen: boolean;
   onClose: () => void;
   initialUserId?: string;
+  initialDirection?: "from" | "to";
 }
 
 /**
@@ -55,6 +57,7 @@ const TransactionForm = ({
   isOpen,
   onClose,
   initialUserId,
+  initialDirection,
 }: TransactionFormProps) => {
   const t = useTranslations("finance");
   const { refreshFinanceData } = useFinanceRefresh();
@@ -67,6 +70,7 @@ const TransactionForm = ({
   const { form, onSubmit, isPending } = useTransactionForm(
     handleSuccess,
     initialUserId,
+    initialDirection,
   );
 
   return (
@@ -126,10 +130,18 @@ const TransactionForm = ({
 
             <UserSelect<TransactionFormData>
               form={form}
-              name="userId"
-              label={t("user")}
-              placeholder={t("selectUser")}
-              required
+              name="senderId"
+              label={t("sender")}
+              placeholder={t("selectSender")}
+              required={false}
+            />
+
+            <UserSelect<TransactionFormData>
+              form={form}
+              name="receiverId"
+              label={t("receiver")}
+              placeholder={t("selectReceiver")}
+              required={false}
             />
 
             <FormField

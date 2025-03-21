@@ -39,6 +39,7 @@ import { DateRangeFilter } from "@/components/shared/finance/date-range-filter";
  */
 const TransactionsList = () => {
   const t = useTranslations("finance");
+  const INTERNAL_TRANSACTION = t("internal");
   const {
     transactions,
     isLoading,
@@ -239,6 +240,8 @@ const TransactionsList = () => {
                   <TableHead>{t("date")}</TableHead>
                   <TableHead className="text-right">{t("credit")}</TableHead>
                   <TableHead className="text-right">{t("debit")}</TableHead>
+                  <TableHead>{t("sender")}</TableHead>
+                  <TableHead>{t("receiver")}</TableHead>
                   <TableHead>{t("user")}</TableHead>
                   <TableHead>{t("transactionType")}</TableHead>
                   <TableHead className="w-[250px]">{t("reason")}</TableHead>
@@ -249,7 +252,7 @@ const TransactionsList = () => {
                   // Loading skeleton
                   Array.from({ length: 5 }).map((_, i) => (
                     <TableRow key={i}>
-                      {Array.from({ length: 6 }).map((_, j) => (
+                      {Array.from({ length: 8 }).map((_, j) => (
                         <TableCell key={j}>
                           <div className="h-6 w-full bg-gray-200 animate-pulse rounded" />
                         </TableCell>
@@ -259,7 +262,7 @@ const TransactionsList = () => {
                 ) : filteredTransactions.length === 0 ? (
                   // No results message
                   <TableRow>
-                    <TableCell colSpan={6} className="h-24 text-center">
+                    <TableCell colSpan={8} className="h-24 text-center">
                       {searchTerm ||
                       filter ||
                       transactionTypeFilter ||
@@ -288,6 +291,12 @@ const TransactionsList = () => {
                             {formatAmount(transaction.amount)}
                           </span>
                         ) : null}
+                      </TableCell>
+                      <TableCell>
+                        {transaction.senderName || INTERNAL_TRANSACTION}
+                      </TableCell>
+                      <TableCell>
+                        {transaction.receiverName || INTERNAL_TRANSACTION}
                       </TableCell>
                       <TableCell>
                         {transaction.userName || t("unknown")}

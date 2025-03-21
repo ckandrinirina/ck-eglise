@@ -16,7 +16,8 @@ import { TransactionService } from "@/lib/services/transaction.service";
 // Form validation schema
 const transactionSchema = z.object({
   type: z.enum(["credit", "debit"]),
-  userId: z.string().min(1, "User is required"),
+  senderId: z.string().nullable().optional(),
+  receiverId: z.string().nullable().optional(),
   amount: z.number().min(0.01, "Amount must be greater than 0"),
   reason: z.string().nullable().optional(),
   transactionTypeId: z.string().nullable().optional(),
@@ -31,31 +32,42 @@ export type TransactionFormData = z.infer<typeof transactionSchema>;
  * @hook
  * @param {Function} onSuccess - Callback to be called after successful submission
  * @param {string} initialUserId - Optional initial user ID to prefill the user field
+ * @param {string} initialDirection - Optional initial direction ("from" or "to")
  * @returns {Object} Form state and handlers
  */
 export const useTransactionForm = (
   onSuccess?: () => void,
   initialUserId?: string,
+  initialDirection?: "from" | "to",
 ) => {
   const t = useTranslations("finance");
   const queryClient = useQueryClient();
   const [isPending, setIsPending] = useState(false);
 
-  // Initialize form with proper typing
-  const form = useForm<TransactionFormData>({
-    resolver: zodResolver(transactionSchema),
-    defaultValues: {
-      type: "credit",
-      userId: initialUserId || "",
+  // Determine initial form values based on direction
+  const getInitialValues = (): TransactionFormData => {
+    return {
+      type: "credit" as const,
+      senderId: initialDirection === "from" ? initialUserId || null : null,
+      receiverId: initialDirection === "to" ? initialUserId || null : null,
       amount: 0,
       reason: null,
       transactionTypeId: null,
-    },
+    };
+  };
+
+  // Initialize form with proper typing
+  const form = useForm<TransactionFormData>({
+    resolver: zodResolver(transactionSchema),
+    defaultValues: getInitialValues(),
   });
 
   // Create transaction mutation
   const createTransactionMutation = useMutation({
-    mutationFn: TransactionService.createTransaction,
+    mutationFn: (data: TransactionFormData) => {
+      // Send the form data directly
+      return TransactionService.createTransaction(data);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
       queryClient.invalidateQueries({ queryKey: ["siteBalance"] });

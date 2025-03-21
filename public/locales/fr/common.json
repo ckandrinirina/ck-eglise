@@ -180,7 +180,9 @@
         "more": "Plus",
         "edit": "Modifier",
         "delete": "Supprimer",
-        "makeTransaction": "Faire une transaction"
+        "makeTransaction": "Faire une transaction",
+        "transactionFrom": "Transaction depuis cet utilisateur",
+        "transactionTo": "Transaction vers cet utilisateur"
       },
       "dialog": {
         "createUser": "Créer un utilisateur",

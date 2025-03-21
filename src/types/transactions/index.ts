@@ -16,6 +16,10 @@ import { z } from "zod";
  * @property {string} reason - Reason for the transaction
  * @property {string} userId - ID of the associated user
  * @property {string} userName - Name of the associated user
+ * @property {string|null} senderId - ID of the sender (optional)
+ * @property {string|null} senderName - Name of the sender (optional)
+ * @property {string|null} receiverId - ID of the receiver (optional)
+ * @property {string|null} receiverName - Name of the receiver (optional)
  * @property {string|null} transactionTypeId - ID of the transaction type (optional)
  * @property {string|null} transactionTypeName - Name of the transaction type (optional)
  * @property {string|null} siteBalanceId - ID of the associated site balance
@@ -30,6 +34,10 @@ export interface Transaction {
   reason: string;
   userId: string;
   userName: string | null;
+  senderId: string | null;
+  senderName: string | null;
+  receiverId: string | null;
+  receiverName: string | null;
   transactionTypeId: string | null;
   transactionTypeName: string | null;
   siteBalanceId: string | null;
@@ -45,7 +53,8 @@ export interface Transaction {
  * @property {number} amount - Amount of the transaction
  * @property {string} type - Type of transaction (credit or debit)
  * @property {string} reason - Reason for the transaction
- * @property {string} userId - ID of the associated user
+ * @property {string|null} senderId - ID of the sender (optional)
+ * @property {string|null} receiverId - ID of the receiver (optional)
  * @property {string|null} transactionTypeId - ID of the transaction type (optional)
  * @property {string|null} siteBalanceId - ID of the associated site balance (optional)
  */
@@ -53,7 +62,8 @@ export interface CreateTransactionData {
   amount: number;
   type: "credit" | "debit";
   reason?: string | null | undefined;
-  userId: string;
+  senderId?: string | null;
+  receiverId?: string | null;
   transactionTypeId?: string | null;
   siteBalanceId?: string | null;
 }
@@ -68,7 +78,8 @@ export const transactionSchema = z.object({
     invalid_type_error: "Le type de transaction doit être crédit ou débit",
   }),
   reason: z.string().nullable(),
-  userId: z.string().min(1, { message: "L'utilisateur est requis" }),
+  senderId: z.string().nullable().optional(),
+  receiverId: z.string().nullable().optional(),
   transactionTypeId: z.string().nullable().optional(),
   siteBalanceId: z.string().nullable().optional(),
 });
