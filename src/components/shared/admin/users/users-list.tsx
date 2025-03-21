@@ -64,6 +64,9 @@ const UsersList = () => {
   const [selectedUserForTransaction, setSelectedUserForTransaction] = useState<
     string | null
   >(null);
+  const [transactionDirection, setTransactionDirection] = useState<
+    "from" | "to" | null
+  >(null);
 
   const {
     users,
@@ -138,14 +141,16 @@ const UsersList = () => {
     );
   };
 
-  const handleMakeTransaction = (user: User) => {
+  const handleMakeTransaction = (user: User, direction: "from" | "to") => {
     setSelectedUserForTransaction(user.id);
+    setTransactionDirection(direction);
     setTransactionDialogOpen(true);
   };
 
   const handleTransactionDialogClose = () => {
     setTransactionDialogOpen(false);
     setSelectedUserForTransaction(null);
+    setTransactionDirection(null);
   };
 
   // Render loading state
@@ -506,10 +511,16 @@ const UsersList = () => {
                             {t("actions.edit")}
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            onClick={() => handleMakeTransaction(user)}
+                            onClick={() => handleMakeTransaction(user, "from")}
                           >
                             <CreditCard className="mr-2 h-4 w-4" />
-                            {t("actions.makeTransaction")}
+                            {t("actions.transactionFrom")}
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => handleMakeTransaction(user, "to")}
+                          >
+                            <CreditCard className="mr-2 h-4 w-4" />
+                            {t("actions.transactionTo")}
                           </DropdownMenuItem>
                           <DropdownMenuItem
                             className="text-red-600"
@@ -542,6 +553,7 @@ const UsersList = () => {
           isOpen={transactionDialogOpen}
           onClose={handleTransactionDialogClose}
           initialUserId={selectedUserForTransaction || undefined}
+          initialDirection={transactionDirection || undefined}
         />
       )}
     </Card>

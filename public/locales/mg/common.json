@@ -167,7 +167,9 @@
         "more": "Bebe kokoa",
         "edit": "Ahitsy",
         "delete": "Fafao",
-        "makeTransaction": "Hamorona fifampizarana"
+        "makeTransaction": "Hamorona fifampizarana",
+        "transactionFrom": "Fifampizarana avy amin'ity mpampiasa ity",
+        "transactionTo": "Fifampizarana ho an'ity mpampiasa ity"
       },
       "dialog": {
         "createUser": "Hamorona mpampiasa vaovao",
