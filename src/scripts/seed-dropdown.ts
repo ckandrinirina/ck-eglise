@@ -236,6 +236,129 @@ async function main() {
     }
 
     console.log("Transaction type dropdowns seeded successfully");
+
+    // Check if parent month exists
+    const existingMonthParent = await prisma.dropdown.findUnique({
+      where: {
+        key: "month",
+      },
+    });
+
+    // Create parent month if it doesn't exist
+    const monthParent =
+      existingMonthParent ||
+      (await prisma.dropdown.create({
+        data: {
+          key: "month",
+          name: "Months",
+          nameFr: "Mois",
+          nameMg: "Volana",
+          isParent: true,
+          isEnabled: true,
+        },
+      }));
+
+    console.log("Parent month created or found:", monthParent.name);
+
+    // Create month options
+    const months = [
+      {
+        name: "January",
+        nameFr: "Janvier",
+        nameMg: "Janoary",
+        isEnabled: true,
+      },
+      {
+        name: "February",
+        nameFr: "Février",
+        nameMg: "Febroary",
+        isEnabled: true,
+      },
+      {
+        name: "March",
+        nameFr: "Mars",
+        nameMg: "Martsa",
+        isEnabled: true,
+      },
+      {
+        name: "April",
+        nameFr: "Avril",
+        nameMg: "Aprily",
+        isEnabled: true,
+      },
+      {
+        name: "May",
+        nameFr: "Mai",
+        nameMg: "Mey",
+        isEnabled: true,
+      },
+      {
+        name: "June",
+        nameFr: "Juin",
+        nameMg: "Jona",
+        isEnabled: true,
+      },
+      {
+        name: "July",
+        nameFr: "Juillet",
+        nameMg: "Jolay",
+        isEnabled: true,
+      },
+      {
+        name: "August",
+        nameFr: "Août",
+        nameMg: "Aogositra",
+        isEnabled: true,
+      },
+      {
+        name: "September",
+        nameFr: "Septembre",
+        nameMg: "Septambra",
+        isEnabled: true,
+      },
+      {
+        name: "October",
+        nameFr: "Octobre",
+        nameMg: "Oktobra",
+        isEnabled: true,
+      },
+      {
+        name: "November",
+        nameFr: "Novembre",
+        nameMg: "Novambra",
+        isEnabled: true,
+      },
+      {
+        name: "December",
+        nameFr: "Décembre",
+        nameMg: "Desambra",
+        isEnabled: true,
+      },
+    ];
+
+    // Create month options if they don't exist
+    for (const month of months) {
+      const existingMonth = await prisma.dropdown.findFirst({
+        where: {
+          name: month.name,
+          parentId: monthParent.id,
+        },
+      });
+
+      if (!existingMonth) {
+        const newMonth = await prisma.dropdown.create({
+          data: {
+            ...month,
+            parentId: monthParent.id,
+          },
+        });
+        console.log(`Created month: ${newMonth.name}`);
+      } else {
+        console.log(`Month ${month.name} already exists`);
+      }
+    }
+
+    console.log("Month dropdowns seeded successfully");
   } catch (error) {
     console.error("Error seeding dropdowns:", error);
   } finally {

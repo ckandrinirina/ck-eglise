@@ -20,6 +20,8 @@
   "transactionType": "Karazana fifampiasana",
   "transactionDirection": "Fizotran'ny vola",
   "date": "Daty",
+  "month": "Volana",
+  "selectMonth": "Misafidy volana",
   "type": "Karazana",
   "credit": "Miditra",
   "debit": "Mivoaka",
