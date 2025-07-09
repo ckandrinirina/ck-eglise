@@ -32,6 +32,8 @@ model User {
   transactions  Transaction[] // Relation to transactions
   sentTransactions     Transaction[] @relation("TransactionSender")
   receivedTransactions Transaction[] @relation("TransactionReceiver")
+  createdGoals         MoneyGoal[]   @relation("GoalCreator") // Goals created by this user
+  contributions        MoneyGoalContribution[] @relation("GoalContributor") // Contributions made by this user
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 
@@ -130,4 +132,39 @@ model SiteBalance {
   transaction Transaction?  // Relation to the transaction that created this balance
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
+}
+
+// MoneyGoal model for tracking financial goals
+model MoneyGoal {
+  id                String                @id @default(cuid())
+  name              String                // Name of the goal
+  amountGoal        Float                 // Target amount for the goal
+  years             Int                   // Target year for the goal
+  status            String                @default("active") // "active", "completed", "cancelled"
+  createdBy         String                // ID of the user who created the goal
+  creator           User                  @relation("GoalCreator", fields: [createdBy], references: [id], onDelete: Restrict)
+  contributions     MoneyGoalContribution[] // All contributions to this goal
+  editHistory       String?               @default("[]") // JSON array of edit history for traceability
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+
+  @@index([createdBy])
+  @@index([years])
+  @@index([status])
+}
+
+// MoneyGoalContribution model for tracking amounts added to goals
+model MoneyGoalContribution {
+  id            String    @id @default(cuid())
+  goalId        String    // ID of the associated goal
+  goal          MoneyGoal @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  amount        Float     // Amount contributed
+  contributedBy String    // ID of the user who made the contribution
+  contributor   User      @relation("GoalContributor", fields: [contributedBy], references: [id], onDelete: Restrict)
+  reason        String?   // Optional reason for the contribution
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([goalId])
+  @@index([contributedBy])
 }

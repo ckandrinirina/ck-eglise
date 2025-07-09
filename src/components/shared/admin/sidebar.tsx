@@ -59,6 +59,10 @@ const navItems = [
         url: "/admin/finance/transactions",
       },
       {
+        title: "money_goals", // Added money goals section
+        url: "/admin/finance/money-goals",
+      },
+      {
         title: "settings", // Changed to match translation key pattern
         url: "/admin/settings",
       },
