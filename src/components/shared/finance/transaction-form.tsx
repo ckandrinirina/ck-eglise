@@ -41,6 +41,7 @@ interface TransactionFormData {
   amount: number;
   reason?: string | null;
   transactionTypeId?: string | null;
+  monthId?: string | null;
 }
 
 interface TransactionFormProps {
@@ -158,6 +159,27 @@ const TransactionForm = ({
                       onBlur={field.onBlur}
                       name={field.name}
                       placeholder={t("selectTransactionType")}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="monthId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("month")}</FormLabel>
+                  <FormControl>
+                    <DropdownSelect
+                      dropdownKey="month"
+                      value={field.value}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                      name={field.name}
+                      placeholder={t("selectMonth")}
                     />
                   </FormControl>
                   <FormMessage />

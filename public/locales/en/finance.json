@@ -20,6 +20,8 @@
   "transactionType": "Transaction type",
   "transactionDirection": "Transaction direction",
   "date": "Date",
+  "month": "Month",
+  "selectMonth": "Select a month",
   "type": "Type",
   "credit": "Credit",
   "debit": "Debit",

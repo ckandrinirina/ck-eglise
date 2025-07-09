@@ -335,6 +335,105 @@
         "save": "Tehirizo ny Fanovana"
       }
     },
+    "money_goals": {
+      "title": "Tanjon'ny Vola",
+      "description": "Tantano ny tanjon'ny vola sy araho ny fandraisana anjara",
+      "actions": {
+        "create": "Hamorona Tanjona",
+        "edit": "Ovao",
+        "delete": "Fafao",
+        "export_pdf": "Avoaka ho PDF"
+      },
+      "status": {
+        "active": "Mavitrika",
+        "completed": "Vita",
+        "cancelled": "Nofoanana"
+      },
+      "filters": {
+        "title": "Sivana",
+        "search": "Fikarohana",
+        "search_placeholder": "Mitadiava tanjona...",
+        "year": "Taona",
+        "year_placeholder": "Safidio ny taona",
+        "status": "Toe-javatra",
+        "status_placeholder": "Safidio ny toe-javatra",
+        "all_statuses": "Toe-javatra rehetra",
+        "reset": "Avereno"
+      },
+      "summary": {
+        "total_goals": "Tanjon'ny totaliny",
+        "target_amount": "Vola kendrena",
+        "reached_amount": "Vola tratra",
+        "overall_progress": "Fivoaran'ny ankapobeny",
+        "active": "mavitrika",
+        "completed": "vita",
+        "across_all_goals": "amin'ny tanjona rehetra",
+        "total_contributions": "fandraisana anjara totaliny",
+        "error": "Hadisoana tamin'ny fakana famintinana"
+      },
+      "list": {
+        "title": "Lisitry ny Tanjona",
+        "loading": "Andrasana...",
+        "error": "Hadisoana tamin'ny fakana",
+        "no_goals": "Tsy misy tanjona hita"
+      },
+      "table": {
+        "name": "Anarana",
+        "target_amount": "Vola kendrena",
+        "reached_amount": "Vola tratra",
+        "progress": "Fivoarana",
+        "status": "Toe-javatra",
+        "year": "Taona",
+        "creator": "Mpamorona",
+        "actions": "Asa"
+      },
+      "totals": {
+        "title": "Totalin'ny",
+        "total_target": "Totalin'ny kendrena",
+        "total_reached": "Totalin'ny tratra"
+      },
+      "form": {
+        "create_title": "Hamorona Tanjon'ny Vola",
+        "edit_title": "Hanova Tanjon'ny Vola",
+        "create_description": "Hamorona tanjon'ny vola vaovao miaraka amin'ny vola kendrena sy taona.",
+        "edit_description": "Ovao ny antsipirian'ny tanjon'ny vola.",
+        "loading": "Andrasana...",
+        "fields": {
+          "name": "Anaran'ny tanjona",
+          "name_placeholder": "Ampidiro ny anaran'ny tanjona",
+          "amount_goal": "Vola kendrena",
+          "amount_goal_placeholder": "Ampidiro ny vola kendrena",
+          "year": "Taona",
+          "year_placeholder": "Ampidiro ny taona kendrena"
+        },
+        "actions": {
+          "cancel": "Aoka",
+          "create": "Hamorona",
+          "update": "Havaozina",
+          "saving": "Mitehiry..."
+        },
+        "success": {
+          "create": "Tanjona noforonina soa aman-tsara",
+          "update": "Tanjona nohavaozina soa aman-tsara"
+        },
+        "error": {
+          "create": "Hadisoana tamin'ny famoronana",
+          "update": "Hadisoana tamin'ny fanavaozana",
+          "load": "Hadisoana tamin'ny fakana"
+        }
+      },
+      "delete": {
+        "title": "Fafao ny Tanjona",
+        "description": "Azo antoka ve fa te-hamamafa an'ity tanjona ity ianao? Ity hetsika ity dia tsy azo averina.",
+        "actions": {
+          "cancel": "Aoka",
+          "delete": "Fafao",
+          "deleting": "Mamafa..."
+        },
+        "success": "Tanjona nofafana soa aman-tsara",
+        "error": "Hadisoana tamin'ny famafana"
+      }
+    },
     "breadcrumbs": {
       "home": "Fandraisana"
     }

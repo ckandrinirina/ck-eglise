@@ -21,6 +21,7 @@ const transactionSchema = z.object({
   amount: z.number().min(0.01, "Amount must be greater than 0"),
   reason: z.string().nullable().optional(),
   transactionTypeId: z.string().nullable().optional(),
+  monthId: z.string().nullable().optional(), // Optional month field
 });
 
 // Infer the form data type from the schema
@@ -53,6 +54,7 @@ export const useTransactionForm = (
       amount: 0,
       reason: null,
       transactionTypeId: null,
+      monthId: null, // Default monthId is null
     };
   };
 

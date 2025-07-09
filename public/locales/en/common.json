@@ -348,6 +348,105 @@
         "save": "Save Changes"
       }
     },
+    "money_goals": {
+      "title": "Money Goals",
+      "description": "Manage financial goals and track contributions",
+      "actions": {
+        "create": "Create Goal",
+        "edit": "Edit",
+        "delete": "Delete",
+        "export_pdf": "Export to PDF"
+      },
+      "status": {
+        "active": "Active",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      },
+      "filters": {
+        "title": "Filters",
+        "search": "Search",
+        "search_placeholder": "Search for a goal...",
+        "year": "Year",
+        "year_placeholder": "Select year",
+        "status": "Status",
+        "status_placeholder": "Select status",
+        "all_statuses": "All statuses",
+        "reset": "Reset"
+      },
+      "summary": {
+        "total_goals": "Total Goals",
+        "target_amount": "Target Amount",
+        "reached_amount": "Reached Amount",
+        "overall_progress": "Overall Progress",
+        "active": "active",
+        "completed": "completed",
+        "across_all_goals": "across all goals",
+        "total_contributions": "total contributions",
+        "error": "Error loading summary"
+      },
+      "list": {
+        "title": "Goals List",
+        "loading": "Loading...",
+        "error": "Error loading",
+        "no_goals": "No goals found"
+      },
+      "table": {
+        "name": "Name",
+        "target_amount": "Target Amount",
+        "reached_amount": "Reached Amount",
+        "progress": "Progress",
+        "status": "Status",
+        "year": "Year",
+        "creator": "Creator",
+        "actions": "Actions"
+      },
+      "totals": {
+        "title": "Totals",
+        "total_target": "Total Target",
+        "total_reached": "Total Reached"
+      },
+      "form": {
+        "create_title": "Create Money Goal",
+        "edit_title": "Edit Money Goal",
+        "create_description": "Create a new money goal with a target amount and year.",
+        "edit_description": "Edit the money goal details.",
+        "loading": "Loading...",
+        "fields": {
+          "name": "Goal name",
+          "name_placeholder": "Enter goal name",
+          "amount_goal": "Target amount",
+          "amount_goal_placeholder": "Enter target amount",
+          "year": "Year",
+          "year_placeholder": "Enter target year"
+        },
+        "actions": {
+          "cancel": "Cancel",
+          "create": "Create",
+          "update": "Update",
+          "saving": "Saving..."
+        },
+        "success": {
+          "create": "Goal created successfully",
+          "update": "Goal updated successfully"
+        },
+        "error": {
+          "create": "Error creating goal",
+          "update": "Error updating goal",
+          "load": "Error loading goal"
+        }
+      },
+      "delete": {
+        "title": "Delete Goal",
+        "description": "Are you sure you want to delete this goal? This action cannot be undone.",
+        "actions": {
+          "cancel": "Cancel",
+          "delete": "Delete",
+          "deleting": "Deleting..."
+        },
+        "success": "Goal deleted successfully",
+        "error": "Error deleting goal"
+      }
+    },
     "breadcrumbs": {
       "home": "Home"
     }

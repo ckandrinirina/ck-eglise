@@ -348,6 +348,105 @@
         "save": "Enregistrer les Modifications"
       }
     },
+    "money_goals": {
+      "title": "Objectifs Financiers",
+      "description": "Gérer les objectifs financiers et suivre les contributions",
+      "actions": {
+        "create": "Créer un objectif",
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "export_pdf": "Exporter en PDF"
+      },
+      "status": {
+        "active": "Actif",
+        "completed": "Terminé",
+        "cancelled": "Annulé"
+      },
+      "filters": {
+        "title": "Filtres",
+        "search": "Recherche",
+        "search_placeholder": "Rechercher un objectif...",
+        "year": "Année",
+        "year_placeholder": "Sélectionner l'année",
+        "status": "Statut",
+        "status_placeholder": "Sélectionner le statut",
+        "all_statuses": "Tous les statuts",
+        "reset": "Réinitialiser"
+      },
+      "summary": {
+        "total_goals": "Total des Objectifs",
+        "target_amount": "Montant Cible",
+        "reached_amount": "Montant Atteint",
+        "overall_progress": "Progrès Global",
+        "active": "actifs",
+        "completed": "terminés",
+        "across_all_goals": "sur tous les objectifs",
+        "total_contributions": "total des contributions",
+        "error": "Erreur lors du chargement du résumé"
+      },
+      "list": {
+        "title": "Liste des Objectifs",
+        "loading": "Chargement...",
+        "error": "Erreur lors du chargement",
+        "no_goals": "Aucun objectif trouvé"
+      },
+      "table": {
+        "name": "Nom",
+        "target_amount": "Montant Cible",
+        "reached_amount": "Montant Atteint",
+        "progress": "Progrès",
+        "status": "Statut",
+        "year": "Année",
+        "creator": "Créateur",
+        "actions": "Actions"
+      },
+      "totals": {
+        "title": "Totaux",
+        "total_target": "Total Cible",
+        "total_reached": "Total Atteint"
+      },
+      "form": {
+        "create_title": "Créer un Objectif Financier",
+        "edit_title": "Modifier l'Objectif Financier",
+        "create_description": "Créer un nouvel objectif financier avec un montant cible et une année.",
+        "edit_description": "Modifier les détails de l'objectif financier.",
+        "loading": "Chargement...",
+        "fields": {
+          "name": "Nom de l'objectif",
+          "name_placeholder": "Entrez le nom de l'objectif",
+          "amount_goal": "Montant cible",
+          "amount_goal_placeholder": "Entrez le montant cible",
+          "year": "Année",
+          "year_placeholder": "Entrez l'année cible"
+        },
+        "actions": {
+          "cancel": "Annuler",
+          "create": "Créer",
+          "update": "Mettre à jour",
+          "saving": "Enregistrement..."
+        },
+        "success": {
+          "create": "Objectif créé avec succès",
+          "update": "Objectif mis à jour avec succès"
+        },
+        "error": {
+          "create": "Erreur lors de la création",
+          "update": "Erreur lors de la mise à jour",
+          "load": "Erreur lors du chargement"
+        }
+      },
+      "delete": {
+        "title": "Supprimer l'Objectif",
+        "description": "Êtes-vous sûr de vouloir supprimer cet objectif ? Cette action ne peut pas être annulée.",
+        "actions": {
+          "cancel": "Annuler",
+          "delete": "Supprimer",
+          "deleting": "Suppression..."
+        },
+        "success": "Objectif supprimé avec succès",
+        "error": "Erreur lors de la suppression"
+      }
+    },
     "breadcrumbs": {
       "home": "Accueil"
     }
