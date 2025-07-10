@@ -134,6 +134,23 @@ model SiteBalance {
   createdAt DateTime @default(now())
 }
 
+// MoneyGoalCategory model for categorizing money goals
+model MoneyGoalCategory {
+  id          String      @id @default(cuid())
+  name        String      // Default name
+  nameFr      String?     // French name
+  nameMg      String?     // Malagasy name
+  description String?     // Optional description
+  color       String?     // Optional color for UI display
+  icon        String?     // Optional icon identifier
+  isEnabled   Boolean     @default(true)  // Whether the category is enabled
+  goals       MoneyGoal[] // Goals in this category
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([isEnabled])
+}
+
 // MoneyGoal model for tracking financial goals
 model MoneyGoal {
   id                String                @id @default(cuid())
@@ -141,6 +158,8 @@ model MoneyGoal {
   amountGoal        Float                 // Target amount for the goal
   years             Int                   // Target year for the goal
   status            String                @default("active") // "active", "completed", "cancelled"
+  categoryId        String                // ID of the category (required)
+  category          MoneyGoalCategory     @relation(fields: [categoryId], references: [id], onDelete: Restrict)
   createdBy         String                // ID of the user who created the goal
   creator           User                  @relation("GoalCreator", fields: [createdBy], references: [id], onDelete: Restrict)
   contributions     MoneyGoalContribution[] // All contributions to this goal
@@ -151,6 +170,7 @@ model MoneyGoal {
   @@index([createdBy])
   @@index([years])
   @@index([status])
+  @@index([categoryId])
 }
 
 // MoneyGoalContribution model for tracking amounts added to goals

@@ -291,6 +291,7 @@ function generateMoneyGoalsHTML(data: MoneyGoalExportData): string {
         <h3>Filtres Appliqués</h3>
         <p><strong>Année:</strong> ${data.filters.years || "Toutes"}</p>
         <p><strong>Statut:</strong> ${data.filters.status ? getStatusText(data.filters.status) : "Tous"}</p>
+        <p><strong>Catégorie:</strong> ${data.filters.categoryId ? "Filtrée" : "Toutes"}</p>
         <p><strong>Recherche:</strong> ${data.filters.search || "Aucune"}</p>
       </div>
 
@@ -300,6 +301,7 @@ function generateMoneyGoalsHTML(data: MoneyGoalExportData): string {
           <thead>
             <tr>
               <th>Nom</th>
+              <th>Catégorie</th>
               <th>Montant Cible</th>
               <th>Montant Atteint</th>
               <th>Progrès</th>
@@ -314,6 +316,12 @@ function generateMoneyGoalsHTML(data: MoneyGoalExportData): string {
                 (goal) => `
               <tr>
                 <td>${goal.name}</td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    ${goal.category?.color ? `<div style="width: 12px; height: 12px; border-radius: 50%; background-color: ${goal.category.color}; border: 1px solid #e2e8f0;"></div>` : ""}
+                    <span>${goal.category?.nameFr || goal.category?.name || "N/A"}</span>
+                  </div>
+                </td>
                 <td>${formatCurrency(goal.amountGoal)}</td>
                 <td>${formatCurrency(goal.reachedGoal)}</td>
                 <td>

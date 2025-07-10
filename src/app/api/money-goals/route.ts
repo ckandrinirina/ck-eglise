@@ -32,6 +32,7 @@ export async function GET(request: NextRequest) {
         : undefined,
       status: searchParams.get("status") || undefined,
       search: searchParams.get("search") || undefined,
+      categoryId: searchParams.get("categoryId") || undefined,
     };
 
     // Build where clause
@@ -49,6 +50,10 @@ export async function GET(request: NextRequest) {
       whereClause.OR = [{ name: { contains: filters.search } }];
     }
 
+    if (filters.categoryId) {
+      whereClause.categoryId = filters.categoryId;
+    }
+
     // If no year filter provided, default to current year
     if (!filters.years) {
       whereClause.years = new Date().getFullYear();
@@ -58,6 +63,7 @@ export async function GET(request: NextRequest) {
     const goals = await prisma.moneyGoal.findMany({
       where: whereClause,
       include: {
+        category: true,
         creator: {
           select: {
             id: true,
@@ -123,7 +129,7 @@ export async function POST(request: NextRequest) {
     const body: CreateMoneyGoalRequest = await request.json();
 
     // Validate required fields
-    if (!body.name || !body.amountGoal || !body.years) {
+    if (!body.name || !body.amountGoal || !body.years || !body.categoryId) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 },
@@ -136,10 +142,12 @@ export async function POST(request: NextRequest) {
         name: body.name,
         amountGoal: body.amountGoal,
         years: body.years,
+        categoryId: body.categoryId,
         createdBy: session.user.id || "",
         editHistory: JSON.stringify([]),
       },
       include: {
+        category: true,
         creator: {
           select: {
             id: true,

@@ -36,6 +36,9 @@ export const MoneyGoalService = {
     if (filters?.search) {
       params.append("search", filters.search);
     }
+    if (filters?.categoryId) {
+      params.append("categoryId", filters.categoryId);
+    }
 
     const response = await api.get(`/money-goals?${params.toString()}`);
     return response.data;
@@ -109,6 +112,9 @@ export const MoneyGoalService = {
     if (filters?.status) {
       params.append("status", filters.status);
     }
+    if (filters?.categoryId) {
+      params.append("categoryId", filters.categoryId);
+    }
 
     const response = await api.get(`/money-goals/summary?${params.toString()}`);
     return response.data;
@@ -135,6 +141,9 @@ export const MoneyGoalService = {
     }
     if (filters?.search) {
       params.append("search", filters.search);
+    }
+    if (filters?.categoryId) {
+      params.append("categoryId", filters.categoryId);
     }
 
     const response = await api.get(`/money-goals/export?${params.toString()}`);

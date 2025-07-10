@@ -19,7 +19,7 @@ import {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     // Check authentication
@@ -28,10 +28,14 @@ export async function GET(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // Await params in Next.js 15
+    const { id } = await params;
+
     // Fetch goal with relations
     const goal = await prisma.moneyGoal.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
+        category: true,
         creator: {
           select: {
             id: true,
@@ -86,7 +90,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     // Check authentication
@@ -95,12 +99,15 @@ export async function PUT(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // Await params in Next.js 15
+    const { id } = await params;
+
     // Parse request body
     const body: UpdateMoneyGoalRequest = await request.json();
 
     // Fetch current goal to compare changes
     const currentGoal = await prisma.moneyGoal.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!currentGoal) {
@@ -150,6 +157,18 @@ export async function PUT(
       });
     }
 
+    if (
+      body.categoryId !== undefined &&
+      body.categoryId !== currentGoal.categoryId
+    ) {
+      updateData.categoryId = body.categoryId;
+      changes.push({
+        field: "categoryId",
+        previousValue: currentGoal.categoryId,
+        newValue: body.categoryId,
+      });
+    }
+
     // If there are changes, update edit history
     if (changes.length > 0) {
       const currentHistory = currentGoal.editHistory
@@ -170,9 +189,10 @@ export async function PUT(
 
     // Update goal
     const updatedGoal = await prisma.moneyGoal.update({
-      where: { id: params.id },
+      where: { id },
       data: updateData,
       include: {
+        category: true,
         creator: {
           select: {
             id: true,
@@ -211,7 +231,7 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     // Check authentication
@@ -220,9 +240,12 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // Await params in Next.js 15
+    const { id } = await params;
+
     // Check if goal exists
     const goal = await prisma.moneyGoal.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!goal) {
@@ -231,7 +254,7 @@ export async function DELETE(
 
     // Delete goal (this will cascade delete contributions)
     await prisma.moneyGoal.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({ message: "Goal deleted successfully" });

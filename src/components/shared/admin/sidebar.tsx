@@ -63,6 +63,10 @@ const navItems = [
         url: "/admin/finance/money-goals",
       },
       {
+        title: "money_goal_categories", // Added money goal categories section
+        url: "/admin/finance/money-goal-categories",
+      },
+      {
         title: "settings", // Changed to match translation key pattern
         url: "/admin/settings",
       },
