@@ -15,7 +15,7 @@ import { UpdateMoneyGoalCategoryRequest } from "@/types/money-goals";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     // Check authentication
@@ -24,9 +24,12 @@ export async function GET(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // Await params in Next.js 15
+    const { id } = await params;
+
     // Fetch category with goals count
     const category = await prisma.moneyGoalCategory.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         _count: {
           select: {
@@ -55,7 +58,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     // Check authentication and admin role
@@ -69,12 +72,15 @@ export async function PUT(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
+    // Await params in Next.js 15
+    const { id } = await params;
+
     // Parse request body
     const body: UpdateMoneyGoalCategoryRequest = await request.json();
 
     // Check if category exists
     const existingCategory = await prisma.moneyGoalCategory.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!existingCategory) {
@@ -111,7 +117,7 @@ export async function PUT(
 
     // Update category
     const updatedCategory = await prisma.moneyGoalCategory.update({
-      where: { id: params.id },
+      where: { id },
       data: updateData,
       include: {
         _count: {
@@ -134,7 +140,7 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     // Check authentication and admin role
@@ -148,9 +154,12 @@ export async function DELETE(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
+    // Await params in Next.js 15
+    const { id } = await params;
+
     // Check if category exists and has goals
     const category = await prisma.moneyGoalCategory.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         _count: {
           select: {
@@ -180,7 +189,7 @@ export async function DELETE(
 
     // Delete category
     await prisma.moneyGoalCategory.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({ message: "Category deleted successfully" });
