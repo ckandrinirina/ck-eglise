@@ -371,6 +371,10 @@
         "status": "Status",
         "status_placeholder": "Select status",
         "all_statuses": "All statuses",
+        "category": "Category",
+        "category_placeholder": "Select category",
+        "all_categories": "All categories",
+        "apply": "Apply",
         "reset": "Reset"
       },
       "summary": {
@@ -392,6 +396,7 @@
       },
       "table": {
         "name": "Name",
+        "category": "Category",
         "target_amount": "Target Amount",
         "reached_amount": "Reached Amount",
         "progress": "Progress",
@@ -414,6 +419,8 @@
         "fields": {
           "name": "Goal name",
           "name_placeholder": "Enter goal name",
+          "category": "Category",
+          "category_placeholder": "Select a category",
           "amount_goal": "Target amount",
           "amount_goal_placeholder": "Enter target amount",
           "year": "Year",
@@ -445,6 +452,99 @@
         },
         "success": "Goal deleted successfully",
         "error": "Error deleting goal"
+      }
+    },
+    "money_goal_categories": {
+      "title": "Goal Categories",
+      "description": "Manage money goal categories",
+      "actions": {
+        "create": "Create Category",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "status": {
+        "enabled": "Enabled",
+        "disabled": "Disabled"
+      },
+      "filters": {
+        "title": "Filters",
+        "search": "Search",
+        "search_placeholder": "Search for a category...",
+        "status": "Status",
+        "status_placeholder": "Select status",
+        "all_statuses": "All statuses",
+        "reset": "Reset"
+      },
+      "list": {
+        "title": "Categories List",
+        "loading": "Loading...",
+        "error": "Error loading",
+        "no_categories": "No categories found"
+      },
+      "table": {
+        "name": "Name",
+        "translations": "Translations",
+        "color": "Color",
+        "status": "Status",
+        "goals_count": "Goals count",
+        "goals": "goals",
+        "actions": "Actions"
+      },
+      "form": {
+        "create_title": "Create Category",
+        "edit_title": "Edit Category",
+        "create_description": "Create a new money goal category.",
+        "edit_description": "Edit the category details.",
+        "loading": "Loading...",
+        "fields": {
+          "name": "Name (English)",
+          "name_placeholder": "Enter name in English",
+          "name_fr": "Name (French)",
+          "name_fr_placeholder": "Enter name in French",
+          "name_mg": "Name (Malagasy)",
+          "name_mg_placeholder": "Enter name in Malagasy",
+          "description": "Description",
+          "description_placeholder": "Enter description (optional)",
+          "color": "Color",
+          "color_placeholder": "#color or color name",
+          "color_description": "Choose a color or enter a custom color code",
+          "icon": "Icon",
+          "icon_placeholder": "Icon name (optional)",
+          "icon_description": "Lucide React icon name (e.g. DollarSign, Target)",
+          "enabled": "Enabled",
+          "enabled_description": "This category is available for selection"
+        },
+        "actions": {
+          "cancel": "Cancel",
+          "create": "Create",
+          "update": "Update",
+          "saving": "Saving..."
+        },
+        "success": {
+          "create": "Category created successfully",
+          "update": "Category updated successfully"
+        },
+        "error": {
+          "create": "Error creating category",
+          "update": "Error updating category",
+          "load": "Error loading category"
+        }
+      },
+      "delete": {
+        "title": "Delete Category",
+        "description": "Are you sure you want to delete the category \"{name}\"?",
+        "has_goals_warning": "This category contains {count} money goal(s).",
+        "has_goals_instruction": "You must first move or delete these goals before you can delete this category.",
+        "permanent_warning": "This action cannot be undone.",
+        "loading": "Loading...",
+        "actions": {
+          "cancel": "Cancel",
+          "delete": "Delete",
+          "deleting": "Deleting..."
+        },
+        "success": "Category deleted successfully",
+        "error": "Error deleting category",
+        "load_error": "Error loading category"
       }
     },
     "breadcrumbs": {

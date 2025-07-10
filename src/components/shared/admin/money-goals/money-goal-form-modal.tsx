@@ -14,7 +14,7 @@ import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { toast } from "sonner";
 
@@ -28,6 +28,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Form,
   FormControl,
   FormField,
@@ -36,6 +43,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { MoneyGoalService } from "@/lib/services/money-goal.service";
+import { MoneyGoalCategoryService } from "@/lib/services/money-goal-category.service";
 import {
   CreateMoneyGoalRequest,
   UpdateMoneyGoalRequest,
@@ -45,6 +53,7 @@ const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
   amountGoal: z.coerce.number().min(0.01, "Amount must be greater than 0"),
   years: z.coerce.number().min(2024, "Year must be valid"),
+  categoryId: z.string().min(1, "Category is required"),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -64,12 +73,19 @@ export const MoneyGoalFormModal = ({
   const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
 
+  // Fetch categories
+  const { data: categories } = useQuery({
+    queryKey: ["money-goal-categories"],
+    queryFn: () => MoneyGoalCategoryService.getCategories(),
+  });
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       amountGoal: 0,
       years: new Date().getFullYear(),
+      categoryId: "",
     },
   });
 
@@ -118,6 +134,7 @@ export const MoneyGoalFormModal = ({
           form.setValue("name", goal.name);
           form.setValue("amountGoal", goal.amountGoal);
           form.setValue("years", goal.years);
+          form.setValue("categoryId", goal.categoryId);
         })
         .catch((error) => {
           toast.error(error.response?.data?.error || t("form.error.load"));
@@ -130,6 +147,7 @@ export const MoneyGoalFormModal = ({
         name: "",
         amountGoal: 0,
         years: new Date().getFullYear(),
+        categoryId: "",
       });
     }
   }, [goalId, isOpen, form, t]);
@@ -178,6 +196,41 @@ export const MoneyGoalFormModal = ({
                         {...field}
                       />
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="categoryId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t("form.fields.category")}</FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue
+                            placeholder={t("form.fields.category_placeholder")}
+                          />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {categories?.map((category) => (
+                          <SelectItem key={category.id} value={category.id}>
+                            <div className="flex items-center gap-2">
+                              {category.color && (
+                                <div
+                                  className="w-3 h-3 rounded-full"
+                                  style={{ backgroundColor: category.color }}
+                                />
+                              )}
+                              {category.nameFr || category.name}
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}

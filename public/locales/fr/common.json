@@ -371,6 +371,10 @@
         "status": "Statut",
         "status_placeholder": "Sélectionner le statut",
         "all_statuses": "Tous les statuts",
+        "category": "Catégorie",
+        "category_placeholder": "Sélectionner la catégorie",
+        "all_categories": "Toutes les catégories",
+        "apply": "Appliquer",
         "reset": "Réinitialiser"
       },
       "summary": {
@@ -392,6 +396,7 @@
       },
       "table": {
         "name": "Nom",
+        "category": "Catégorie",
         "target_amount": "Montant Cible",
         "reached_amount": "Montant Atteint",
         "progress": "Progrès",
@@ -414,6 +419,8 @@
         "fields": {
           "name": "Nom de l'objectif",
           "name_placeholder": "Entrez le nom de l'objectif",
+          "category": "Catégorie",
+          "category_placeholder": "Sélectionner une catégorie",
           "amount_goal": "Montant cible",
           "amount_goal_placeholder": "Entrez le montant cible",
           "year": "Année",
@@ -445,6 +452,99 @@
         },
         "success": "Objectif supprimé avec succès",
         "error": "Erreur lors de la suppression"
+      }
+    },
+    "money_goal_categories": {
+      "title": "Catégories d'Objectifs",
+      "description": "Gérer les catégories d'objectifs financiers",
+      "actions": {
+        "create": "Créer une catégorie",
+        "edit": "Modifier",
+        "delete": "Supprimer"
+      },
+      "status": {
+        "enabled": "Activé",
+        "disabled": "Désactivé"
+      },
+      "filters": {
+        "title": "Filtres",
+        "search": "Recherche",
+        "search_placeholder": "Rechercher une catégorie...",
+        "status": "Statut",
+        "status_placeholder": "Sélectionner le statut",
+        "all_statuses": "Tous les statuts",
+        "reset": "Réinitialiser"
+      },
+      "list": {
+        "title": "Liste des Catégories",
+        "loading": "Chargement...",
+        "error": "Erreur lors du chargement",
+        "no_categories": "Aucune catégorie trouvée"
+      },
+      "table": {
+        "name": "Nom",
+        "translations": "Traductions",
+        "color": "Couleur",
+        "status": "Statut",
+        "goals_count": "Nombre d'objectifs",
+        "goals": "objectifs",
+        "actions": "Actions"
+      },
+      "form": {
+        "create_title": "Créer une Catégorie",
+        "edit_title": "Modifier la Catégorie",
+        "create_description": "Créer une nouvelle catégorie d'objectifs financiers.",
+        "edit_description": "Modifier les détails de la catégorie.",
+        "loading": "Chargement...",
+        "fields": {
+          "name": "Nom (Anglais)",
+          "name_placeholder": "Entrez le nom en anglais",
+          "name_fr": "Nom (Français)",
+          "name_fr_placeholder": "Entrez le nom en français",
+          "name_mg": "Nom (Malgache)",
+          "name_mg_placeholder": "Entrez le nom en malgache",
+          "description": "Description",
+          "description_placeholder": "Entrez une description (optionnel)",
+          "color": "Couleur",
+          "color_placeholder": "#couleur ou nom de couleur",
+          "color_description": "Choisissez une couleur ou entrez un code couleur personnalisé",
+          "icon": "Icône",
+          "icon_placeholder": "Nom de l'icône (optionnel)",
+          "icon_description": "Nom de l'icône Lucide React (ex: DollarSign, Target)",
+          "enabled": "Activé",
+          "enabled_description": "Cette catégorie est disponible pour la sélection"
+        },
+        "actions": {
+          "cancel": "Annuler",
+          "create": "Créer",
+          "update": "Mettre à jour",
+          "saving": "Enregistrement..."
+        },
+        "success": {
+          "create": "Catégorie créée avec succès",
+          "update": "Catégorie mise à jour avec succès"
+        },
+        "error": {
+          "create": "Erreur lors de la création",
+          "update": "Erreur lors de la mise à jour",
+          "load": "Erreur lors du chargement"
+        }
+      },
+      "delete": {
+        "title": "Supprimer la Catégorie",
+        "description": "Êtes-vous sûr de vouloir supprimer la catégorie \"{name}\" ?",
+        "has_goals_warning": "Cette catégorie contient {count} objectif(s) financier(s).",
+        "has_goals_instruction": "Vous devez d'abord déplacer ou supprimer ces objectifs avant de pouvoir supprimer cette catégorie.",
+        "permanent_warning": "Cette action ne peut pas être annulée.",
+        "loading": "Chargement...",
+        "actions": {
+          "cancel": "Annuler",
+          "delete": "Supprimer",
+          "deleting": "Suppression..."
+        },
+        "success": "Catégorie supprimée avec succès",
+        "error": "Erreur lors de la suppression",
+        "load_error": "Erreur lors du chargement de la catégorie"
       }
     },
     "breadcrumbs": {

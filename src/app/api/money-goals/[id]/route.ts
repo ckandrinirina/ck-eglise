@@ -32,6 +32,7 @@ export async function GET(
     const goal = await prisma.moneyGoal.findUnique({
       where: { id: params.id },
       include: {
+        category: true,
         creator: {
           select: {
             id: true,
@@ -150,6 +151,18 @@ export async function PUT(
       });
     }
 
+    if (
+      body.categoryId !== undefined &&
+      body.categoryId !== currentGoal.categoryId
+    ) {
+      updateData.categoryId = body.categoryId;
+      changes.push({
+        field: "categoryId",
+        previousValue: currentGoal.categoryId,
+        newValue: body.categoryId,
+      });
+    }
+
     // If there are changes, update edit history
     if (changes.length > 0) {
       const currentHistory = currentGoal.editHistory
@@ -173,6 +186,7 @@ export async function PUT(
       where: { id: params.id },
       data: updateData,
       include: {
+        category: true,
         creator: {
           select: {
             id: true,

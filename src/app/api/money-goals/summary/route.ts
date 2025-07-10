@@ -26,6 +26,7 @@ export async function GET(request: NextRequest) {
         ? parseInt(searchParams.get("years")!)
         : undefined,
       status: searchParams.get("status") || undefined,
+      categoryId: searchParams.get("categoryId") || undefined,
     };
 
     // Build where clause
@@ -37,6 +38,10 @@ export async function GET(request: NextRequest) {
 
     if (filters.status) {
       whereClause.status = filters.status;
+    }
+
+    if (filters.categoryId) {
+      whereClause.categoryId = filters.categoryId;
     }
 
     // If no year filter provided, default to current year

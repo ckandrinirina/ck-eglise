@@ -358,6 +358,10 @@
         "status": "Toe-javatra",
         "status_placeholder": "Safidio ny toe-javatra",
         "all_statuses": "Toe-javatra rehetra",
+        "category": "Sokajy",
+        "category_placeholder": "Safidio ny sokajy",
+        "all_categories": "Sokajy rehetra",
+        "apply": "Ampiharo",
         "reset": "Avereno"
       },
       "summary": {
@@ -379,6 +383,7 @@
       },
       "table": {
         "name": "Anarana",
+        "category": "Sokajy",
         "target_amount": "Vola kendrena",
         "reached_amount": "Vola tratra",
         "progress": "Fivoarana",
@@ -401,6 +406,8 @@
         "fields": {
           "name": "Anaran'ny tanjona",
           "name_placeholder": "Ampidiro ny anaran'ny tanjona",
+          "category": "Sokajy",
+          "category_placeholder": "Safidio ny sokajy",
           "amount_goal": "Vola kendrena",
           "amount_goal_placeholder": "Ampidiro ny vola kendrena",
           "year": "Taona",
@@ -432,6 +439,99 @@
         },
         "success": "Tanjona nofafana soa aman-tsara",
         "error": "Hadisoana tamin'ny famafana"
+      }
+    },
+    "money_goal_categories": {
+      "title": "Sokajen'ny Tanjona",
+      "description": "Tantano ny sokajen'ny tanjon'ny vola",
+      "actions": {
+        "create": "Hamorona Sokajy",
+        "edit": "Ovao",
+        "delete": "Fafao"
+      },
+      "status": {
+        "enabled": "Nampidirina",
+        "disabled": "Nesorina"
+      },
+      "filters": {
+        "title": "Sivana",
+        "search": "Fikarohana",
+        "search_placeholder": "Mitadiava sokajy...",
+        "status": "Toe-javatra",
+        "status_placeholder": "Safidio ny toe-javatra",
+        "all_statuses": "Toe-javatra rehetra",
+        "reset": "Avereno"
+      },
+      "list": {
+        "title": "Lisitry ny Sokajy",
+        "loading": "Andrasana...",
+        "error": "Hadisoana tamin'ny fakana",
+        "no_categories": "Tsy misy sokajy hita"
+      },
+      "table": {
+        "name": "Anarana",
+        "translations": "Fandikana",
+        "color": "Loko",
+        "status": "Toe-javatra",
+        "goals_count": "Isan'ny tanjona",
+        "goals": "tanjona",
+        "actions": "Asa"
+      },
+      "form": {
+        "create_title": "Hamorona Sokajy",
+        "edit_title": "Hanova Sokajy",
+        "create_description": "Hamorona sokajin'ny tanjon'ny vola vaovao.",
+        "edit_description": "Ovao ny antsipirian'ny sokajy.",
+        "loading": "Andrasana...",
+        "fields": {
+          "name": "Anarana (Anglisy)",
+          "name_placeholder": "Ampidiro ny anarana amin'ny anglisy",
+          "name_fr": "Anarana (Frantsay)",
+          "name_fr_placeholder": "Ampidiro ny anarana amin'ny frantsay",
+          "name_mg": "Anarana (Malagasy)",
+          "name_mg_placeholder": "Ampidiro ny anarana amin'ny malagasy",
+          "description": "Famaritana",
+          "description_placeholder": "Ampidiro ny famaritana (azo atao)",
+          "color": "Loko",
+          "color_placeholder": "#loko na anaran'ny loko",
+          "color_description": "Safidio ny loko na ampidiro ny kaody loko manokana",
+          "icon": "Sary",
+          "icon_placeholder": "Anaran'ny sary (azo atao)",
+          "icon_description": "Anaran'ny sary Lucide React (ohatra: DollarSign, Target)",
+          "enabled": "Nampidirina",
+          "enabled_description": "Ity sokajy ity dia azo fidiana"
+        },
+        "actions": {
+          "cancel": "Aoka",
+          "create": "Hamorona",
+          "update": "Havaozina",
+          "saving": "Mitehiry..."
+        },
+        "success": {
+          "create": "Sokajy noforonina soa aman-tsara",
+          "update": "Sokajy nohavaozina soa aman-tsara"
+        },
+        "error": {
+          "create": "Hadisoana tamin'ny famoronana sokajy",
+          "update": "Hadisoana tamin'ny fanavaozana sokajy",
+          "load": "Hadisoana tamin'ny fakana sokajy"
+        }
+      },
+      "delete": {
+        "title": "Fafao ny Sokajy",
+        "description": "Azo antoka ve fa te-hamamafa ny sokajy \"{name}\" ianao?",
+        "has_goals_warning": "Ity sokajy ity dia misy tanjon'ny vola {count}.",
+        "has_goals_instruction": "Tsy maintsy afindra na fafana ireo tanjona ireo alohan'ny hamafana ity sokajy ity.",
+        "permanent_warning": "Ity hetsika ity dia tsy azo averina.",
+        "loading": "Andrasana...",
+        "actions": {
+          "cancel": "Aoka",
+          "delete": "Fafao",
+          "deleting": "Mamafa..."
+        },
+        "success": "Sokajy nofafana soa aman-tsara",
+        "error": "Hadisoana tamin'ny famafana sokajy",
+        "load_error": "Hadisoana tamin'ny fakana sokajy"
       }
     },
     "breadcrumbs": {

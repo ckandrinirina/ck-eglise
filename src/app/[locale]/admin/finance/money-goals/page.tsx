@@ -9,6 +9,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useQuery } from "@tanstack/react-query";
 import { Plus, FileText, Filter, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,14 +38,26 @@ import { MoneyGoalFormModal } from "@/components/shared/admin/money-goals/money-
 import { MoneyGoalDeleteDialog } from "@/components/shared/admin/money-goals/money-goal-delete-dialog";
 import { MoneyGoalSummaryCards } from "@/components/shared/admin/money-goals/money-goal-summary-cards";
 import { MoneyGoalService } from "@/lib/services/money-goal.service";
+import { MoneyGoalCategoryService } from "@/lib/services/money-goal-category.service";
 import { PDFExportService } from "@/lib/services/pdf-export.service";
 
 export default function MoneyGoalsPage() {
   const t = useTranslations("admin.money_goals");
-  const [filters, setFilters] = useState<MoneyGoalFilters>({
+
+  // Applied filters (used for API calls)
+  const [appliedFilters, setAppliedFilters] = useState<MoneyGoalFilters>({
     years: new Date().getFullYear(),
     status: undefined,
     search: "",
+    categoryId: undefined,
+  });
+
+  // Pending filters (form state)
+  const [pendingFilters, setPendingFilters] = useState<MoneyGoalFilters>({
+    years: new Date().getFullYear(),
+    status: undefined,
+    search: "",
+    categoryId: undefined,
   });
 
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
@@ -52,13 +65,34 @@ export default function MoneyGoalsPage() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [goalToDelete, setGoalToDelete] = useState<string | null>(null);
 
-  const { data: goals, isLoading, error } = useMoneyGoals(filters);
+  const { data: goals, isLoading, error } = useMoneyGoals(appliedFilters);
+
+  // Fetch categories for filtering
+  const { data: categories } = useQuery({
+    queryKey: ["money-goal-categories"],
+    queryFn: () => MoneyGoalCategoryService.getCategories(),
+  });
 
   const handleFilterChange = (
     key: keyof MoneyGoalFilters,
     value: string | number | undefined,
   ) => {
-    setFilters((prev) => ({ ...prev, [key]: value }));
+    setPendingFilters((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const applyFilters = () => {
+    setAppliedFilters(pendingFilters);
+  };
+
+  const resetFilters = () => {
+    const defaultFilters = {
+      years: new Date().getFullYear(),
+      status: undefined,
+      search: "",
+      categoryId: undefined,
+    };
+    setPendingFilters(defaultFilters);
+    setAppliedFilters(defaultFilters);
   };
 
   const handleEditGoal = (goalId: string) => {
@@ -73,7 +107,7 @@ export default function MoneyGoalsPage() {
 
   const handleExportPDF = async () => {
     try {
-      const exportData = await MoneyGoalService.exportToPdf(filters);
+      const exportData = await MoneyGoalService.exportToPdf(appliedFilters);
       await PDFExportService.exportMoneyGoalsToPDF(exportData);
     } catch (error) {
       console.error("Error exporting PDF:", error);
@@ -145,7 +179,7 @@ export default function MoneyGoalsPage() {
       </div>
 
       {/* Summary Cards */}
-      <MoneyGoalSummaryCards filters={filters} />
+      <MoneyGoalSummaryCards filters={appliedFilters} />
 
       {/* Filters */}
       <Card>
@@ -156,14 +190,14 @@ export default function MoneyGoalsPage() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
               <Label>{t("filters.search")}</Label>
               <div className="relative">
                 <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder={t("filters.search_placeholder")}
-                  value={filters.search || ""}
+                  value={pendingFilters.search || ""}
                   onChange={(e) => handleFilterChange("search", e.target.value)}
                   className="pl-10"
                 />
@@ -172,7 +206,7 @@ export default function MoneyGoalsPage() {
             <div>
               <Label>{t("filters.year")}</Label>
               <Select
-                value={filters.years?.toString()}
+                value={pendingFilters.years?.toString()}
                 onValueChange={(value) =>
                   handleFilterChange("years", parseInt(value))
                 }
@@ -195,7 +229,7 @@ export default function MoneyGoalsPage() {
             <div>
               <Label>{t("filters.status")}</Label>
               <Select
-                value={filters.status || "all"}
+                value={pendingFilters.status || "all"}
                 onValueChange={(value) =>
                   handleFilterChange(
                     "status",
@@ -220,19 +254,47 @@ export default function MoneyGoalsPage() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex items-end">
-              <Button
-                variant="outline"
-                onClick={() =>
-                  setFilters({
-                    years: new Date().getFullYear(),
-                    status: undefined,
-                    search: "",
-                  })
+            <div>
+              <Label>{t("filters.category")}</Label>
+              <Select
+                value={pendingFilters.categoryId || "all"}
+                onValueChange={(value) =>
+                  handleFilterChange(
+                    "categoryId",
+                    value === "all" ? undefined : value,
+                  )
                 }
               >
+                <SelectTrigger>
+                  <SelectValue
+                    placeholder={t("filters.category_placeholder")}
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">
+                    {t("filters.all_categories")}
+                  </SelectItem>
+                  {categories?.map((category) => (
+                    <SelectItem key={category.id} value={category.id}>
+                      <div className="flex items-center gap-2">
+                        {category.color && (
+                          <div
+                            className="w-3 h-3 rounded-full"
+                            style={{ backgroundColor: category.color }}
+                          />
+                        )}
+                        {category.nameFr || category.name}
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex items-end gap-2">
+              <Button variant="outline" onClick={resetFilters}>
                 {t("filters.reset")}
               </Button>
+              <Button onClick={applyFilters}>{t("filters.apply")}</Button>
             </div>
           </div>
         </CardContent>
@@ -262,6 +324,7 @@ export default function MoneyGoalsPage() {
                 <TableHeader>
                   <TableRow>
                     <TableHead>{t("table.name")}</TableHead>
+                    <TableHead>{t("table.category")}</TableHead>
                     <TableHead>{t("table.target_amount")}</TableHead>
                     <TableHead>{t("table.reached_amount")}</TableHead>
                     <TableHead>{t("table.progress")}</TableHead>
@@ -275,6 +338,19 @@ export default function MoneyGoalsPage() {
                   {goals.map((goal) => (
                     <TableRow key={goal.id}>
                       <TableCell className="font-medium">{goal.name}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          {goal.category?.color && (
+                            <div
+                              className="w-3 h-3 rounded-full"
+                              style={{ backgroundColor: goal.category.color }}
+                            />
+                          )}
+                          <span>
+                            {goal.category?.nameFr || goal.category?.name}
+                          </span>
+                        </div>
+                      </TableCell>
                       <TableCell>{formatCurrency(goal.amountGoal)}</TableCell>
                       <TableCell>{formatCurrency(goal.reachedGoal)}</TableCell>
                       <TableCell className="min-w-[120px]">
