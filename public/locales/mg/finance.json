@@ -84,5 +84,12 @@
   "transactionTo": "Fifampizarana ho an'ity mpampiasa ity",
   "sending": "Mandefa",
   "receiving": "Mandray",
-  "userDidAction": "Mpampiasa nanao ny hetsika"
+  "userDidAction": "Mpampiasa nanao ny hetsika",
+  "moneyGoal": "Tanjona ara-bola",
+  "selectMoneyGoal": "Misafidy tanjona ara-bola",
+  "searchMoneyGoal": "Mitady tanjona ara-bola",
+  "noMoneyGoalsFound": "Tsy misy tanjona ara-bola hita",
+  "errorLoadingMoneyGoals": "Hadisoana teo am-pakana ny tanjona ara-bola",
+  "unknownGoal": "Tanjona tsy fantatra",
+  "moneyGoals": "Tanjona ara-bola"
 }

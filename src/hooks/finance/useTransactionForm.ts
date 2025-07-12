@@ -21,6 +21,7 @@ const transactionSchema = z.object({
   amount: z.number().min(0.01, "Amount must be greater than 0"),
   reason: z.string().nullable().optional(),
   transactionTypeId: z.string().nullable().optional(),
+  moneyGoalId: z.string().nullable().optional(), // Optional money goal field
   monthId: z.string().nullable().optional(), // Optional month field
 });
 
@@ -54,6 +55,7 @@ export const useTransactionForm = (
       amount: 0,
       reason: null,
       transactionTypeId: null,
+      moneyGoalId: null, // Default moneyGoalId is null
       monthId: null, // Default monthId is null
     };
   };
@@ -75,6 +77,8 @@ export const useTransactionForm = (
       queryClient.invalidateQueries({ queryKey: ["siteBalance"] });
       queryClient.invalidateQueries({ queryKey: ["transactionSummary"] });
       queryClient.invalidateQueries({ queryKey: ["balanceHistory"] });
+      queryClient.invalidateQueries({ queryKey: ["money-goals"] });
+      queryClient.invalidateQueries({ queryKey: ["money-goals-summary"] });
       toast.success(t("success.transactionCreated"));
       form.reset();
       onSuccess?.(); // Call the onSuccess callback if provided

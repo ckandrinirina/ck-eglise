@@ -84,5 +84,12 @@
   "transactionTo": "Transaction to this user",
   "sending": "Sending",
   "receiving": "Receiving",
-  "userDidAction": "User who performed the action"
+  "userDidAction": "User who performed the action",
+  "moneyGoal": "Money goal",
+  "selectMoneyGoal": "Select a money goal",
+  "searchMoneyGoal": "Search money goal",
+  "noMoneyGoalsFound": "No money goals found",
+  "errorLoadingMoneyGoals": "Error loading money goals",
+  "unknownGoal": "Unknown goal",
+  "moneyGoals": "Money goals"
 }

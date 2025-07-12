@@ -6,7 +6,9 @@
       "Bash(pnpm typecheck:*)",
       "Bash(pnpm dlx:*)",
       "Bash(grep:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(pnpm prisma generate:*)",
+      "Bash(pnpm build:*)"
     ],
     "deny": []
   }
