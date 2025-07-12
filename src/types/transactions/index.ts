@@ -56,6 +56,7 @@ export interface Transaction {
  * @property {string|null} senderId - ID of the sender (optional)
  * @property {string|null} receiverId - ID of the receiver (optional)
  * @property {string|null} transactionTypeId - ID of the transaction type (optional)
+ * @property {string|null} moneyGoalId - ID of the associated money goal (optional)
  * @property {string|null} siteBalanceId - ID of the associated site balance (optional)
  */
 export interface CreateTransactionData {
@@ -65,6 +66,7 @@ export interface CreateTransactionData {
   senderId?: string | null;
   receiverId?: string | null;
   transactionTypeId?: string | null;
+  moneyGoalId?: string | null;
   siteBalanceId?: string | null;
 }
 
@@ -81,6 +83,7 @@ export const transactionSchema = z.object({
   senderId: z.string().nullable().optional(),
   receiverId: z.string().nullable().optional(),
   transactionTypeId: z.string().nullable().optional(),
+  moneyGoalId: z.string().nullable().optional(),
   siteBalanceId: z.string().nullable().optional(),
 });
 

@@ -84,5 +84,12 @@
   "transactionTo": "Transaction vers cet utilisateur",
   "sending": "Envoi",
   "receiving": "Réception",
-  "userDidAction": "Utilisateur qui a effectué l'action"
+  "userDidAction": "Utilisateur qui a effectué l'action",
+  "moneyGoal": "Objectif financier",
+  "selectMoneyGoal": "Sélectionner un objectif financier",
+  "searchMoneyGoal": "Rechercher un objectif financier",
+  "noMoneyGoalsFound": "Aucun objectif financier trouvé",
+  "errorLoadingMoneyGoals": "Erreur lors du chargement des objectifs financiers",
+  "unknownGoal": "Objectif inconnu",
+  "moneyGoals": "Objectifs financiers"
 }

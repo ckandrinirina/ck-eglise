@@ -68,6 +68,7 @@ export async function GET(request: Request) {
         sender: true,
         receiver: true,
         transactionType: true,
+        moneyGoal: true,
         siteBalance: true,
       },
       orderBy: {
@@ -92,6 +93,8 @@ export async function GET(request: Request) {
         transaction.transactionType?.nameFr ||
         transaction.transactionType?.name ||
         null,
+      moneyGoalId: transaction.moneyGoalId,
+      moneyGoalName: transaction.moneyGoal?.name || null,
       siteBalanceId: transaction.siteBalanceId,
       siteBalanceAmount: transaction.siteBalance?.amount || null,
       createdAt: transaction.createdAt.toISOString(),
@@ -180,6 +183,7 @@ export async function POST(request: Request) {
             senderId: validatedData.senderId || null,
             receiverId: validatedData.receiverId || null,
             transactionTypeId: validatedData.transactionTypeId || null,
+            moneyGoalId: validatedData.moneyGoalId || null,
             siteBalanceId: newSiteBalance.id,
           },
           include: {
@@ -187,9 +191,23 @@ export async function POST(request: Request) {
             sender: true,
             receiver: true,
             transactionType: true,
+            moneyGoal: true,
             siteBalance: true,
           },
         });
+
+        // If a money goal is specified, create a contribution
+        if (validatedData.moneyGoalId) {
+          await tx.moneyGoalContribution.create({
+            data: {
+              goalId: validatedData.moneyGoalId,
+              amount: validatedData.amount,
+              contributedBy: userId,
+              transactionId: newTransaction.id,
+              reason: validatedData.reason || null,
+            },
+          });
+        }
 
         return newTransaction;
       });
@@ -211,6 +229,8 @@ export async function POST(request: Request) {
           transaction.transactionType?.nameFr ||
           transaction.transactionType?.name ||
           null,
+        moneyGoalId: transaction.moneyGoalId,
+        moneyGoalName: transaction.moneyGoal?.name || null,
         siteBalanceId: transaction.siteBalanceId,
         siteBalanceAmount: transaction.siteBalance?.amount || null,
         createdAt: transaction.createdAt.toISOString(),

@@ -33,6 +33,7 @@ import { useTransactionForm } from "@/hooks/finance/useTransactionForm";
 import { useFinanceRefresh } from "@/hooks/finance/useFinanceRefresh";
 import UserSelect from "@/components/shared/common/user-select";
 import { DropdownSelect } from "@/components/shared/common/dropdown-select";
+import MoneyGoalSelect from "@/components/shared/common/money-goal-select";
 
 interface TransactionFormData {
   type: "credit" | "debit";
@@ -41,6 +42,7 @@ interface TransactionFormData {
   amount: number;
   reason?: string | null;
   transactionTypeId?: string | null;
+  moneyGoalId?: string | null;
   monthId?: string | null;
 }
 
@@ -164,6 +166,14 @@ const TransactionForm = ({
                   <FormMessage />
                 </FormItem>
               )}
+            />
+
+            <MoneyGoalSelect<TransactionFormData>
+              form={form}
+              name="moneyGoalId"
+              label={t("moneyGoal")}
+              placeholder={t("selectMoneyGoal")}
+              required={false}
             />
 
             <FormField
