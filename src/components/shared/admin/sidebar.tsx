@@ -55,6 +55,10 @@ const navItems = [
         url: "/admin/dropdowns",
       },
       {
+        title: "calendar", // Added calendar section
+        url: "/admin/calendar",
+      },
+      {
         title: "transactions", // Added new finance section
         url: "/admin/finance/transactions",
       },

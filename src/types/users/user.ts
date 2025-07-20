@@ -23,6 +23,7 @@ export interface User {
   territory?: DropdownUser;
   territoryId?: string;
   gender?: string;
+  image?: string;
   createdAt: string;
 }
 

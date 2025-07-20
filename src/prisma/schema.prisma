@@ -34,6 +34,9 @@ model User {
   receivedTransactions Transaction[] @relation("TransactionReceiver")
   createdGoals         MoneyGoal[]   @relation("GoalCreator") // Goals created by this user
   contributions        MoneyGoalContribution[] @relation("GoalContributor") // Contributions made by this user
+  createdEvents        Event[]       @relation("EventCreator") // Events created by this user
+  eventAttendances     EventAttendee[] @relation("EventAttendee") // Events this user is attending
+  eventReminders       EventReminder[] @relation("EventReminder") // Reminders for this user
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 
@@ -91,6 +94,7 @@ model Dropdown {
   users         User[]     @relation("UserTerritory") // Users who have this as territory
   userFunctions User[]     @relation("UserFunctions") // Users who have this as function
   transactions  Transaction[] @relation("TransactionType") // Transactions with this type
+  events        Event[]    @relation("EventCategory") // Events with this category
   isEnabled     Boolean    @default(true) // Whether the dropdown is enabled
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
@@ -195,4 +199,70 @@ model MoneyGoalContribution {
   @@index([goalId])
   @@index([contributedBy])
   @@index([transactionId])
+}
+
+// Event model for calendar functionality
+model Event {
+  id            String       @id @default(cuid())
+  title         String       // Event title
+  description   String?      // Optional event description
+  startDate     DateTime     // Event start date and time
+  endDate       DateTime     // Event end date and time
+  location      String?      // Optional event location
+  isAllDay      Boolean      @default(false) // Whether the event is all day
+  color         String?      // Optional color for UI display
+  isRecurring   Boolean      @default(false) // Whether the event is recurring
+  recurrenceRule String?     // JSON string for recurrence pattern (RRULE-like)
+  status        String       @default("confirmed") // "confirmed", "tentative", "cancelled"
+  visibility    String       @default("public") // "public", "private"
+  categoryId    String?      // Optional category (can use dropdown system)
+  category      Dropdown?    @relation("EventCategory", fields: [categoryId], references: [id], onDelete: SetNull)
+  createdBy     String       // ID of the user who created the event
+  creator       User         @relation("EventCreator", fields: [createdBy], references: [id], onDelete: Restrict)
+  attendees     EventAttendee[] // Users attending the event
+  reminders     EventReminder[] // Reminders for the event
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@index([startDate])
+  @@index([endDate])
+  @@index([createdBy])
+  @@index([categoryId])
+  @@index([status])
+}
+
+// EventAttendee model for tracking event attendees
+model EventAttendee {
+  id          String   @id @default(cuid())
+  eventId     String   // ID of the event
+  event       Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  userId      String   // ID of the attending user
+  user        User     @relation("EventAttendee", fields: [userId], references: [id], onDelete: Cascade)
+  status      String   @default("pending") // "pending", "accepted", "declined", "tentative"
+  isOrganizer Boolean  @default(false) // Whether this attendee is an organizer
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([eventId, userId]) // Prevent duplicate attendees
+  @@index([eventId])
+  @@index([userId])
+}
+
+// EventReminder model for event reminders
+model EventReminder {
+  id           String   @id @default(cuid())
+  eventId      String   // ID of the event
+  event        Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  userId       String   // ID of the user to remind
+  user         User     @relation("EventReminder", fields: [userId], references: [id], onDelete: Cascade)
+  reminderTime DateTime // When to send the reminder
+  type         String   @default("notification") // "notification", "email", "sms"
+  isSent       Boolean  @default(false) // Whether the reminder has been sent
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([eventId])
+  @@index([userId])
+  @@index([reminderTime])
+  @@index([isSent])
 }

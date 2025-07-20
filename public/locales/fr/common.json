@@ -245,6 +245,136 @@
       "unnamed": "Sans nom",
       "users": "Utilisateurs"
     },
+    "calendar": {
+      "title": "Calendrier",
+      "subtitle": "Gérer les événements et activités",
+      "events": "Événements",
+      "myEvents": "Mes Événements",
+      "createEvent": "Créer un Événement",
+      "editEvent": "Modifier l'Événement",
+      "deleteEvent": "Supprimer l'Événement",
+      "eventDetails": "Détails de l'Événement",
+      "views": {
+        "month": "Mois",
+        "week": "Semaine",
+        "day": "Jour",
+        "agenda": "Agenda"
+      },
+      "navigation": {
+        "today": "Aujourd'hui",
+        "previous": "Précédent",
+        "next": "Suivant"
+      },
+      "form": {
+        "title": "Titre",
+        "titleRequired": "Le titre est requis",
+        "titleTooLong": "Le titre est trop long",
+        "description": "Description",
+        "descriptionTooLong": "La description est trop longue",
+        "startDate": "Date de Début",
+        "startDateRequired": "La date de début est requise",
+        "endDate": "Date de Fin",
+        "endDateRequired": "La date de fin est requise",
+        "endDateAfterStart": "La date de fin doit être après la date de début",
+        "startTime": "Heure de Début",
+        "endTime": "Heure de Fin",
+        "location": "Lieu",
+        "locationTooLong": "Le lieu est trop long",
+        "allDay": "Toute la Journée",
+        "color": "Couleur",
+        "recurring": "Récurrent",
+        "recurrenceRule": "Modèle de Récurrence",
+        "status": "Statut",
+        "visibility": "Visibilité",
+        "category": "Catégorie",
+        "attendees": "Participants",
+        "reminders": "Rappels",
+        "reminderMinutes": "Minutes avant l'événement"
+      },
+      "status": {
+        "confirmed": "Confirmé",
+        "tentative": "Provisoire",
+        "cancelled": "Annulé"
+      },
+      "visibility": {
+        "public": "Public",
+        "private": "Privé"
+      },
+      "attendeeStatus": {
+        "pending": "En Attente",
+        "accepted": "Accepté",
+        "declined": "Refusé",
+        "tentative": "Provisoire"
+      },
+      "attendeeActions": {
+        "accept": "Accepter",
+        "decline": "Refuser",
+        "maybe": "Peut-être"
+      },
+      "reminderTypes": {
+        "notification": "Notification",
+        "email": "Email",
+        "sms": "SMS"
+      },
+      "recurrence": {
+        "daily": "Quotidien",
+        "weekly": "Hebdomadaire",
+        "monthly": "Mensuel",
+        "yearly": "Annuel",
+        "custom": "Personnalisé"
+      },
+      "buttons": {
+        "save": "Enregistrer l'Événement",
+        "cancel": "Annuler",
+        "delete": "Supprimer",
+        "edit": "Modifier",
+        "view": "Voir",
+        "addAttendee": "Ajouter un Participant",
+        "addReminder": "Ajouter un Rappel"
+      },
+      "messages": {
+        "createSuccess": "Événement créé avec succès",
+        "updateSuccess": "Événement mis à jour avec succès",
+        "deleteSuccess": "Événement supprimé avec succès",
+        "createError": "Échec de la création de l'événement",
+        "updateError": "Échec de la mise à jour de l'événement",
+        "deleteError": "Échec de la suppression de l'événement",
+        "loadError": "Échec du chargement des événements",
+        "noEvents": "Aucun événement trouvé",
+        "noEventsInRange": "Aucun événement dans la plage de dates sélectionnée",
+        "attendeeUpdateSuccess": "Votre réponse a été mise à jour",
+        "attendeeUpdateError": "Échec de la mise à jour de votre réponse"
+      },
+      "confirmations": {
+        "deleteEvent": "Êtes-vous sûr de vouloir supprimer cet événement ?",
+        "deleteEventDescription": "Cette action ne peut pas être annulée. L'événement sera définitivement supprimé du calendrier."
+      },
+      "placeholders": {
+        "searchEvents": "Rechercher des événements...",
+        "eventTitle": "Saisir le titre de l'événement",
+        "eventDescription": "Saisir la description de l'événement",
+        "eventLocation": "Saisir le lieu de l'événement",
+        "selectCategory": "Sélectionner une catégorie",
+        "selectAttendees": "Sélectionner les participants",
+        "noAttendees": "Aucun participant sélectionné",
+        "noCategory": "Aucune catégorie sélectionnée"
+      },
+      "time": {
+        "allDay": "Toute la journée",
+        "at": "à",
+        "from": "de",
+        "to": "à",
+        "duration": "Durée",
+        "minutesBefore": "minutes avant"
+      },
+      "dateFormats": {
+        "monthYear": "MMMM yyyy",
+        "dayMonth": "d MMMM",
+        "dayMonthYear": "d MMMM yyyy",
+        "weekday": "EEEE",
+        "time": "HH:mm"
+      }
+    },
     "dropdowns": {
       "title": "Listes déroulantes",
       "subtitle": "Gérer les valeurs disponibles dans les menus déroulants",

@@ -245,6 +245,136 @@
       "unnamed": "Unnamed",
       "users": "Users"
     },
+    "calendar": {
+      "title": "Calendar",
+      "subtitle": "Manage events and activities",
+      "events": "Events",
+      "myEvents": "My Events",
+      "createEvent": "Create Event",
+      "editEvent": "Edit Event",
+      "deleteEvent": "Delete Event",
+      "eventDetails": "Event Details",
+      "views": {
+        "month": "Month",
+        "week": "Week",
+        "day": "Day",
+        "agenda": "Agenda"
+      },
+      "navigation": {
+        "today": "Today",
+        "previous": "Previous",
+        "next": "Next"
+      },
+      "form": {
+        "title": "Title",
+        "titleRequired": "Title is required",
+        "titleTooLong": "Title is too long",
+        "description": "Description",
+        "descriptionTooLong": "Description is too long",
+        "startDate": "Start Date",
+        "startDateRequired": "Start date is required",
+        "endDate": "End Date",
+        "endDateRequired": "End date is required",
+        "endDateAfterStart": "End date must be after start date",
+        "startTime": "Start Time",
+        "endTime": "End Time",
+        "location": "Location",
+        "locationTooLong": "Location is too long",
+        "allDay": "All Day",
+        "color": "Color",
+        "recurring": "Recurring",
+        "recurrenceRule": "Recurrence Pattern",
+        "status": "Status",
+        "visibility": "Visibility",
+        "category": "Category",
+        "attendees": "Attendees",
+        "reminders": "Reminders",
+        "reminderMinutes": "Minutes before event"
+      },
+      "status": {
+        "confirmed": "Confirmed",
+        "tentative": "Tentative",
+        "cancelled": "Cancelled"
+      },
+      "visibility": {
+        "public": "Public",
+        "private": "Private"
+      },
+      "attendeeStatus": {
+        "pending": "Pending",
+        "accepted": "Accepted",
+        "declined": "Declined",
+        "tentative": "Tentative"
+      },
+      "attendeeActions": {
+        "accept": "Accept",
+        "decline": "Decline",
+        "maybe": "Maybe"
+      },
+      "reminderTypes": {
+        "notification": "Notification",
+        "email": "Email",
+        "sms": "SMS"
+      },
+      "recurrence": {
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "monthly": "Monthly",
+        "yearly": "Yearly",
+        "custom": "Custom"
+      },
+      "buttons": {
+        "save": "Save Event",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "view": "View",
+        "addAttendee": "Add Attendee",
+        "addReminder": "Add Reminder"
+      },
+      "messages": {
+        "createSuccess": "Event created successfully",
+        "updateSuccess": "Event updated successfully",
+        "deleteSuccess": "Event deleted successfully",
+        "createError": "Failed to create event",
+        "updateError": "Failed to update event",
+        "deleteError": "Failed to delete event",
+        "loadError": "Failed to load events",
+        "noEvents": "No events found",
+        "noEventsInRange": "No events in selected date range",
+        "attendeeUpdateSuccess": "Your response has been updated",
+        "attendeeUpdateError": "Failed to update your response"
+      },
+      "confirmations": {
+        "deleteEvent": "Are you sure you want to delete this event?",
+        "deleteEventDescription": "This action cannot be undone. The event will be permanently removed from the calendar."
+      },
+      "placeholders": {
+        "searchEvents": "Search events...",
+        "eventTitle": "Enter event title",
+        "eventDescription": "Enter event description",
+        "eventLocation": "Enter event location",
+        "selectCategory": "Select category",
+        "selectAttendees": "Select attendees",
+        "noAttendees": "No attendees selected",
+        "noCategory": "No category selected"
+      },
+      "time": {
+        "allDay": "All day",
+        "at": "at",
+        "from": "from",
+        "to": "to",
+        "duration": "Duration",
+        "minutesBefore": "minutes before"
+      },
+      "dateFormats": {
+        "monthYear": "MMMM yyyy",
+        "dayMonth": "d MMMM",
+        "dayMonthYear": "d MMMM yyyy",
+        "weekday": "EEEE",
+        "time": "HH:mm"
+      }
+    },
     "dropdowns": {
       "title": "Dropdowns",
       "subtitle": "Manage dropdown menu values",

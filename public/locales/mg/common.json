@@ -232,6 +232,136 @@
       "unnamed": "Tsy misy anarana",
       "users": "Mpampiasa"
     },
+    "calendar": {
+      "title": "Kalandrie",
+      "subtitle": "Mitantana ny hetsika sy asa",
+      "events": "Hetsika",
+      "myEvents": "Ny Hetsikako",
+      "createEvent": "Mamorona Hetsika",
+      "editEvent": "Manova ny Hetsika",
+      "deleteEvent": "Mamafa ny Hetsika",
+      "eventDetails": "Antsipiriany momba ny Hetsika",
+      "views": {
+        "month": "Volana",
+        "week": "Herinandro",
+        "day": "Andro",
+        "agenda": "Fandaharam-potoana"
+      },
+      "navigation": {
+        "today": "Androany",
+        "previous": "Teo aloha",
+        "next": "Manaraka"
+      },
+      "form": {
+        "title": "Lohateny",
+        "titleRequired": "Ilaina ny lohateny",
+        "titleTooLong": "Lava loatra ny lohateny",
+        "description": "Famaritana",
+        "descriptionTooLong": "Lava loatra ny famaritana",
+        "startDate": "Datin'ny Fanombohana",
+        "startDateRequired": "Ilaina ny datin'ny fanombohana",
+        "endDate": "Datin'ny Fiafara",
+        "endDateRequired": "Ilaina ny datin'ny fiafara",
+        "endDateAfterStart": "Ny datin'ny fiafara dia tokony ho aorian'ny datin'ny fanombohana",
+        "startTime": "Fotoanan'ny Fanombohana",
+        "endTime": "Fotoanan'ny Fiafara",
+        "location": "Toerana",
+        "locationTooLong": "Lava loatra ny toerana",
+        "allDay": "Mandritra ny Andro",
+        "color": "Loko",
+        "recurring": "Miverimberina",
+        "recurrenceRule": "Fandaharam-piverimberina",
+        "status": "Toe-javatra",
+        "visibility": "Fahitana",
+        "category": "Sokajy",
+        "attendees": "Mpandray anjara",
+        "reminders": "Fampahatsiahivana",
+        "reminderMinutes": "Minitra alohan'ny hetsika"
+      },
+      "status": {
+        "confirmed": "Voamarina",
+        "tentative": "Tsy azo antoka",
+        "cancelled": "Nofoanana"
+      },
+      "visibility": {
+        "public": "Ho an'ny daholobe",
+        "private": "Manokana"
+      },
+      "attendeeStatus": {
+        "pending": "Miandry",
+        "accepted": "Noekenina",
+        "declined": "Nolavina",
+        "tentative": "Tsy azo antoka"
+      },
+      "attendeeActions": {
+        "accept": "Manaiky",
+        "decline": "Mandà",
+        "maybe": "Angamba"
+      },
+      "reminderTypes": {
+        "notification": "Fampilazana",
+        "email": "Mailaka",
+        "sms": "SMS"
+      },
+      "recurrence": {
+        "daily": "Isan'andro",
+        "weekly": "Isan'kerinandro",
+        "monthly": "Isan-bolana",
+        "yearly": "Isan-taona",
+        "custom": "Manokana"
+      },
+      "buttons": {
+        "save": "Mitahiry ny Hetsika",
+        "cancel": "Manafoana",
+        "delete": "Mamafa",
+        "edit": "Manova",
+        "view": "Mijery",
+        "addAttendee": "Manampy Mpandray anjara",
+        "addReminder": "Manampy Fampahatsiahivana"
+      },
+      "messages": {
+        "createSuccess": "Voaforona soa aman-tsara ny hetsika",
+        "updateSuccess": "Voahavaozina soa aman-tsara ny hetsika",
+        "deleteSuccess": "Voafafa soa aman-tsara ny hetsika",
+        "createError": "Tsy afaka namorona ny hetsika",
+        "updateError": "Tsy afaka nanavao ny hetsika",
+        "deleteError": "Tsy afaka namafa ny hetsika",
+        "loadError": "Tsy afaka nampiditra ny hetsika",
+        "noEvents": "Tsy misy hetsika hita",
+        "noEventsInRange": "Tsy misy hetsika amin'ny daty voafaritra",
+        "attendeeUpdateSuccess": "Voahavaozina ny valinteninao",
+        "attendeeUpdateError": "Tsy afaka nanavao ny valinteninao"
+      },
+      "confirmations": {
+        "deleteEvent": "Tena te hamafa ity hetsika ity ve ianao?",
+        "deleteEventDescription": "Tsy azo averina ity asa ity. Ho voafafa tanteraka amin'ny kalandrie ny hetsika."
+      },
+      "placeholders": {
+        "searchEvents": "Mikaroka hetsika...",
+        "eventTitle": "Ampidiro ny lohatenin'ny hetsika",
+        "eventDescription": "Ampidiro ny famaritak'ny hetsika",
+        "eventLocation": "Ampidiro ny toeran'ny hetsika",
+        "selectCategory": "Misafidiana sokajy",
+        "selectAttendees": "Misafidiana mpandray anjara",
+        "noAttendees": "Tsy misy mpandray anjara voafidy",
+        "noCategory": "Tsy misy sokajy voafidy"
+      },
+      "time": {
+        "allDay": "Mandritra ny andro",
+        "at": "amin'ny",
+        "from": "manomboka",
+        "to": "hatramin'ny",
+        "duration": "Faharetana",
+        "minutesBefore": "minitra aloha"
+      },
+      "dateFormats": {
+        "monthYear": "MMMM yyyy",
+        "dayMonth": "d MMMM",
+        "dayMonthYear": "d MMMM yyyy",
+        "weekday": "EEEE",
+        "time": "HH:mm"
+      }
+    },
     "dropdowns": {
       "title": "Lisitra azo alahatra",
       "subtitle": "Tantano ny sanda misy ao anatin'ny lisitra azo alahatra",
